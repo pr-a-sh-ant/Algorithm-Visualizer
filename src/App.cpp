@@ -10,7 +10,6 @@ App::App()
     this->window->setFramerateLimit(144);
     this->circle = new sf::CircleShape(100.f);
     this->circle->setFillColor(sf::Color::Green);
-    std::cout<<"PPP"<<std::endl;
     this->mouse = new Mouse(this);
 }
 
