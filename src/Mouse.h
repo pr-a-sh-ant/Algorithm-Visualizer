@@ -8,12 +8,12 @@ class Mouse
 {
 private:
 	// sf::Font* font;
-	sf::Text* PosText;
+	// sf::Text* PosText;
 
 public:
 	App* app;
 	sf::Vector2i* pos;
-	sf::RectangleShape* rectangle;
+	sf::CircleShape* rectangle;
 
 
 	Mouse(App* app);

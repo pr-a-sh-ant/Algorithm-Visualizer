@@ -1,7 +1,7 @@
 #include "App.h"
 #include <SFML/Graphics.hpp>
 #include "Mouse.h"
-
+#include <iostream>
 
 App::App()
 {
@@ -10,7 +10,8 @@ App::App()
     this->window->setFramerateLimit(144);
     this->circle = new sf::CircleShape(100.f);
     this->circle->setFillColor(sf::Color::Green);
-    this->mouse = new Mouse(this);
+    std::cout<<"PPP"<<std::endl;
+    // this->mouse = new Mouse(this);
 }
 
 void App::update()
@@ -25,6 +26,7 @@ void App::update()
                 this->window->close();
             }
         }
+        this->render();
     }
 }
 
@@ -35,7 +37,7 @@ void App::render()
     
         this->window->draw(*this->circle);
 
-        // this->mouse->render();
+        this->mouse->render();
 
         this->window->display();
 }
