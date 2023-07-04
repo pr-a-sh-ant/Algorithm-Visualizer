@@ -11,14 +11,14 @@ App::App()
     this->circle = new sf::CircleShape(100.f);
     this->circle->setFillColor(sf::Color::Green);
     std::cout<<"PPP"<<std::endl;
-    // this->mouse = new Mouse(this);
+    this->mouse = new Mouse(this);
 }
 
 void App::update()
 {
 	while (this->window->isOpen())
     {
-        // this->mouse->update();
+        this->mouse->update();
         for (auto event = sf::Event{}; this->window->pollEvent(event);)
         {
             if (event.type == sf::Event::Closed)

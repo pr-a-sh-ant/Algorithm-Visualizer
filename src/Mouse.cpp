@@ -16,18 +16,19 @@ Mouse::Mouse(App* app)
 	// this->PosText->setFillColor(sf::Color::Black);
 	// this->PosText->setOrigin(this->PosText->getLocalBounds().width / 2., this->PosText->getLocalBounds().height / 2.);
 
-	this->rectangle = new sf::CircleShape(100.f);
-    this->rectangle->setFillColor(sf::Color::Green);
+	this->rectangle = new sf::CircleShape(10.f);
+    this->rectangle->setFillColor(sf::Color::Red);
 }
 
 void Mouse::update()
 {
-	// this->pos->x = sf::Mouse::getPosition(*app->window).x;
-	// this->pos->y = sf::Mouse::getPosition(*app->window).y;
+	this->pos = sf::Vector2i(sf::Mouse::getPosition(*app->window).x,sf::Mouse::getPosition(*app->window).y);
+	 
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
-		std::cout << "CLicked" << std::endl;
+		std::cout << sf::Mouse::getPosition(*app->window).y << std::endl;
+		
 	}
 }
 
