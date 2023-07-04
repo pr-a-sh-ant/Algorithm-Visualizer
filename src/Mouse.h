@@ -7,14 +7,17 @@ class App;
 class Mouse
 {
 private:
-	sf::Font* font;
+	// sf::Font* font;
 	sf::Text* PosText;
 
 public:
 	App* app;
 	sf::Vector2i* pos;
+	sf::RectangleShape* rectangle;
+
 
 	Mouse(App* app);
 	void update();
 	void render();
+
 };

@@ -9,16 +9,18 @@ class App;
 Mouse::Mouse(App* app)
 {
 	this->app = app;
-	if (!this->font->loadFromFile("/Fonts/Roborto-Regular.ttf"))
-	{
-		return;
-		// throw "Font Not Found";
-	}
+	
+	// this->font->loadFromFile("Roboto-Regular.ttf");
+	// this->PosText->setFont(*this->font);
+	// this->PosText->setCharacterSize(60);
+	// this->PosText->setFillColor(sf::Color::Black);
+	// this->PosText->setOrigin(this->PosText->getLocalBounds().width / 2., this->PosText->getLocalBounds().height / 2.);
 
-	this->PosText->setFont(*this->font);
-	this->PosText->setCharacterSize(60);
-	this->PosText->setFillColor(sf::Color::Black);
-	this->PosText->setOrigin(this->PosText->getLocalBounds().width / 2., this->PosText->getLocalBounds().height / 2.);
+
+	this->rectangle->setSize(sf::Vector2f(100, 50));
+	this->rectangle->setOutlineColor(sf::Color::Red);
+	this->rectangle->setOutlineThickness(5);
+	this->rectangle->setPosition(0, 0);
 }
 
 void Mouse::update()
@@ -35,8 +37,10 @@ void Mouse::update()
 
 void Mouse::render()
 {
-	this->PosText->setString(std::to_string(this->pos->x));
-	this->PosText->setString(std::to_string(this->pos->y));
+	// this->PosText->setString(std::to_string(this->pos->x));
+	// this->PosText->setString(std::to_string(this->pos->y));
 
-	this->app->window->draw(*this->PosText);
+	this->rectangle->setPosition(this->pos->x, this->pos->y);
+
+	this->app->window->draw(*this->rectangle);
 }
