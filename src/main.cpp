@@ -3,12 +3,7 @@
 
 int main()
 {
-    
-    App *app = new App;
-   
-   
-    app->init();
-    app->update();
+	auto app = new App;
 
+	app->update();
 }
-

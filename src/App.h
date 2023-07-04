@@ -10,8 +10,8 @@ public:
     sf::RenderWindow *window;
     sf::CircleShape *circle;
     Mouse *mouse;
-    
-    void init();
+
+    App();
     void update();
     void render();
 

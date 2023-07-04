@@ -3,7 +3,8 @@
 #include "Mouse.h"
 
 
-void App::init(){
+App::App()
+{
     sf::VideoMode mode = sf::VideoMode::getDesktopMode();
 	this->window = new sf::RenderWindow(mode, "SFML works!");
     this->window->setFramerateLimit(144);
@@ -12,12 +13,10 @@ void App::init(){
     this->mouse = new Mouse(this);
 }
 
-void App::update(){
-    
-
-     
-    while (this->window->isOpen())
-    {   
+void App::update()
+{
+	while (this->window->isOpen())
+    {
         // this->mouse->update();
         for (auto event = sf::Event{}; this->window->pollEvent(event);)
         {
@@ -26,18 +25,17 @@ void App::update(){
                 this->window->close();
             }
         }
-        }
+    }
 }
 
-void App::render(){
+void App::render()
+{
     
         this->window->clear();
     
         this->window->draw(*this->circle);
-    
+
         // this->mouse->render();
-    
+
         this->window->display();
-
-
 }

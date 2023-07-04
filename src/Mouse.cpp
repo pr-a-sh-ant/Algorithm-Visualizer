@@ -1,29 +1,25 @@
 #include <SFML/Graphics.hpp>
 class App;
-#include "App.h" 
+#include "App.h"
 
 #include "Mouse.h"
 #include <iostream>
 
 
-Mouse::Mouse(App *app){
+Mouse::Mouse(App* app)
+{
 	this->app = app;
-}
-
-void Mouse::init(){
-		if(!this->font->loadFromFile("/Fonts/Roborto-Regular.ttf"),50){
+	if (!this->font->loadFromFile("/Fonts/Roborto-Regular.ttf"))
+	{
+		return;
 		// throw "Font Not Found";
-        
 	}
+
 	this->PosText->setFont(*this->font);
 	this->PosText->setCharacterSize(60);
-    this->PosText->setFillColor(sf::Color::Black);
-    this->PosText->setOrigin(this->PosText->getLocalBounds().width/2. , this->PosText->getLocalBounds().height/2.);
-	
-	
-
+	this->PosText->setFillColor(sf::Color::Black);
+	this->PosText->setOrigin(this->PosText->getLocalBounds().width / 2., this->PosText->getLocalBounds().height / 2.);
 }
-
 
 void Mouse::update()
 {
@@ -32,18 +28,15 @@ void Mouse::update()
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
-		
-		std::cout<<"CLicked"<<std::endl;
-	
+		std::cout << "CLicked" << std::endl;
 	}
 	this->render();
 }
 
-void Mouse::render(){
+void Mouse::render()
+{
 	this->PosText->setString(std::to_string(this->pos->x));
 	this->PosText->setString(std::to_string(this->pos->y));
-	
+
 	this->app->window->draw(*this->PosText);
-
-
 }
