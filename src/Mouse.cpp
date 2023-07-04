@@ -13,6 +13,7 @@ Mouse::Mouse(App *app){
 void Mouse::init(){
 		if(!this->font->loadFromFile("/Fonts/Roborto-Regular.ttf"),50){
 		// throw "Font Not Found";
+		std::cout<<"FontNotFound"<<std::endl;
         
 	}
 	this->PosText->setFont(*this->font);
