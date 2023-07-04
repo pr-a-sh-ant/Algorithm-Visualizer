@@ -8,8 +8,6 @@ App::App()
     sf::VideoMode mode = sf::VideoMode::getDesktopMode();
 	this->window = new sf::RenderWindow(mode, "SFML works!");
     this->window->setFramerateLimit(144);
-    this->circle = new sf::CircleShape(100.f);
-    this->circle->setFillColor(sf::Color::Green);
     this->mouse = new Mouse(this);
 }
 
@@ -34,7 +32,6 @@ void App::render()
     
         this->window->clear();
     
-        this->window->draw(*this->circle);
 
         this->mouse->render();
 
