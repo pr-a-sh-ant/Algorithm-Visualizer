@@ -16,7 +16,9 @@ Mouse::Mouse(App* app)
 	this->PosText.setFillColor(sf::Color::Red);
 	this->PosText.setOrigin(this->PosText.getLocalBounds().width / 2., this->PosText.getLocalBounds().height / 2.);
 
-	this->rectangle = new sf::CircleShape(10.f);
+
+	this->rectangle = new sf::CircleShape;
+	this->rectangle->setRadius(10);
     this->rectangle->setFillColor(sf::Color::Red);
 }
 
@@ -35,9 +37,8 @@ void Mouse::update()
 void Mouse::render()
 {
 	this->PosText.setString(std::to_string(this->pos.x) + " " + std::to_string(this->pos.y));
-	// this->PosText->setString(std::to_string();
 
-	this->rectangle->setPosition(this->pos.x, this->pos.y);
+	this->rectangle->setPosition(this->pos.x - this->rectangle->getRadius()/2 , this->pos.y - this->rectangle->getRadius()/2);
 
 	this->app->window->draw(*this->rectangle);
 	this->app->window->draw(this->PosText);
