@@ -4,24 +4,23 @@
 #include "Entity.h"
 #include "Screen.h"
 
-class Mouse;
-class Screen;
 
-
-class App
+namespace viz
 {
-private:
-    /* data */
-public:
-    
-    sf::RenderWindow *window;
-    Mouse *mouse;
-    Screen *screen;
-    
-    App();
-    void update();
-    void render();
-    
-    
+	class Mouse;
+	class Screen;
 
-};
+	class App
+	{
+	private:
+		/* data */
+	public:
+		sf::RenderWindow* window;
+		viz::Mouse* mouse;
+		viz::Screen* screen;
+
+		App();
+		void update();
+		void render();
+	};
+}

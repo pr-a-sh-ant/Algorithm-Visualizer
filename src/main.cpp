@@ -3,10 +3,8 @@
 #include <iostream>
 
 int main()
-
-
 {
-	auto app = new App;
-		
+	viz::App* app = new viz::App;
+
 	app->update();
 }

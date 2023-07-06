@@ -1,7 +1,7 @@
 #include "Entity.h"
 #include "Mouse.h"
 
-Entity::Entity(const int x, const int y, const int width, const int height)
+viz::Entity::Entity(const int x, const int y, const int width, const int height)
 {
 	this->pos = sf::Vector2i(x, y);
 	this->dim = sf::Vector2i(width, height);
@@ -12,13 +12,13 @@ Entity::Entity(const int x, const int y, const int width, const int height)
 	this->rect.setFillColor(sf::Color::Green);
 }
 
-Entity::Entity(const sf::Vector2i& position, const sf::Vector2i& dimensions)
+viz::Entity::Entity(const sf::Vector2i& position, const sf::Vector2i& dimensions)
 {
 	this->pos = position;
 	this->dim = dimensions;
 }
 
-bool Entity::operator==(const Entity *entity2) const
+bool viz::Entity::collides_with(const Entity* entity2) const
 {
 	if (this->pos.x < entity2->pos.x and this->pos.x + this->dim.x > entity2->pos.x)
 	{
@@ -31,7 +31,7 @@ bool Entity::operator==(const Entity *entity2) const
 	return false;
 }
 
-bool Entity::operator==(const Mouse *mouse) const
+bool viz::Entity::collides_with(const Mouse* mouse) const
 {
 	if (this->pos.x < mouse->pos.x and this->pos.x + this->dim.x > mouse->pos.x)
 	{

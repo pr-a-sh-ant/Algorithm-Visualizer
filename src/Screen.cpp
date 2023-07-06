@@ -1,12 +1,12 @@
 #include "Screen.h"
 
-Screen::Screen(App *app)
+viz::Screen::Screen(App *app)
 {
         this->app = app;
 		this->init_box();
 }
 
-void Screen::init_box()
+void viz::Screen::init_box()
 {
 	for (int x = 0; x < 40; x++)
 	{
@@ -20,31 +20,26 @@ void Screen::init_box()
 }
 
 
-void Screen::update(){
+void viz::Screen::update(){
 	for (int x = 0; x < 40; x++)
 	{
 		for (int y = 0; y < 40; y++)
 		{
-			if (*box[x][y] == this->app->mouse)
+			if (box[x][y]->collides_with(this->app->mouse))
 			{
 				box[x][y]->rect.setFillColor(sf::Color::Red);
 			}
 		}
 	}
-
 }
 
-void Screen::render(){
+void viz::Screen::render(){
 
 	for (int x = 0; x < 40; x++)
 	{
 		for (int y = 0; y < 40; y++)
 		{
-			
 			this->app->window->draw(box[x][y]->rect);
-
 		}
 	}
-
-
 }

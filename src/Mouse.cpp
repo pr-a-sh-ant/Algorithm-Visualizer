@@ -6,10 +6,10 @@ class App;
 #include <iostream>
 
 
-Mouse::Mouse(App* app)
+viz::Mouse::Mouse(App* app)
 {
 	this->app = app;
-	
+
 	this->font.loadFromFile("src/font.ttf");
 	this->PosText.setFont(this->font);
 	this->PosText.setCharacterSize(60);
@@ -19,26 +19,26 @@ Mouse::Mouse(App* app)
 
 	this->rectangle = new sf::CircleShape;
 	this->rectangle->setRadius(10);
-    this->rectangle->setFillColor(sf::Color::Red);
+	this->rectangle->setFillColor(sf::Color::Red);
 }
 
-void Mouse::update()
+void viz::Mouse::update()
 {
-	this->pos = sf::Vector2i(sf::Mouse::getPosition(*app->window).x,sf::Mouse::getPosition(*app->window).y);
-	 
+	this->pos = sf::Vector2i(sf::Mouse::getPosition(*app->window).x, sf::Mouse::getPosition(*app->window).y);
+
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		std::cout << "CLICKED" << std::endl;
-		
 	}
 }
 
-void Mouse::render()
+void viz::Mouse::render()
 {
 	this->PosText.setString(std::to_string(this->pos.x) + " " + std::to_string(this->pos.y));
 
-	this->rectangle->setPosition(this->pos.x - this->rectangle->getRadius()/2 , this->pos.y - this->rectangle->getRadius()/2);
+	this->rectangle->setPosition(this->pos.x - this->rectangle->getRadius() / 2,
+	                             this->pos.y - this->rectangle->getRadius() / 2);
 
 	this->app->window->draw(*this->rectangle);
 	this->app->window->draw(this->PosText);
