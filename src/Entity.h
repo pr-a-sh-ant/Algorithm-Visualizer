@@ -19,6 +19,11 @@ namespace viz
 
 		Entity() = default;
 
+		bool clicked=false;
+		bool mouse_over=false;
+
+		void update();
+
 		bool collides_with(const Entity* entity2) const;
 		bool collides_with(const Mouse* mouse) const;
 		~Entity();

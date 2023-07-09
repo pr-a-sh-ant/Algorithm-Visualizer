@@ -29,7 +29,10 @@ void viz::Mouse::update()
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
-		std::cout << "CLICKED" << std::endl;
+		this->clicked=true;
+	}
+	else{
+		this->clicked=false;
 	}
 }
 
