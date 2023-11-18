@@ -1,8 +1,9 @@
 #pragma once
-#include "Mouse.h"
-#include <SFML/Graphics.hpp>
+class App;
 #include "Node.h"
 #include <queue>
+#include "App.h"
+
 
 class Search
 {
@@ -13,15 +14,13 @@ private:
 
 public:
 	Search();
+	Search(App *app);
 	~Search();
 
-	sf::RenderWindow* window;
-	Mouse* mouse;
+	App *app;
 	sf::Vector2i origin = sf::Vector2i(32, 32);
 	std::vector<std::vector<Box*>> box;
-	float deltime;
-	sf::Clock clock;
-	sf::Event sfEvent;
+	
 	float totalTime = .0f;
 	float switchTIme = .1f;
 	bool searching = false;

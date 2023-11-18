@@ -1,19 +1,21 @@
 #include "Search.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "App.h"
 
 Box* Search::get_box(sf::Vector2i& pos)
 {
 	return this->box[pos.x][pos.y];
 }
 
-Search::Search()
+Search::Search(App *app)
 {
+	this->app = app;
 	init_boxes();
-	init_window();
+	
 	init_variables();
 	init_solve();
-	this->mouse = new Mouse(this->box);
+
 }
 
 void Search::init_solve()
@@ -34,10 +36,7 @@ void Search::init_solve()
 	}
 }
 
-void Search::init_variables()
-{
-	deltime = 0.0f;
-}
+
 
 void Search::init_boxes()
 {
@@ -52,34 +51,12 @@ void Search::init_boxes()
 	}
 }
 
-void Search::updateSFMLevents()
-{
-	deltime = clock.restart().asSeconds();
-	while (this->window->pollEvent(this->sfEvent))
-	{
-		if (this->sfEvent.type == sf::Event::Closed)
-			this->window->close();
-		if (sfEvent.type == sf::Event::KeyPressed)
-		{
-			if (sfEvent.key.code == sf::Keyboard::Q or sfEvent.key.code == sf::Keyboard::Escape)
-			{
-				this->window->close();
-			}
-			else if (sfEvent.key.code == sf::Keyboard::S)
-			{
-				this->searching = true;
-			}
-		}
-	}
-}
+
 
 void Search::update()
 {
-	updateSFMLevents();
-	mouse->update(*window);
-
-
-	totalTime += deltime;
+	
+	totalTime += this->app->deltime;
 
 
 	if (searching)
@@ -98,7 +75,7 @@ void Search::update_boxes()
 		{
 			if (box[x][y]->animating)
 			{
-				box[x][y]->animate(deltime);
+				box[x][y]->animate(this->app->deltime);
 			}
 		}
 	}
@@ -112,7 +89,7 @@ void Search::draw_boxes()
 		for (int y = 0; y < 40; y++)
 		{
 			if (!box[x][y]->animating)
-				window->draw(box[x][y]->rect);
+				app->window->draw(box[x][y]->rect);
 		}
 	}
 	for (int x = 0; x < 40; x++)
@@ -120,38 +97,20 @@ void Search::draw_boxes()
 		for (int y = 0; y < 40; y++)
 		{
 			if (box[x][y]->animating)
-				window->draw(box[x][y]->rect);
+				app->window->draw(box[x][y]->rect);
 		}
 	}
 }
 
 void Search::draw()
 {
-	window->clear();
+	
 	draw_boxes();
-	window->display();
 }
 
-void Search::init_window()
-{
-	sf::VideoMode mode = sf::VideoMode::getDesktopMode();
-	this->window = new sf::RenderWindow(mode, "SFML works!");
-}
-
-void Search::run()
-{
-	while (this->window->isOpen())
-	{
-		// * Update
-
-		update();
 
 
-		// * Draw
 
-		draw();
-	}
-}
 
 void Search::solve()
 {
@@ -221,7 +180,6 @@ void Search::solve()
 
 Search::~Search()
 {
-	delete this->mouse;
 
 	for (auto& rows : this->box)
 	{
