@@ -1,31 +1,20 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
-#include "Mouse.h"
 
-namespace viz
+class Entity
 {
-	class Mouse;
+private:
 
-	class Entity
-	{
-	private:
-		/* data */
-	public:
-		sf::Vector2i pos;
-		sf::Vector2i dim;
-		sf::RectangleShape rect;
-		Entity(int x, int y, int width, int height);
-		Entity(const sf::Vector2i& position, const sf::Vector2i& dimensions);
+public:
+	Entity(const int x, const int y, const int width, const int height);
+	Entity(const sf::Vector2i& position, const sf::Vector2i& dimensions);
+	Entity() = default;
 
-		Entity() = default;
+	sf::Vector2i pos;
+	sf::Vector2i dim;
 
-		bool clicked=false;
-		bool mouse_over=false;
+	bool entity_over(const sf::Vector2i& pos2) const;
 
-		void update();
-
-		bool collides_with(const Entity* entity2) const;
-		bool collides_with(const Mouse* mouse) const;
-		~Entity();
-	};
-}
+	bool operator==(const Entity& other) const = default;
+};

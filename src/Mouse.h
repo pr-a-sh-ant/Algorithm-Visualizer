@@ -1,28 +1,18 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include "App.h"
+#include "Box.h"
 
-namespace viz
+class Mouse
 {
-	class App;
+private:
+	Box* get_box(sf::Vector2i pos) const;
+	std::vector<std::vector<Box*>> *boxes_;
+	sf::Vector2i maze_dim_rows_cols_;
+	sf::Vector2i box_dim_;
+	sf::Vector2i box_starting_pos_;
 
-	class Mouse
-	{
-	private:
-		sf::Font font;
-		sf::Text PosText;
+public:
+	Mouse(std::vector<std::vector<Box*>>& boxes);
 
-	public:
-		App* app;
-		sf::Vector2i pos;
-		sf::CircleShape* rectangle;
-
-		bool clicked=false;
-
-
-		Mouse(App* app);
-		void update();
-		void render();
-	};
-}
+	void update(const sf::RenderWindow& window) const;
+};

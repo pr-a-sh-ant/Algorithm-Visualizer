@@ -1,27 +1,8 @@
-#pragma once
-#include <SFML/Graphics.hpp>
-#include "Mouse.h"
-#include "Entity.h"
-#include "Screen.h"
 
-namespace viz
+App::App(/* args */)
 {
-	class Mouse;
-	class Screen;
+}
 
-	class App
-	{
-	private:
-		/* data */
-	public:
-		sf::RenderWindow *window;
-		viz::Mouse *mouse;
-		viz::Screen *screen;
-		int *scene;
-
-		App();
-		void update();
-		void render();
-		void renderStartPage();
-	};
+App::~App()
+{
 }

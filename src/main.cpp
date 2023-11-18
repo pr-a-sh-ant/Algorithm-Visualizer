@@ -1,12 +1,11 @@
-#include <SFML/Graphics.hpp>
-#include "App.h"
-#include <iostream>
+#include "Search.h"
+
 
 int main()
 {
-	int *scene = new int(0);
+	Search search;
 
-	viz::App *app = new viz::App;
-
-	app->renderStartPage();
+	search.run();
+	
+	return 0;
 }

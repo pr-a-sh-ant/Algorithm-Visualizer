@@ -1,48 +1,50 @@
 #include <SFML/Graphics.hpp>
-class App;
-#include "App.h"
-
 #include "Mouse.h"
-#include <iostream>
 
 
-viz::Mouse::Mouse(App* app)
+Box* Mouse::get_box(sf::Vector2i pos) const
 {
-	this->app = app;
+	// Readjust pos with starting of box
+	pos.x -= this->box_starting_pos_.x;
+	pos.y -= this->box_starting_pos_.y;
 
-	this->font.loadFromFile("src/font.ttf");
-	this->PosText.setFont(this->font);
-	this->PosText.setCharacterSize(60);
-	this->PosText.setFillColor(sf::Color::Red);
-	this->PosText.setOrigin(this->PosText.getLocalBounds().width / 2., this->PosText.getLocalBounds().height / 2.);
+	if (pos.x < 0 || pos.y < 0 || pos.x > this->box_dim_.x * this->maze_dim_rows_cols_.x || pos.y > this->box_dim_.y *
+		this->maze_dim_rows_cols_.y)
+	{
+		return nullptr;
+	}
 
 
-	this->rectangle = new sf::CircleShape;
-	this->rectangle->setRadius(10);
-	this->rectangle->setFillColor(sf::Color::Red);
+	int x = pos.x / this->box_dim_.x;
+	x = x >= this->maze_dim_rows_cols_.x ? this->maze_dim_rows_cols_.x - 1 : x;
+
+	int y = pos.y / this->box_dim_.y;
+	y = y >= this->maze_dim_rows_cols_.y ? this->maze_dim_rows_cols_.y - 1 : y;
+
+	return this->boxes_->at(x).at(y);
 }
 
-void viz::Mouse::update()
+Mouse::Mouse(std::vector<std::vector<Box*>>& boxes)
 {
-	this->pos = sf::Vector2i(sf::Mouse::getPosition(*app->window).x, sf::Mouse::getPosition(*app->window).y);
+	this->boxes_ = &boxes;
+	this->maze_dim_rows_cols_ = sf::Vector2i(boxes.size(), boxes[0].size());
+	this->box_dim_ = sf::Vector2i(boxes[0][0]->dim.x, boxes[0][0]->dim.y);
+	this->box_starting_pos_ = sf::Vector2i(boxes[0][0]->pos.x, boxes[0][0]->pos.y);
+}
 
+void Mouse::update(const sf::RenderWindow& window) const
+{
+	const sf::Vector2i pos = sf::Mouse::getPosition(window);
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
-		this->clicked=true;
+		// calculate the box that the mouse is over
+		const auto box = this->get_box(pos);
+		if (!box)
+		{
+			return;
+		}
+
+		box->animating = true;
 	}
-	else{
-		this->clicked=false;
-	}
-}
-
-void viz::Mouse::render()
-{
-	this->PosText.setString(std::to_string(this->pos.x) + " " + std::to_string(this->pos.y));
-
-	this->rectangle->setPosition(this->pos.x - this->rectangle->getRadius() / 2,
-	                             this->pos.y - this->rectangle->getRadius() / 2);
-
-	this->app->window->draw(*this->rectangle);
-	this->app->window->draw(this->PosText);
 }
