@@ -1,45 +1,51 @@
 #include "App.h"
 #include "Search.h"
 #include <iostream>
+#include "Home.h"
 
-App::App(){
-	
-    init_window();
+App::App()
+{
+	init_window();
 	init_variables();
-	std::cout<<"APP INIT DONE......"<<std::endl;
+	std::cout << "APP INIT DONE......" << std::endl;
 }
-
 
 void App::init_window()
 {
 	sf::VideoMode mode = sf::VideoMode::getDesktopMode();
 	this->window = new sf::RenderWindow(mode, "SFML works!");
 	init_search();
-
+	init_home();
 }
 
 void App::init_variables()
 {
 	deltime = 0.0f;
+	current = new int(0);
 }
 
 void App::init_search()
 {
-    this->search = new Search(this);
+	this->search = new Search(this);
+}
 
+void App::init_home()
+{
+
+	this->home = new Home(this);
 }
 
 void App::draw()
 {
 	this->window->clear();
-	
+	this->home->draw();
 	this->window->display();
 }
 
 void App::update()
 {
+	updateSFMLevents();
 
-    updateSFMLevents();
 	mouse->update(*window);
 	
 	
@@ -60,29 +66,23 @@ void App::updateSFMLevents()
 			}
 			else if (sfEvent.key.code == sf::Keyboard::S)
 			{
-				
 			}
 		}
 	}
 }
 
-
 void App::run()
 {
-    while (this->window->isOpen())
+	while (this->window->isOpen())
 	{
 
-            this->update();
+		this->update();
 
-            this->draw();
-
-    }	
+		this->draw();
+	}
 }
-
-
 
 App::~App()
 {
-    delete this->mouse;
-
+	delete this->mouse;
 }

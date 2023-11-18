@@ -1,34 +1,38 @@
 #pragma once
 
-
 #include "Mouse.h"
 #include "Search.h"
 #include <SFML/Graphics.hpp>
+#include "Home.h"
 
 class Search;
 class Mouse;
+class Home;
 
 class App
 {
-    public:
-        App();
-        sf::RenderWindow* window;
-        Mouse* mouse;
-        Search* search;
-        
-        float deltime;	
-        sf::Clock clock;
-        sf::Event sfEvent;
+public:
+	App();
+	sf::RenderWindow *window;
+	Mouse *mouse;
+	Search *search;
+	Home *home;
 
-        void init_window() ;
-        void init_variables();
-        void init_search();
+	float deltime;
+	sf::Clock clock;
+	sf::Event sfEvent;
 
-        void draw();
-        
-        void update();
-        void updateSFMLevents();
+	int *current;
+	void init_window();
+	void init_variables();
+	void init_search();
+	void init_home();
 
-        void run();
-        ~App();
+	void draw();
+
+	void update();
+	void updateSFMLevents();
+
+	void run();
+	~App();
 };
