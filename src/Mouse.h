@@ -2,6 +2,8 @@
 
 #include "Box.h"
 
+// class App;
+
 class Mouse
 {
 private:
