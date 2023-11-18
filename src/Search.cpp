@@ -3,7 +3,7 @@
 #include <iostream>
 #include "App.h"
 
-Box* Search::get_box(sf::Vector2i& pos)
+Box *Search::get_box(sf::Vector2i &pos)
 {
 	return this->box[pos.x][pos.y];
 }
@@ -13,7 +13,6 @@ Search::Search(App *app)
 	this->app = app;
 	init_boxes();
 	init_solve();
-
 }
 
 void Search::init_solve()
@@ -34,13 +33,11 @@ void Search::init_solve()
 	}
 }
 
-
-
 void Search::init_boxes()
 {
 	for (int x = 0; x < 40; x++)
 	{
-		std::vector<Box*> temp_box;
+		std::vector<Box *> temp_box;
 		for (int y = 0; y < 40; y++)
 		{
 			temp_box.push_back(new Box(origin.x + (x * 32), origin.y + (y * 32), 32, 32));
@@ -49,13 +46,10 @@ void Search::init_boxes()
 	}
 }
 
-
-
 void Search::update()
 {
-	
-	totalTime += this->app->deltime;
 
+	totalTime += this->app->deltime;
 
 	if (searching)
 	{
@@ -81,7 +75,7 @@ void Search::update_boxes()
 
 void Search::draw_boxes()
 {
-	//Draw
+	// Draw
 	for (int x = 0; x < 40; x++)
 	{
 		for (int y = 0; y < 40; y++)
@@ -102,11 +96,9 @@ void Search::draw_boxes()
 
 void Search::draw()
 {
-	
+
 	draw_boxes();
 }
-
-
 
 void Search::solve()
 {
@@ -119,7 +111,7 @@ void Search::solve()
 	if (this->queue.front() == this->final_state)
 	{
 		sf::Vector2i curr_gg = this->final_state;
-		while(curr_gg != this->initial_state)
+		while (curr_gg != this->initial_state)
 		{
 			this->get_box(curr_gg)->animating = true;
 			curr_gg = this->parents[curr_gg.x][curr_gg.y];
@@ -132,7 +124,7 @@ void Search::solve()
 		return;
 	}
 
-	auto& curr = queue.front();
+	auto &curr = queue.front();
 	this->get_box(curr)->animating = true;
 	if (curr.x > 0)
 	{
@@ -177,9 +169,9 @@ void Search::solve()
 Search::~Search()
 {
 
-	for (auto& rows : this->box)
+	for (auto &rows : this->box)
 	{
-		for (const auto& item : rows)
+		for (const auto &item : rows)
 		{
 			delete item;
 		}

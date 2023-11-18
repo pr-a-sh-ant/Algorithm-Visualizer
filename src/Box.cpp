@@ -12,7 +12,6 @@ Box::Box(int x, int y, int width = 32, int height = 32) : Entity(x, y, width, he
 	this->rect.setFillColor(sf::Color::Green);
 }
 
-
 void Box::animate(float deltime)
 {
 	if (!animating)
@@ -23,13 +22,12 @@ void Box::animate(float deltime)
 	// std::cout<<pos.x/32<<"Animating"<<pos.y/32<<std::endl;
 	// std::cout<<totalTime<<" "<<switchTIme<<std::endl;
 
-
 	if (totalTime >= switchTIme)
 	{
 		// std::cout<<totalTime<<"Animating"<<switchTIme<<std::endl;
 
-		//TODO Better Implementation Upcomming
-		//Nub fucker
+		// TODO Better Implementation Upcomming
+		// Nub fucker
 
 		if (currentAnimation == 9)
 		{
@@ -39,7 +37,6 @@ void Box::animate(float deltime)
 
 		rect.setFillColor(animColours[currentAnimation]);
 		centerScale(scale[currentAnimation]);
-
 
 		currentAnimation++;
 		totalTime = 0;
@@ -53,7 +50,6 @@ void Box::is_path()
 	this->rect.setFillColor(sf::Color::Black);
 	this->centerScale(scale[0]);
 }
-
 
 void Box::centerScale(int scale)
 {
