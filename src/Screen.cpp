@@ -27,8 +27,21 @@ void viz::Screen::update(){
 		{
 			if (box[x][y]->collides_with(this->app->mouse))
 			{
-				box[x][y]->rect.setFillColor(sf::Color::Red);
+				box[x][y]->mouse_over = true;
+				if(this->app->mouse->clicked){
+					box[x][y]->clicked=true;
+				}
+				else{
+
+				box[x][y]->clicked=false;
+				}
 			}
+			else{
+				box[x][y]->mouse_over=false;
+			}
+		
+		 box[x][y]->update();
+		
 		}
 	}
 }

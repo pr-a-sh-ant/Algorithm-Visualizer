@@ -43,3 +43,19 @@ bool viz::Entity::collides_with(const Mouse* mouse) const
 	}
 	return false;
 }
+
+void viz::Entity::update(){
+
+    if(this->mouse_over){
+        if(this->clicked){
+            this->rect.setFillColor(sf::Color::Red);
+        }
+        else{
+            this->rect.setFillColor(sf::Color::Blue);
+        }
+    }
+	else{
+		this->rect.setFillColor(sf::Color::Green);
+	}
+
+}

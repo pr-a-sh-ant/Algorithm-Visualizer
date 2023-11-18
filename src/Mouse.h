@@ -18,6 +18,8 @@ namespace viz
 		sf::Vector2i pos;
 		sf::CircleShape* rectangle;
 
+		bool clicked=false;
+
 
 		Mouse(App* app);
 		void update();
