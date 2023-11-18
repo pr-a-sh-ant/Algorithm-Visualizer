@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Mouse.h"
-
+#include <iostream>
 
 Box* Mouse::get_box(sf::Vector2i pos) const
 {
@@ -35,6 +35,7 @@ Mouse::Mouse(std::vector<std::vector<Box*>>& boxes)
 void Mouse::update(const sf::RenderWindow& window) const
 {
 	const sf::Vector2i pos = sf::Mouse::getPosition(window);
+	std::cout<<pos.x<<" "<<pos.y<<std::endl;
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{

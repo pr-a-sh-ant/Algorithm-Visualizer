@@ -46,6 +46,13 @@ void Search::init_boxes()
 	}
 }
 
+void Search::init_buttons()
+{
+
+	
+
+}
+
 void Search::update()
 {
 

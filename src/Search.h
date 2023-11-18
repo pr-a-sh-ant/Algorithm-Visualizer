@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Node.h"
+#include "Button.h"
 #include <queue>
 #include "App.h"
 
@@ -17,8 +18,9 @@ public:
 	Search(App *app);
 	~Search();
 	App *app;
-	sf::Vector2i origin = sf::Vector2i(32, 32);
+	sf::Vector2i origin = sf::Vector2i(1, 1);
 	std::vector<std::vector<Box *>> box;
+	std::vector<Button *> button;
 
 	float totalTime = .0f;
 	float switchTIme = .1f;
@@ -32,7 +34,9 @@ public:
 	sf::Vector2i initial_state = sf::Vector2i(5, 5);
 	sf::Vector2i final_state = sf::Vector2i(20, 20);
 
+
 	void init_boxes();
+	void init_buttons();
 
 	void update();
 	void update_boxes();

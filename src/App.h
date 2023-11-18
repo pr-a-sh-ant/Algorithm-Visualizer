@@ -13,14 +13,17 @@ class App
 {
 public:
 	App();
-	sf::RenderWindow *window;
 	Mouse *mouse;
 	Search *search;
 	Home *home;
 
 	float deltime;
+
+	sf::RenderWindow *window;
 	sf::Clock clock;
 	sf::Event sfEvent;
+	sf::Font font;
+    
 
 	int *current;
 	void init_window();
