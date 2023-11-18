@@ -1,11 +1,11 @@
-#include "Search.h"
+#include "App.h"
 
 
 int main()
 {
-	Search search;
+	App app;
 
-	search.run();
+	app.run();
 	
 	return 0;
 }

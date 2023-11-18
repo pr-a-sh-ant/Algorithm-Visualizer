@@ -1,9 +1,12 @@
 #include "App.h"
 #include "Search.h"
-
+#include <iostream>
 
 App::App(){
+	
     init_window();
+	init_variables();
+	std::cout<<"APP INIT DONE>>>"<<std::endl;
 }
 
 
@@ -11,6 +14,7 @@ void App::init_window()
 {
 	sf::VideoMode mode = sf::VideoMode::getDesktopMode();
 	this->window = new sf::RenderWindow(mode, "SFML works!");
+	
 
 }
 

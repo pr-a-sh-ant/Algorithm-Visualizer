@@ -13,7 +13,6 @@ private:
 	Box* get_box(sf::Vector2i& pos);
 
 public:
-	Search();
 	Search(App *app);
 	~Search();
 
@@ -34,7 +33,6 @@ public:
 	sf::Vector2i final_state = sf::Vector2i(20, 20);
 
 
-	void init_variables();
 	void init_window();
 	void init_boxes();
 

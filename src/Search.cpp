@@ -12,8 +12,6 @@ Search::Search(App *app)
 {
 	this->app = app;
 	init_boxes();
-	
-	init_variables();
 	init_solve();
 
 }
