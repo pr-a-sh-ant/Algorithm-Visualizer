@@ -41,8 +41,8 @@ void App::update()
 
     updateSFMLevents();
 	mouse->update(*window);
-
-
+	
+	
 }
 
 void App::updateSFMLevents()
