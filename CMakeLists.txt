@@ -7,7 +7,7 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(CMakeSFMLProject src/main.cpp src/Node.cpp src/Box.cpp src/Algorithm.cpp src/Mouse.cpp src/Entity.cpp src/Search.cpp)
+add_executable(CMakeSFMLProject src/main.cpp src/Node.cpp src/Box.cpp src/Algorithm.cpp src/Mouse.cpp src/Entity.cpp src/Search.cpp src/App.cpp)
 target_link_libraries(CMakeSFMLProject PRIVATE sfml-graphics)
 target_compile_features(CMakeSFMLProject PRIVATE cxx_std_20)
 if (WIN32 AND BUILD_SHARED_LIBS)

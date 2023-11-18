@@ -1,9 +1,10 @@
 #pragma once
-class App;
+
 #include "Node.h"
 #include <queue>
 #include "App.h"
 
+class App;
 
 class Search
 {
@@ -15,7 +16,6 @@ private:
 public:
 	Search(App *app);
 	~Search();
-
 	App *app;
 	sf::Vector2i origin = sf::Vector2i(32, 32);
 	std::vector<std::vector<Box*>> box;
@@ -33,11 +33,10 @@ public:
 	sf::Vector2i final_state = sf::Vector2i(20, 20);
 
 
-	void init_window();
+	
 	void init_boxes();
 
 	void update();
-	void updateSFMLevents();
 	void update_boxes();
 
 	void draw_boxes();
@@ -46,5 +45,4 @@ public:
 	void solve();
 	void init_solve();
 
-	void run();
 };

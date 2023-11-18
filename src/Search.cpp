@@ -108,8 +108,6 @@ void Search::draw()
 
 
 
-
-
 void Search::solve()
 {
 	std::cout << "solving\n";

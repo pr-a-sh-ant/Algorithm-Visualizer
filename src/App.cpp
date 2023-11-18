@@ -6,7 +6,7 @@ App::App(){
 	
     init_window();
 	init_variables();
-	std::cout<<"APP INIT DONE>>>"<<std::endl;
+	std::cout<<"APP INIT DONE......"<<std::endl;
 }
 
 
@@ -14,7 +14,7 @@ void App::init_window()
 {
 	sf::VideoMode mode = sf::VideoMode::getDesktopMode();
 	this->window = new sf::RenderWindow(mode, "SFML works!");
-	
+	init_search();
 
 }
 
@@ -66,6 +66,7 @@ void App::updateSFMLevents()
 	}
 }
 
+
 void App::run()
 {
     while (this->window->isOpen())
@@ -75,8 +76,9 @@ void App::run()
 
             this->draw();
 
-    }
+    }	
 }
+
 
 
 App::~App()

@@ -16,5 +16,4 @@ public:
 
 	bool entity_over(const sf::Vector2i& pos2) const;
 
-	bool operator==(const Entity& other) const = default;
 };
