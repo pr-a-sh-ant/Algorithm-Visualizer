@@ -4,7 +4,9 @@
 
 int main()
 {
-	viz::App* app = new viz::App;
+	int *scene = new int(0);
 
-	app->update();
+	viz::App *app = new viz::App;
+
+	app->renderStartPage();
 }

@@ -2,6 +2,7 @@
 #include "Mouse.h"
 #include "App.h"
 #include <iostream>
+#include "start_page.cpp"
 
 viz::App::App()
 {
@@ -10,33 +11,53 @@ viz::App::App()
 	this->window->setFramerateLimit(144);
 	this->mouse = new Mouse(this);
 	this->screen = new Screen(this);
+	this->scene = new int(0);
 }
 
-void viz::App::update()
+void viz::App::renderStartPage()
 {
-	while (this->window->isOpen())
+	while (*scene != -1)
 	{
-		this->mouse->update();
-		this->screen->update();
-
-		for (auto event = sf::Event{}; this->window->pollEvent(event);)
+		switch (*scene)
 		{
-			if (event.type == sf::Event::Closed)
-			{
-				this->window->close();
-			}
+		case 0:
+			// Run Start Page
+			runStartScreen(scene, this->window);
+			break;
+
+		default:
+			return;
+			// Run Search Algorithm
+
+			// Run Sort Algorithm
 		}
-		this->render();
 	}
 }
 
+// void viz::App::update()
+// {
+// 	while (this->window->isOpen())
+// 	{
+// 		this->mouse->update();
+// 		this->screen->update();
 
-void viz::App::render()
-{
-	this->window->clear();
+// 		for (auto event = sf::Event{}; this->window->pollEvent(event);)
+// 		{
+// 			if (event.type == sf::Event::Closed)
+// 			{
+// 				this->window->close();
+// 			}
+// 		}
+// 		this->render();
+// 	}
+// }
 
-	this->mouse->render();
-	this->screen->render();
+// void viz::App::render()
+// {
+// 	this->window->clear();
 
-	this->window->display();
-}
+// 	this->mouse->render();
+// 	this->screen->render();
+
+// 	this->window->display();
+// }

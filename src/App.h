@@ -4,7 +4,6 @@
 #include "Entity.h"
 #include "Screen.h"
 
-
 namespace viz
 {
 	class Mouse;
@@ -15,12 +14,14 @@ namespace viz
 	private:
 		/* data */
 	public:
-		sf::RenderWindow* window;
-		viz::Mouse* mouse;
-		viz::Screen* screen;
+		sf::RenderWindow *window;
+		viz::Mouse *mouse;
+		viz::Screen *screen;
+		int *scene;
 
 		App();
 		void update();
 		void render();
+		void renderStartPage();
 	};
 }
