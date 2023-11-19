@@ -16,9 +16,12 @@ public:
     sf::Texture backgroundTexture;
     sf::RectangleShape background;
     sf::Text searchAlgo;
+    sf::Text sortAlgo;
+    sf::Text exit;
 
-    void init();
+    void
+    init();
 
-    // void update();
+    void update();
     void draw();
 };

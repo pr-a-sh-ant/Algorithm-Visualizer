@@ -13,7 +13,7 @@ App::App()
 void App::init_window()
 {
 	sf::VideoMode mode = sf::VideoMode::getDesktopMode();
-	this->window = new sf::RenderWindow(mode, "SFML works!",sf::Style::Fullscreen);
+	this->window = new sf::RenderWindow(mode, "SFML works!", sf::Style::Fullscreen);
 	init_search();
 	init_home();
 }
@@ -23,10 +23,10 @@ void App::init_variables()
 	deltime = 0.0f;
 	current = new int(0);
 	if (!font.loadFromFile("src/public/font.ttf"))
-    {
-        std::cout << "Error loading font" << std::endl;
-        return;
-    }
+	{
+		std::cout << "Error loading font" << std::endl;
+		return;
+	}
 }
 
 void App::init_search()
@@ -43,17 +43,34 @@ void App::init_home()
 void App::draw()
 {
 	this->window->clear();
-	this->search->draw();
+	if (*current == 0)
+	{
+		this->home->draw();
+	}
+	else if (*current == 1)
+	{
+		this->search->draw();
+	}
 	this->window->display();
 }
 
 void App::update()
 {
 	updateSFMLevents();
-	mouse->update(*window);
-
-	this->search->update();
-	
+	if (*current == 0)
+	{
+		this->home->update();
+	}
+	else if (*current == 1)
+	{
+		this->search->update();
+	}
+	else if (*current == -1)
+	{
+		this->window->clear();
+		this->window->close();
+	}
+	// mouse->update(*window);
 }
 
 void App::updateSFMLevents()
@@ -71,7 +88,6 @@ void App::updateSFMLevents()
 			}
 			else if (sfEvent.key.code == sf::Keyboard::S)
 			{
-
 			}
 		}
 	}
@@ -83,7 +99,7 @@ void App::run()
 	{
 
 		this->update();
-		
+
 		this->draw();
 	}
 }

@@ -23,7 +23,6 @@ public:
 	sf::Clock clock;
 	sf::Event sfEvent;
 	sf::Font font;
-    
 
 	int *current;
 	void init_window();

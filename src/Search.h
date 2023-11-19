@@ -21,6 +21,9 @@ public:
 	sf::Vector2i origin = sf::Vector2i(1, 1);
 	std::vector<std::vector<Box *>> box;
 	std::vector<Button *> button;
+	sf::Texture backgroundTexture;
+	sf::RectangleShape background;
+	sf::Text back;
 
 	float totalTime = .0f;
 	float switchTIme = .1f;
@@ -34,9 +37,9 @@ public:
 	sf::Vector2i initial_state = sf::Vector2i(5, 5);
 	sf::Vector2i final_state = sf::Vector2i(20, 20);
 
-
 	void init_boxes();
 	void init_buttons();
+	void init();
 
 	void update();
 	void update_boxes();
