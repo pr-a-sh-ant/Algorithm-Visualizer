@@ -1,6 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Entity.h"
+#include "Mouse.h"
+#include "App.h"
+
 
 class Box : public Entity
 {
@@ -30,4 +33,6 @@ public:
 	bool animating = false;
 	void centerScale(int scale);
 	void is_path();
+	
+	void update(App *app) override;
 };

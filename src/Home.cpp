@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "App.h"
+#include "Button.h"
 
 Home::Home(App *app)
 {
@@ -37,6 +38,23 @@ void Home::init()
     exit.setFillColor(sf::Color::Black);
 }
 
+void Home::init_buttons()
+{
+
+    Button *but = new Button(1300, 530,256,64);
+    this->entities.push_back(but);
+    delete but;
+    Button *but = new Button(900, 880,256,64);
+    this->entities.push_back(but);
+    delete but;
+    Button *but = new Button(350, 530,256,64);
+    this->entities.push_back(but);
+    delete but;
+
+
+}
+
+
 void Home::draw()
 {
     app->window->draw(background);
@@ -47,19 +65,9 @@ void Home::draw()
 
 void Home::update()
 {
-    if (app->sfEvent.type == sf::Event::MouseButtonPressed)
-    {
-        if (searchAlgo.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
-        {
-            *(app->current) = 1;
-        }
-        if (sortAlgo.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
-        {
-            *(app->current) = 2;
-        }
-        if (exit.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
-        {
-            *(app->current) = -1;
-        }
-    }
+    for(int i=0; i < entities.size(); i++){
+
+            entities[i]->update(this->app);
+    } 
+  
 }

@@ -71,13 +71,7 @@ void Search::init_buttons()
 
 void Search::update()
 {
-	if (app->sfEvent.type == sf::Event::MouseButtonPressed)
-	{
-		if (back.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
-		{
-			*(app->current) = 0;
-		}
-	}
+	
 
 	totalTime += this->app->deltime;
 
@@ -95,10 +89,7 @@ void Search::update_boxes()
 	{
 		for (int y = 0; y < 40; y++)
 		{
-			if (box[x][y]->animating)
-			{
-				box[x][y]->animate(this->app->deltime);
-			}
+			box[x][y]->update(this->app->deltime,*this->app->mouse);	
 		}
 	}
 }
