@@ -1,21 +1,22 @@
+#pragma once
+
+class App;
+g
 #include "App.h"
-#include "Mouse.h"
 #include "Entity.h"
+#include "Mouse.h"
 
 
 class Button : public Entity
 {
-private:
-    /* data */
-public:
-    Button(int x, int y, int width, int height);
-    sf::RectangleShape rect;
-    bool pressed;
-    std::vector<Entity *> entities;
+    public:
+        Button(int x, int y, int width, int height);
+       
+        bool pressed;
 
-    ~Button();
-    void centerScale(int scale);
-    void update(App *app) override;
+        ~Button();
+        void centerScale(int scale);
+        void update(App *app);
     
 
 };

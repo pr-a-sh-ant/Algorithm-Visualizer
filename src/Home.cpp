@@ -3,6 +3,7 @@
 #include <iostream>
 #include "App.h"
 #include "Button.h"
+#include <iostream>
 
 Home::Home(App *app)
 {
@@ -36,6 +37,8 @@ void Home::init()
     exit.setCharacterSize(60);
     exit.setPosition(sf::Vector2f(900, 880));
     exit.setFillColor(sf::Color::Black);
+
+    init_buttons();
 }
 
 void Home::init_buttons()
@@ -43,13 +46,11 @@ void Home::init_buttons()
 
     Button *but = new Button(1300, 530,256,64);
     this->entities.push_back(but);
-    delete but;
     Button *but = new Button(900, 880,256,64);
     this->entities.push_back(but);
-    delete but;
     Button *but = new Button(350, 530,256,64);
     this->entities.push_back(but);
-    delete but;
+
 
 
 }
@@ -61,6 +62,11 @@ void Home::draw()
     app->window->draw(sortAlgo);
     app->window->draw(searchAlgo);
     app->window->draw(exit);
+    for(int i=0; i < entities.size(); i++){
+        std::cout<<std::endl<<"entity"<<entities[i]->pos.x<<std::endl;
+        app->window->draw(entities[i]->rect);
+            
+    }    
 }
 
 void Home::update()

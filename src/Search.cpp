@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "App.h"
+#include "Box.h"
 
 Box *Search::get_box(sf::Vector2i &pos)
 {
@@ -89,7 +90,7 @@ void Search::update_boxes()
 	{
 		for (int y = 0; y < 40; y++)
 		{
-			box[x][y]->update(this->app->deltime,*this->app->mouse);	
+			box[x][y]->update(this->app);	
 		}
 	}
 }

@@ -18,6 +18,7 @@ public:
 
 	sf::Vector2i pos;
 	sf::Vector2i dim;
+	sf::RectangleShape rect;
 
 	virtual void update(App *app)=0;
 
