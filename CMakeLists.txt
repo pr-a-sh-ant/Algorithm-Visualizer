@@ -15,7 +15,12 @@ add_executable(AlgViz
     src/Entity.h
     src/Search.h
     src/App.h
-    
+    src/array.h
+    src/sort_alg.h
+
+    src/navin_main.cpp
+    src/array.cpp
+    src/sort_alg.cpp
     src/Node.cpp 
     src/Box.cpp 
     src/Algorithm.cpp 
@@ -24,7 +29,7 @@ add_executable(AlgViz
     src/Search.cpp
     src/App.cpp
     src/main.cpp
-)
+ "src/sort/src/main.h" "src/sort/src/const.h")
 
 target_include_directories(AlgViz PRIVATE src)
 target_link_libraries(AlgViz PRIVATE sfml-graphics)
