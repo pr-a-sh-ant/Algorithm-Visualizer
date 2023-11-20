@@ -8,6 +8,7 @@
 #include <iostream>
 
 class Box;
+class Button;
 
 class Search
 {

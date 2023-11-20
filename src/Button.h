@@ -1,10 +1,10 @@
 #pragma once
+#include <SFML/Graphics.hpp>
+#include "Entity.h"
+#include "App.h"
 
 class App;
-g
-#include "App.h"
-#include "Entity.h"
-#include "Mouse.h"
+
 
 
 class Button : public Entity

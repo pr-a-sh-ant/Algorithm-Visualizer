@@ -1,6 +1,8 @@
+#include <SFML/Graphics.hpp>
 #include "Button.h"
 #include "Mouse.h"
 #include <iostream>
+#include "App.h"
 
 Button::Button(int x, int y, int width=256, int height=64):Entity(x, y, width, height){
 

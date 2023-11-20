@@ -3,6 +3,7 @@
 #include <iostream>
 #include "App.h"
 #include "Box.h"
+#include "Button.h"
 
 Box *Search::get_box(sf::Vector2i &pos)
 {

@@ -8,8 +8,6 @@
 class Search;
 class Mouse;
 class Home;
-class Box;
-class Button;
 
 class App
 {
