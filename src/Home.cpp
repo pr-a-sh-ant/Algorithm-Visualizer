@@ -47,19 +47,32 @@ void Home::draw()
 
 void Home::update()
 {
-    if (app->sfEvent.type == sf::Event::MouseButtonPressed)
+    searchAlgo.setFillColor(sf::Color(0xF6, 0xF1, 0xF1));
+    exit.setFillColor(sf::Color(0, 0, 0));
+    sortAlgo.setFillColor(sf::Color(0xF6, 0xF1, 0xF1));
+
+    if (searchAlgo.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
     {
-        if (searchAlgo.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
+        if (app->sfEvent.type == sf::Event::MouseButtonPressed)
         {
             *(app->current) = 1;
         }
-        if (sortAlgo.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
+        searchAlgo.setFillColor(sf::Color(0xAF, 0xD3, 0xE2));
+    }
+    if (sortAlgo.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
+    {
+        if (app->sfEvent.type == sf::Event::MouseButtonPressed)
         {
             *(app->current) = 2;
         }
-        if (exit.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
+        sortAlgo.setFillColor(sf::Color(0xAF, 0xD3, 0xE2));
+    }
+    if (exit.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
+    {
+        if (app->sfEvent.type == sf::Event::MouseButtonPressed)
         {
             *(app->current) = -1;
         }
+        exit.setFillColor(sf::Color(0xAF, 0xD3, 0xE2));
     }
 }

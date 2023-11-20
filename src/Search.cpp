@@ -27,6 +27,19 @@ void Search::init()
 	background.setTexture(&backgroundTexture);
 	background.setPosition(sf::Vector2f(0, 0));
 
+	if (!startButton.loadFromFile("src/Public/startSearch.png"))
+	{
+		std::cout << "Error loading Texture" << std::endl;
+		return;
+	}
+	startsearch.setSize((sf::Vector2f(1920, 1080)));
+	startsearch.setTexture(&startButton);
+	startsearch.setPosition(sf::Vector2f(0, 0));
+
+	clearSearch.setSize(sf::Vector2f(100, 50));
+	clearSearch.setFillColor(sf::Color::Cyan);
+	clearSearch.setPosition(1600, 20);
+
 	back.setString("Back");
 	back.setFont(app->font);
 	back.setCharacterSize(50);
@@ -129,6 +142,8 @@ void Search::draw()
 	app->window->draw(background);
 	draw_boxes();
 	app->window->draw(back);
+	app->window->draw(startsearch);
+	app->window->draw(clearSearch);
 }
 
 void Search::solve()

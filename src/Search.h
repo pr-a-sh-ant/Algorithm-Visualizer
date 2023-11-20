@@ -22,8 +22,14 @@ public:
 	std::vector<std::vector<Box *>> box;
 	std::vector<Button *> button;
 	sf::Texture backgroundTexture;
+	sf::Texture startButton;
 	sf::RectangleShape background;
+	sf::RectangleShape startsearch;
+	sf::RectangleShape clearSearch;
+
 	sf::Text back;
+	sf::Text startText;
+	sf::Text clearText;
 
 	float totalTime = .0f;
 	float switchTIme = .1f;
