@@ -3,7 +3,7 @@
 #include <iostream>
 #include "App.h"
 
-Box* Search::get_box(sf::Vector2i& pos)
+Box *Search::get_box(sf::Vector2i &pos)
 {
 	return this->box[pos.x][pos.y];
 }
@@ -11,9 +11,40 @@ Box* Search::get_box(sf::Vector2i& pos)
 Search::Search(App *app)
 {
 	this->app = app;
+	init();
 	init_boxes();
 	init_solve();
+}
 
+void Search::init()
+{
+	if (!backgroundTexture.loadFromFile("src/Public/search.jpg"))
+	{
+		std::cout << "Error loading Texture" << std::endl;
+		return;
+	}
+	background.setSize((sf::Vector2f(1920, 1080)));
+	background.setTexture(&backgroundTexture);
+	background.setPosition(sf::Vector2f(0, 0));
+
+	if (!startButton.loadFromFile("src/Public/startSearch.png"))
+	{
+		std::cout << "Error loading Texture" << std::endl;
+		return;
+	}
+	startsearch.setSize((sf::Vector2f(1920, 1080)));
+	startsearch.setTexture(&startButton);
+	startsearch.setPosition(sf::Vector2f(0, 0));
+
+	clearSearch.setSize(sf::Vector2f(100, 50));
+	clearSearch.setFillColor(sf::Color::Cyan);
+	clearSearch.setPosition(1600, 20);
+
+	back.setString("Back");
+	back.setFont(app->font);
+	back.setCharacterSize(50);
+	back.setPosition(sf::Vector2f(1600, 910));
+	back.setFillColor(sf::Color::Black);
 }
 
 void Search::init_solve()
@@ -34,13 +65,11 @@ void Search::init_solve()
 	}
 }
 
-
-
 void Search::init_boxes()
 {
 	for (int x = 0; x < 40; x++)
 	{
-		std::vector<Box*> temp_box;
+		std::vector<Box *> temp_box;
 		for (int y = 0; y < 40; y++)
 		{
 			temp_box.push_back(new Box(origin.x + (x * 32), origin.y + (y * 32), 32, 32));
@@ -49,13 +78,21 @@ void Search::init_boxes()
 	}
 }
 
-
+void Search::init_buttons()
+{
+}
 
 void Search::update()
 {
-	
-	totalTime += this->app->deltime;
+	if (app->sfEvent.type == sf::Event::MouseButtonPressed)
+	{
+		if (back.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
+		{
+			*(app->current) = 0;
+		}
+	}
 
+	totalTime += this->app->deltime;
 
 	if (searching)
 	{
@@ -81,7 +118,7 @@ void Search::update_boxes()
 
 void Search::draw_boxes()
 {
-	//Draw
+	// Draw
 	for (int x = 0; x < 40; x++)
 	{
 		for (int y = 0; y < 40; y++)
@@ -102,11 +139,12 @@ void Search::draw_boxes()
 
 void Search::draw()
 {
-	
+	app->window->draw(background);
 	draw_boxes();
+	app->window->draw(back);
+	app->window->draw(startsearch);
+	app->window->draw(clearSearch);
 }
-
-
 
 void Search::solve()
 {
@@ -119,7 +157,7 @@ void Search::solve()
 	if (this->queue.front() == this->final_state)
 	{
 		sf::Vector2i curr_gg = this->final_state;
-		while(curr_gg != this->initial_state)
+		while (curr_gg != this->initial_state)
 		{
 			this->get_box(curr_gg)->animating = true;
 			curr_gg = this->parents[curr_gg.x][curr_gg.y];
@@ -132,7 +170,7 @@ void Search::solve()
 		return;
 	}
 
-	auto& curr = queue.front();
+	auto &curr = queue.front();
 	this->get_box(curr)->animating = true;
 	if (curr.x > 0)
 	{
@@ -177,9 +215,9 @@ void Search::solve()
 Search::~Search()
 {
 
-	for (auto& rows : this->box)
+	for (auto &rows : this->box)
 	{
-		for (const auto& item : rows)
+		for (const auto &item : rows)
 		{
 			delete item;
 		}

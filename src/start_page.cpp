@@ -28,8 +28,6 @@ inline void runStartScreen(int *scene, sf::RenderWindow *window)
     sf::Color transparentColor(225, 255, 225, 0);
 
     sf::RectangleShape background(sf::Vector2f(1920, 1080));
-    background.setTexture(&backgroundTexture);
-    background.setPosition(sf::Vector2f(0, 0));
 
     sf::Text searchAlgo("Search Algo", font, 60);
     searchAlgo.setPosition(190, 760);
