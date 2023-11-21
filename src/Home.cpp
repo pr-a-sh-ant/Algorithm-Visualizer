@@ -61,7 +61,7 @@ void Home::draw()
     app->window->draw(exit);
     for(int i=0; i < entities.size(); i++){
         
-        app->window->draw(entities[i]->rect);
+        entities[i]->draw(this->app->window);
             
     }    
 }

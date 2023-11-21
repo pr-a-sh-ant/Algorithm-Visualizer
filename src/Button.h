@@ -1,7 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "Mouse.h"
-
+#include <SFML/Graphics.hpp>
 
 class Button : public Entity
 {
@@ -13,8 +13,12 @@ public:
 
     bool pressed;
     bool hovered;
+    sf::Text *text;
+
+
 
     void centerScale(int scale);
     void update(Mouse *mouse);
-};
+    void draw(sf::RenderWindow *window);
+};  
 
