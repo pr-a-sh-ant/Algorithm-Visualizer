@@ -2,8 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "App.h"
-#include "Box.h"
-#include "Button.h"
 
 Box *Search::get_box(sf::Vector2i &pos)
 {
@@ -73,7 +71,13 @@ void Search::init_buttons()
 
 void Search::update()
 {
-	
+	if (app->sfEvent.type == sf::Event::MouseButtonPressed)
+	{
+		if (back.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
+		{
+			*(app->current) = 0;
+		}
+	}
 
 	totalTime += this->app->deltime;
 
@@ -91,7 +95,10 @@ void Search::update_boxes()
 	{
 		for (int y = 0; y < 40; y++)
 		{
-			box[x][y]->update(this->app);	
+			if (box[x][y]->animating)
+			{
+				box[x][y]->animate(this->app->deltime);
+			}
 		}
 	}
 }

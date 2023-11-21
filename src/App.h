@@ -27,8 +27,8 @@ public:
 	int *current;
 	void init_window();
 	void init_variables();
-	void init_screens();
-	
+	void init_search();
+	void init_home();
 
 	void draw();
 

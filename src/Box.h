@@ -1,10 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Entity.h"
-#include "Mouse.h"
-#include "App.h"
-
-class App;
 
 class Box : public Entity
 {
@@ -26,7 +22,6 @@ private:
 
 public:
 	Box(int x, int y, int width, int height);
-	
 	void animate(float deltime);
 	int currentAnimation = 0;
 	float totalTime = 0.0f;
@@ -34,6 +29,4 @@ public:
 	bool animating = false;
 	void centerScale(int scale);
 	void is_path();
-	
-	void update(App *app);
 };

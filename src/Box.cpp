@@ -1,8 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include "Box.h"
-#include "Mouse.h"
-#include <iostream>
-#include "App.h"
 
 Box::Box(int x, int y, int width = 32, int height = 32) : Entity(x, y, width, height)
 {
@@ -44,21 +41,6 @@ void Box::animate(float deltime)
 		currentAnimation++;
 		totalTime = 0;
 	}
-}
-
-void Box::update(App *app){
-
-	if(this->mouse_over(app->mouse) && app->mouse->clicked)
-	{
-		this->animating=true;
-
-
-	}
-	if (this->animating)
-			{
-				this->animate(app->deltime);
-			}
-
 }
 
 void Box::is_path()

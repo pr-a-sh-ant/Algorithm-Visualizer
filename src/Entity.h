@@ -1,11 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Mouse.h"
-#include "App.h"
 
-class Mouse;
-class App;
 
 class Entity
 {
@@ -17,11 +13,10 @@ public:
 	Entity() = default;
 
 	sf::Vector2i pos;
-	sf::Vector2i dim;
 	sf::RectangleShape rect;
+	sf::Vector2i dim;
 
-	virtual void update(App *app)=0;
+	bool mouse_over(sf::Vector2i& pos2);
 
-	bool mouse_over(Mouse *mouse);
 
 };

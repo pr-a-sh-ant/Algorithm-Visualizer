@@ -34,7 +34,7 @@ std::vector<sf::Vector2i> Node::get_actions()
 		int xpos = state.x + dels[a].x;
 		int ypos = state.y + dels[a].y;
 
-		if (xpos >= 0 and ypos >= 0 and xpos < 40 and ypos < 40)
+		if (xpos >= 0 && ypos >= 0 && xpos < 40 && ypos < 40)
 		{
 			actions.push_back(sf::Vector2i(xpos, ypos));
 		}

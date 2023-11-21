@@ -2,8 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "App.h"
-#include "Button.h"
-#include <iostream>
 
 Home::Home(App *app)
 {
@@ -44,13 +42,12 @@ void Home::init()
 void Home::init_buttons()
 {
 
-    Button *but = new Button(1300, 530,256,64);
-    this->entities.push_back(but);
-    Button *but = new Button(900, 880,256,64);
-    this->entities.push_back(but);
-    Button *but = new Button(350, 530,256,64);
-    this->entities.push_back(but);
-
+    this->entities.push_back(new Button(1300, 530,256,64));
+    
+    
+    this->entities.push_back(new Button(900, 880,256,64));
+    
+    this->entities.push_back(new Button(350, 530,256,64));
 
 
 }
@@ -71,9 +68,5 @@ void Home::draw()
 
 void Home::update()
 {
-    for(int i=0; i < entities.size(); i++){
-
-            entities[i]->update(this->app);
-    } 
   
 }

@@ -2,7 +2,6 @@
 #include "Search.h"
 #include <iostream>
 #include "Home.h"
-#include "Mouse.h"
 
 App::App()
 {
@@ -15,9 +14,8 @@ void App::init_window()
 {
 	sf::VideoMode mode = sf::VideoMode::getDesktopMode();
 	this->window = new sf::RenderWindow(mode, "SFML works!", sf::Style::Fullscreen);
-	this->mouse = new Mouse;
-	init_screens();
-	
+	init_search();
+	init_home();
 }
 
 void App::init_variables()
@@ -31,12 +29,16 @@ void App::init_variables()
 	}
 }
 
-void App::init_screens()
+void App::init_search()
 {
 	this->search = new Search(this);
-	this->home = new Home(this);
 }
 
+void App::init_home()
+{
+
+	this->home = new Home(this);
+}
 
 void App::draw()
 {
@@ -55,8 +57,6 @@ void App::draw()
 void App::update()
 {
 	updateSFMLevents();
-	std::cout<<this->mouse->pos.x;
-	this->mouse->update(*this->window);
 	if (*current == 0)
 	{
 		this->home->update();
@@ -70,7 +70,8 @@ void App::update()
 		this->window->clear();
 		this->window->close();
 	}
-	}
+	// mouse->update(*window);
+}
 
 void App::updateSFMLevents()
 {
@@ -87,7 +88,6 @@ void App::updateSFMLevents()
 			}
 			else if (sfEvent.key.code == sf::Keyboard::S)
 			{
-				this->search->searching= true;
 			}
 		}
 	}

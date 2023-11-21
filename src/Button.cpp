@@ -23,7 +23,7 @@ void Button::centerScale(int scale)
 
 void Button::update(App *app)
 {
-	if(this->mouse_over(app->mouse)){
+	if(this->mouse_over(app->mouse->pos)){
 
 		if(app->mouse->clicked)
 		{
