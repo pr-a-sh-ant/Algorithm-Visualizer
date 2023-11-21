@@ -8,7 +8,7 @@ class Button : public Entity
 private:
     /* data */
 public:
-    Button(int x, int y, int width, int height);
+    Button(int x, int y, std::string, int width, int height);
     ~Button();
 
     bool pressed;

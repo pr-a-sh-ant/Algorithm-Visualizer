@@ -15,10 +15,6 @@ public:
 
     sf::Texture backgroundTexture;
     sf::RectangleShape background;
-    sf::Text searchAlgo;
-    sf::Text sortAlgo;
-    sf::Text exit;
-
 
     std::vector<Button *> entities;
 
@@ -27,5 +23,4 @@ public:
 
     void update();
     void draw();
-
 };

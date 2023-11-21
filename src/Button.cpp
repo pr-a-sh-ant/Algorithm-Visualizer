@@ -4,7 +4,7 @@
 #include <iostream>
 #include "App.h"
 
-Button::Button(int x, int y, int width = 256, int height = 64) : Entity(x, y, width, height)
+Button::Button(int x, int y, std::string text, int width = 256, int height = 64) : Entity(x, y, width, height)
 {
 
 	this->rect.setPosition(x, y);
@@ -19,8 +19,8 @@ Button::Button(int x, int y, int width = 256, int height = 64) : Entity(x, y, wi
 		return;
 	}
 
-	this->text = new sf::Text("Search Algo", this->font, 60);
-	this->text->setPosition(x, y);
+	this->text = new sf::Text(text, this->font, 60);
+	this->text->setPosition(x + 50, y + 10);
 
 	this->pressed = false;
 }

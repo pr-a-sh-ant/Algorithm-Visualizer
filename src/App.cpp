@@ -89,17 +89,17 @@ void App::updateSFMLevents()
 			}
 			else if (sfEvent.key.code == sf::Keyboard::S)
 			{
+				*this->current = 1;
 			}
-			
 		}
 		else if (sfEvent.type == sf::Event::MouseButtonPressed)
-			{
-				this->mouse->clicked=true;
-			}
-			else if (sfEvent.type == sf::Event::MouseButtonReleased)
-			{
-				this->mouse->clicked=false;
-			}
+		{
+			this->mouse->clicked = true;
+		}
+		else if (sfEvent.type == sf::Event::MouseButtonReleased)
+		{
+			this->mouse->clicked = false;
+		}
 	}
 }
 
