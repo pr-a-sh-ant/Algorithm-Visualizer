@@ -4,10 +4,11 @@
 // class App;
 
 class Mouse
-{
+{	
 
 	public:
+		Mouse();
 		sf::Vector2i pos;
 		bool clicked;
-		void update(sf::RenderWindow& window);
+		void update(sf::RenderWindow &window);
 };

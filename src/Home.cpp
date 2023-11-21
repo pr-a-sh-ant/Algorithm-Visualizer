@@ -60,7 +60,7 @@ void Home::draw()
     app->window->draw(searchAlgo);
     app->window->draw(exit);
     for(int i=0; i < entities.size(); i++){
-        std::cout<<std::endl<<"entity"<<entities[i]->pos.x<<std::endl;
+        
         app->window->draw(entities[i]->rect);
             
     }    
@@ -68,5 +68,9 @@ void Home::draw()
 
 void Home::update()
 {
-  
+     for(int i=0; i < entities.size(); i++){
+            
+            entities[i]->update(this->app->mouse);
+    } 
+
 }

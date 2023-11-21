@@ -14,6 +14,7 @@ void App::init_window()
 {
 	sf::VideoMode mode = sf::VideoMode::getDesktopMode();
 	this->window = new sf::RenderWindow(mode, "SFML works!", sf::Style::Fullscreen);
+	this->mouse = new Mouse();
 	init_search();
 	init_home();
 }
@@ -70,7 +71,7 @@ void App::update()
 		this->window->clear();
 		this->window->close();
 	}
-	// mouse->update(*window);
+	mouse->update(*this->window);
 }
 
 void App::updateSFMLevents()
@@ -89,7 +90,16 @@ void App::updateSFMLevents()
 			else if (sfEvent.key.code == sf::Keyboard::S)
 			{
 			}
+			
 		}
+		else if (sfEvent.type == sf::Event::MouseButtonPressed)
+			{
+				this->mouse->clicked=true;
+			}
+			else if (sfEvent.type == sf::Event::MouseButtonReleased)
+			{
+				this->mouse->clicked=false;
+			}
 	}
 }
 

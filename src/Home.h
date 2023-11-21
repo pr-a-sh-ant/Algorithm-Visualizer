@@ -1,7 +1,9 @@
 #pragma once
 #include "App.h"
+#include "Button.h"
 
 class App;
+class Button;
 
 class Home
 {
@@ -18,7 +20,7 @@ public:
     sf::Text exit;
 
 
-    std::vector<Entity *> entities;
+    std::vector<Button *> entities;
 
     void init();
     void init_buttons();

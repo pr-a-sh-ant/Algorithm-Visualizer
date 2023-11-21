@@ -2,6 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include "Box.h"
 
+class Box;
+
 class Node
 {
 private:

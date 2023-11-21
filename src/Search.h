@@ -4,7 +4,10 @@
 #include "Button.h"
 #include <queue>
 #include "App.h"
+#include "Box.h"
 
+
+class Box;
 class Button;
 class App;
 

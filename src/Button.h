@@ -1,9 +1,7 @@
-#pragma once 
-
+#pragma once
 #include "Entity.h"
-#include "App.h"
+#include "Mouse.h"
 
-class App;
 
 class Button : public Entity
 {
@@ -14,8 +12,9 @@ public:
     ~Button();
 
     bool pressed;
+    bool hovered;
 
     void centerScale(int scale);
-    void update(App *app);
+    void update(Mouse *mouse);
 };
 

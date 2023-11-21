@@ -11,6 +11,7 @@ Button::Button(int x, int y, int width=256, int height=64):Entity(x, y, width, h
 	this->rect.setOutlineThickness(2);
 	this->rect.setOutlineColor(sf::Color::White);
 	this->rect.setFillColor(sf::Color::Green);
+	this->pressed=false;
 
 }
 
@@ -21,21 +22,36 @@ void Button::centerScale(int scale)
 	rect.setPosition(pos.x - scale / 2, pos.y - scale / 2);
 }
 
-void Button::update(App *app)
+void Button::update(Mouse *mouse)
+    
 {
-	if(this->mouse_over(app->mouse->pos)){
-
-		if(app->mouse->clicked)
+	if(this->mouse_over(mouse->pos)){
+    
+		if(mouse->clicked)
 		{
- 		
 			this->pressed=true;
+			this->hovered = false;
 		}
 		else{
+			this->hovered = true;
 			this->pressed=false;
 		}
 
-
+	}
+	else{
+		this->hovered = false;
+		this->pressed=false;
+		
 	}
 
-	std::cout<<this->pressed<<std::endl;
+	
+		if(this->pressed){
+			this->rect.setFillColor(sf::Color::Blue);
+		}
+		else if(this->hovered){
+			this->rect.setFillColor(sf::Color::Red);
+		}
+		else{
+			this->rect.setFillColor(sf::Color::Green);			
+		}
 }
