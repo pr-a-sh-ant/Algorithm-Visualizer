@@ -15,10 +15,9 @@ public:
     bool hovered;
     sf::Text *text;
 
-
+    sf::Font font;
 
     void centerScale(int scale);
     void update(Mouse *mouse);
     void draw(sf::RenderWindow *window);
-};  
-
+};

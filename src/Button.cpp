@@ -4,15 +4,14 @@
 #include <iostream>
 #include "App.h"
 
-Button::Button(int x, int y, int width=256, int height=64):Entity(x, y, width, height){
+Button::Button(int x, int y, int width = 256, int height = 64) : Entity(x, y, width, height)
+{
 
-    this->rect.setPosition(x, y);
+	this->rect.setPosition(x, y);
 	this->rect.setSize(sf::Vector2f(width, height));
 	this->rect.setOutlineThickness(2);
 	this->rect.setOutlineColor(sf::Color::White);
 	this->rect.setFillColor(sf::Color::Green);
-
-	sf::Font font;
 
 	if (!font.loadFromFile("src/public/font.ttf"))
 	{
@@ -20,13 +19,11 @@ Button::Button(int x, int y, int width=256, int height=64):Entity(x, y, width, h
 		return;
 	}
 
-	this->text = new sf::Text("Search Algo", font, 60);
+	this->text = new sf::Text("Search Algo", this->font, 60);
 	this->text->setPosition(x, y);
 
-	this->pressed=false;
-
+	this->pressed = false;
 }
-
 
 void Button::centerScale(int scale)
 {
@@ -35,42 +32,46 @@ void Button::centerScale(int scale)
 }
 
 void Button::update(Mouse *mouse)
-    
+
 {
-	if(this->mouse_over(mouse->pos)){
-    
-		if(mouse->clicked)
+	if (this->mouse_over(mouse->pos))
+	{
+
+		if (mouse->clicked)
 		{
-			this->pressed=true;
+			this->pressed = true;
 			this->hovered = false;
 		}
-		else{
+		else
+		{
 			this->hovered = true;
-			this->pressed=false;
+			this->pressed = false;
 		}
-
 	}
-	else{
+	else
+	{
 		this->hovered = false;
-		this->pressed=false;
-		
+		this->pressed = false;
 	}
 
-	
-		if(this->pressed){
-			this->rect.setFillColor(sf::Color::Blue);
-		}
-		else if(this->hovered){
-			this->rect.setFillColor(sf::Color::Red);
-		}
-		else{
-			this->rect.setFillColor(sf::Color::Green);			
-		}
+	if (this->pressed)
+	{
+		this->rect.setFillColor(sf::Color::Blue);
+	}
+	else if (this->hovered)
+	{
+		this->rect.setFillColor(sf::Color::Red);
+	}
+	else
+	{
+		this->rect.setFillColor(sf::Color::Green);
+	}
 }
 
-void Button::draw(sf::RenderWindow *window){
-	
+void Button::draw(sf::RenderWindow *window)
+{
+
 	window->draw(this->rect);
-	//error while drawing text fsr
-	// window->draw(*this->text);
+	// error while drawing text fsr
+	window->draw(*this->text);
 }
