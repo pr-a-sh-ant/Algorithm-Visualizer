@@ -4,10 +4,13 @@
 #include "Search.h"
 #include <SFML/Graphics.hpp>
 #include "Home.h"
+#include "State.h"
 
 class Search;
 class Mouse;
 class Home;
+
+
 
 class App
 {
@@ -24,7 +27,9 @@ public:
 	sf::Event sfEvent;
 	sf::Font font;
 
-	int *current;
+	state *appState;
+	
+
 	void init_window();
 	void init_variables();
 	void init_search();

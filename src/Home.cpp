@@ -47,6 +47,6 @@ void Home::update()
 {
     for (int i = 0; i < entities.size(); i++)
     {
-        entities[i]->update(this->app->mouse);
+        entities[i]->update(this->app->mouse,this->app->appState);
     }
 }

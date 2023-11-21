@@ -2,7 +2,8 @@
 #include "Button.h"
 #include "Mouse.h"
 #include <iostream>
-#include "App.h"
+#include "State.h"
+#include <iostream>
 
 Button::Button(int x, int y, std::string text, int width = 256, int height = 64) : Entity(x, y, width, height)
 {
@@ -26,7 +27,7 @@ void Button::centerScale(int scale)
 	rect.setPosition(pos.x - scale / 2, pos.y - scale / 2);
 }
 
-void Button::update(Mouse *mouse)
+void Button::update(Mouse *mouse, state *appState)
 
 {
 	if (this->mouse_over(mouse->pos))
