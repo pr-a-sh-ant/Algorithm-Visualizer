@@ -5,6 +5,7 @@
 #include <queue>
 #include "App.h"
 
+class Button;
 class App;
 
 class Search

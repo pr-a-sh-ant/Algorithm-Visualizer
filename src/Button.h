@@ -1,5 +1,9 @@
-#include "Entity.h"
+#pragma once 
 
+#include "Entity.h"
+#include "App.h"
+
+class App;
 
 class Button : public Entity
 {
@@ -7,9 +11,11 @@ private:
     /* data */
 public:
     Button(int x, int y, int width, int height);
-    sf::RectangleShape rect;
     ~Button();
-    void centerScale(int scale);
 
+    bool pressed;
+
+    void centerScale(int scale);
+    void update(App *app);
 };
 

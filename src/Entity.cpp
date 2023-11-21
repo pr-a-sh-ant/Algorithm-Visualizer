@@ -12,11 +12,11 @@ Entity::Entity(const sf::Vector2i& position, const sf::Vector2i& dimensions)
 	this->dim = dimensions;
 }
 
-bool Entity::entity_over(const sf::Vector2i& pos2) const
+bool Entity::mouse_over(sf::Vector2i& pos2) 
 {
-	if (this->pos.x < pos2.x and this->pos.x + this->dim.x > pos2.x)
+	if (this->pos.x < pos2.x && this->pos.x + this->dim.x > pos2.x)
 	{
-		if (this->pos.y < pos2.y and this->pos.y + this->dim.y > pos2.y)
+		if (this->pos.y < pos2.y && this->pos.y + this->dim.y > pos2.y)
 		{
 			return true;
 		}

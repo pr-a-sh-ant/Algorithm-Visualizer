@@ -1,7 +1,5 @@
 #pragma once
-
 #include "App.h"
-#include <SFML/Graphics.hpp>
 
 class App;
 
@@ -19,9 +17,13 @@ public:
     sf::Text sortAlgo;
     sf::Text exit;
 
-    void
-    init();
+
+    std::vector<Entity *> entities;
+
+    void init();
+    void init_buttons();
 
     void update();
     void draw();
+
 };

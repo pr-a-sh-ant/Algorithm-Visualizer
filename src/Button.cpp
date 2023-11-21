@@ -1,6 +1,10 @@
+#include <SFML/Graphics.hpp>
 #include "Button.h"
+#include "Mouse.h"
+#include <iostream>
+#include "App.h"
 
-Button::Button(int x, int y, int width=64, int height=256):Entity(x, y, width, height){
+Button::Button(int x, int y, int width=256, int height=64):Entity(x, y, width, height){
 
     this->rect.setPosition(x, y);
 	this->rect.setSize(sf::Vector2f(width, height));
@@ -15,4 +19,23 @@ void Button::centerScale(int scale)
 {
 	rect.setSize(sf::Vector2f(dim.x + scale, dim.y + scale));
 	rect.setPosition(pos.x - scale / 2, pos.y - scale / 2);
+}
+
+void Button::update(App *app)
+{
+	if(this->mouse_over(app->mouse->pos)){
+
+		if(app->mouse->clicked)
+		{
+ 		
+			this->pressed=true;
+		}
+		else{
+			this->pressed=false;
+		}
+
+
+	}
+
+	std::cout<<this->pressed<<std::endl;
 }

@@ -22,7 +22,6 @@ private:
 
 public:
 	Box(int x, int y, int width, int height);
-	sf::RectangleShape rect;
 	void animate(float deltime);
 	int currentAnimation = 0;
 	float totalTime = 0.0f;

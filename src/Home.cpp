@@ -35,7 +35,23 @@ void Home::init()
     exit.setCharacterSize(60);
     exit.setPosition(sf::Vector2f(900, 880));
     exit.setFillColor(sf::Color::Black);
+
+    init_buttons();
 }
+
+void Home::init_buttons()
+{
+
+    this->entities.push_back(new Button(1300, 530,256,64));
+    
+    
+    this->entities.push_back(new Button(900, 880,256,64));
+    
+    this->entities.push_back(new Button(350, 530,256,64));
+
+
+}
+
 
 void Home::draw()
 {
@@ -43,23 +59,14 @@ void Home::draw()
     app->window->draw(sortAlgo);
     app->window->draw(searchAlgo);
     app->window->draw(exit);
+    for(int i=0; i < entities.size(); i++){
+        std::cout<<std::endl<<"entity"<<entities[i]->pos.x<<std::endl;
+        app->window->draw(entities[i]->rect);
+            
+    }    
 }
 
 void Home::update()
 {
-    if (app->sfEvent.type == sf::Event::MouseButtonPressed)
-    {
-        if (searchAlgo.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
-        {
-            *(app->current) = 1;
-        }
-        if (sortAlgo.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
-        {
-            *(app->current) = 2;
-        }
-        if (exit.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
-        {
-            *(app->current) = -1;
-        }
-    }
+  
 }
