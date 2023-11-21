@@ -11,7 +11,7 @@ public:
     Button(int x, int y, std::string, int width, int height);
     ~Button();
 
-    bool pressed;
+    std::string name_button;
     bool hovered;
     sf::Text *text;
 

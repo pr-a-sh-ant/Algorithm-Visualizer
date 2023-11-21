@@ -6,12 +6,9 @@
 
 Button::Button(int x, int y, std::string text, int width = 256, int height = 64) : Entity(x, y, width, height)
 {
-
+	this->name_button = text;
 	this->rect.setPosition(x, y);
 	this->rect.setSize(sf::Vector2f(width, height));
-	this->rect.setOutlineThickness(2);
-	this->rect.setOutlineColor(sf::Color::White);
-	this->rect.setFillColor(sf::Color::Green);
 
 	if (!font.loadFromFile("src/public/font.ttf"))
 	{
@@ -21,8 +18,6 @@ Button::Button(int x, int y, std::string text, int width = 256, int height = 64)
 
 	this->text = new sf::Text(text, this->font, 60);
 	this->text->setPosition(x + 50, y + 10);
-
-	this->pressed = false;
 }
 
 void Button::centerScale(int scale)
@@ -39,32 +34,37 @@ void Button::update(Mouse *mouse)
 
 		if (mouse->clicked)
 		{
-			this->pressed = true;
 			this->hovered = false;
 		}
 		else
 		{
 			this->hovered = true;
-			this->pressed = false;
 		}
 	}
 	else
 	{
 		this->hovered = false;
-		this->pressed = false;
 	}
 
-	if (this->pressed)
+	if (this->name_button == "Exit" || this->name_button == "Back" || this->name_button == "Clear")
 	{
-		this->rect.setFillColor(sf::Color::Blue);
-	}
-	else if (this->hovered)
-	{
-		this->rect.setFillColor(sf::Color::Red);
+		this->rect.setFillColor(sf::Color(170, 19, 23));
 	}
 	else
 	{
-		this->rect.setFillColor(sf::Color::Green);
+		this->rect.setFillColor(sf::Color(9, 57, 120));
+	}
+
+	if (this->hovered)
+	{
+		if (this->name_button == "Exit" || this->name_button == "Back")
+		{
+			this->rect.setFillColor(sf::Color(224, 15, 18));
+		}
+		else
+		{
+			this->rect.setFillColor(sf::Color(19, 98, 168));
+		}
 	}
 }
 

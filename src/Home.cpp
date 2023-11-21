@@ -26,11 +26,11 @@ void Home::init()
 void Home::init_buttons()
 {
 
-    this->entities.push_back(new Button(1200, 650, "Sort Algorithm", 1, 600, 100));
+    this->entities.push_back(new Button(1200, 650, "Sort Algorithm", 600, 100));
 
-    this->entities.push_back(new Button(850, 880, "Exit", 2, 300, 100));
+    this->entities.push_back(new Button(850, 880, "Exit", 300, 100));
 
-    this->entities.push_back(new Button(250, 650, "Search Algorithm", -1, 600, 100));
+    this->entities.push_back(new Button(250, 650, "Search Algorithm", 600, 100));
 }
 
 void Home::draw()
