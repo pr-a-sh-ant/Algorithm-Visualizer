@@ -71,13 +71,7 @@ void Search::init_buttons()
 
 void Search::update()
 {
-	if (app->sfEvent.type == sf::Event::MouseButtonPressed)
-	{
-		if (back.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
-		{
-			*(app->current) = 0;
-		}
-	}
+	
 
 	totalTime += this->app->deltime;
 

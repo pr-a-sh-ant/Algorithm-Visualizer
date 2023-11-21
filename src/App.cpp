@@ -20,9 +20,9 @@ void App::init_window()
 }
 
 void App::init_variables()
-{
+{	
+	this->appState->screen=0;
 	deltime = 0.0f;
-	current = new int(0);
 	if (!font.loadFromFile("src/public/font.ttf"))
 	{
 		std::cout << "Error loading font" << std::endl;
@@ -44,11 +44,11 @@ void App::init_home()
 void App::draw()
 {
 	this->window->clear();
-	if (*current == 0)
+	if (appState->screen == 0)
 	{
 		this->home->draw();
 	}
-	else if (*current == 1)
+	else if (appState->screen == 1)
 	{
 		this->search->draw();
 	}
@@ -58,15 +58,15 @@ void App::draw()
 void App::update()
 {
 	updateSFMLevents();
-	if (*current == 0)
+	if (appState->screen == 0)
 	{
 		this->home->update();
 	}
-	else if (*current == 1)
+	else if (appState->screen == 1)
 	{
 		this->search->update();
 	}
-	else if (*current == -1)
+	else if (appState->screen == -1)
 	{
 		this->window->clear();
 		this->window->close();
@@ -89,7 +89,7 @@ void App::updateSFMLevents()
 			}
 			else if (sfEvent.key.code == sf::Keyboard::S)
 			{
-				*this->current = 1;
+				this->appState->screen = 1;
 			}
 		}
 		else if (sfEvent.type == sf::Event::MouseButtonPressed)

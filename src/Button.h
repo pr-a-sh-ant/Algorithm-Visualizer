@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "Mouse.h"
 #include <SFML/Graphics.hpp>
+#include "State.h"
 
 class Button : public Entity
 {
@@ -18,6 +19,6 @@ public:
     sf::Font font;
 
     void centerScale(int scale);
-    void update(Mouse *mouse);
+    void update(Mouse *mouse,state* appState);
     void draw(sf::RenderWindow *window);
 };
