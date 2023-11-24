@@ -56,3 +56,4 @@ void Box::centerScale(int scale)
 	rect.setSize(sf::Vector2f(dim.x + scale, dim.y + scale));
 	rect.setPosition(pos.x - scale / 2, pos.y - scale / 2);
 }
+

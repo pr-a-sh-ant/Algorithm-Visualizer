@@ -5,7 +5,7 @@
 #include "State.h"
 #include <iostream>
 
-Button::Button(int x, int y, std::string text, int width = 256, int height = 64) : Entity(x, y, width, height)
+Button::Button(int x, int y, std::string text, int width, int height ,std::string func ) : Entity(x, y, width, height)
 {
 
 	this->rect.setPosition(x, y);
@@ -22,6 +22,8 @@ Button::Button(int x, int y, std::string text, int width = 256, int height = 64)
 
 	this->text = new sf::Text(text, this->font, 60);
 	this->text->setPosition(x + 50, y + 10);
+
+	this->func=func;
 
 	this->pressed = false;
 }
@@ -58,9 +60,10 @@ void Button::update(Mouse *mouse,state *appState)
 	if (this->pressed)
 	{
 		this->rect.setFillColor(sf::Color::Blue);
-		std::cout<<"SCREEN :"<<appState->screen<<std::endl;
-		appState->screen = 1;
-		//State Change Function
+		stateChanger(appState);
+		// std::cout<<"SCREEN :"<<appState->screen<<std::endl;
+		// std::cout<<"SCREEN :"<<this->func<<std::endl;
+		mouse->clicked=false;
 
 	}
 	else if (this->hovered)
@@ -79,4 +82,34 @@ void Button::draw(sf::RenderWindow *window)
 	window->draw(this->rect);
 	// error while drawing text fsr
 	window->draw(*this->text);
+}
+
+
+void Button::stateChanger(state *appState){
+
+	
+
+	if (this->func == "goSort"){
+		appState->screen = 2;
+	}
+	else if (this->func == "goSearch"){
+		appState->screen = 1;
+	}
+	else if (this->func == "goBack"){
+		appState->screen = 0;
+	}
+	else if (this->func == "modeMaze"){
+		appState->mode = 0;
+	}
+	else if (this->func == "modeDestination"){
+		appState->mode = 1;
+	}
+	else if (this->func == "modeStart"){
+		appState->mode = 2;
+	}
+	
+	else if (this->func == "setSearching"){
+		appState->startSearch = 1;
+	}
+
 }

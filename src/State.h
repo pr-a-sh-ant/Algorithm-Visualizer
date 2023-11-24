@@ -2,6 +2,7 @@
 struct state
 	{
 		int screen = 0;
-		int selected = 0;
+		int mode = 0;
+		int startSearch = 0;
 	} ;
 	

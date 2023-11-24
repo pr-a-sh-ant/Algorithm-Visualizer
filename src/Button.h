@@ -9,7 +9,7 @@ class Button : public Entity
 private:
     /* data */
 public:
-    Button(int x, int y, std::string, int width, int height);
+    Button(int x, int y, std::string text, int width, int height,std::string func);
     ~Button();
 
     bool pressed;
@@ -17,8 +17,10 @@ public:
     sf::Text *text;
 
     sf::Font font;
+    std::string func;
 
     void centerScale(int scale);
     void update(Mouse *mouse,state* appState);
     void draw(sf::RenderWindow *window);
+    void stateChanger(state *appState);
 };

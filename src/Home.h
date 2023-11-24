@@ -10,7 +10,7 @@ class Home
 
 public:
     Home(App *app);
-    ~Home();
+    
     App *app;
 
     sf::Texture backgroundTexture;

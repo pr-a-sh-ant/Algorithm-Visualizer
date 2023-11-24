@@ -12,26 +12,16 @@ Search::Search(App *app)
 {
 	this->app = app;
 	init();
-	init_boxes();
-	init_solve();
+	
 }
 
 void Search::init()
 {
-	if (!backgroundTexture.loadFromFile("src/Public/search.jpg"))
-	{
-		std::cout << "Error loading Texture" << std::endl;
-		return;
-	}
-	background.setSize((sf::Vector2f(1920, 1080)));
-	background.setTexture(&backgroundTexture);
-	background.setPosition(sf::Vector2f(0, 0));
 
-	back.setString("Back");
-	back.setFont(app->font);
-	back.setCharacterSize(50);
-	back.setPosition(sf::Vector2f(1600, 910));
-	back.setFillColor(sf::Color::Black);
+	init_boxes();
+	init_solve();
+	init_buttons();
+
 }
 
 void Search::init_solve()
@@ -67,6 +57,11 @@ void Search::init_boxes()
 
 void Search::init_buttons()
 {
+	this->buttons.push_back(new Button(1400, 400, "Back", 400, 80,"goBack"));
+	this->buttons.push_back(new Button(1400, 530, "Add Maze", 400, 80,"modeMaze"));
+	this->buttons.push_back(new Button(1400, 680, "Add Destination", 400, 80,"modeDestination"));
+	this->buttons.push_back(new Button(1400, 830, "Add Start", 400, 80,"modeStart"));
+	this->buttons.push_back(new Button(1400, 980, "Start", 400, 80,"setSearching"));
 }
 
 void Search::update()
@@ -75,26 +70,85 @@ void Search::update()
 
 	totalTime += this->app->deltime;
 
+	if (this->app->appState->startSearch==1){
+		searching=true;
+	}
+
 	if (searching)
 	{
 		solve();
 		totalTime = 0;
 	}
 	update_boxes();
+	update_buttons();
 }
 
 void Search::update_boxes()
-{
+{	
+	
+	
+
 	for (int x = 0; x < 40; x++)
 	{
 		for (int y = 0; y < 40; y++)
-		{
+		{	
+			if(sf::Vector2i(x, y) == initial_state){
+				
+				box[x][y]->rect.setFillColor(sf::Color{250, 100, 150});
+			}
+			else if(sf::Vector2i(x, y) == final_state){
+				box[x][y]->rect.setFillColor(sf::Color{250, 0, 0});
+			}
+			
 			if (box[x][y]->animating)
 			{
 				box[x][y]->animate(this->app->deltime);
 			}
+
+			if (this->app->appState->mode==0){
+				// std::cout<<"MODE 0 : MAZE MODE"<<std::endl;
+				if(box[x][y]->mouse_over(this->app->mouse->pos) && this->app->mouse->clicked){
+					std::cout<<"Set Box As Maze "<<std::endl;
+				}
+				
+
+			}
+
+			else if (this->app->appState->mode==1){
+				// std::cout<<"MODE 1 : START MODE"<<std::endl;
+				if(box[x][y]->mouse_over(this->app->mouse->pos) && this->app->mouse->clicked){
+					box[this->final_state.x][this->final_state.y]->rect.setFillColor(sf::Color::Green);
+					this->final_state = sf::Vector2i(x, y);
+				}
+
+			}
+
+			else if (this->app->appState->mode==2){
+				// std::cout<<"MODE 2 : FInal MODE"<<std::endl;
+				if(box[x][y]->mouse_over(this->app->mouse->pos) && this->app->mouse->clicked){
+					box[this->initial_state.x][this->initial_state.y]->rect.setFillColor(sf::Color::Green);
+					this->initial_state = sf::Vector2i(x, y);
+				}
+			}
 		}
 	}
+}
+
+void Search::update_buttons(){
+
+	for (int i = 0; i < buttons.size(); i++)
+    {
+        buttons[i]->update(this->app->mouse,this->app->appState);
+    }
+
+}
+
+void Search::draw_buttons(){
+	 for (int i = 0; i < buttons.size(); i++)
+    {
+
+        buttons[i]->draw(this->app->window);
+    }
 }
 
 void Search::draw_boxes()
@@ -120,9 +174,8 @@ void Search::draw_boxes()
 
 void Search::draw()
 {
-	app->window->draw(background);
 	draw_boxes();
-	app->window->draw(back);
+	draw_buttons();	
 }
 
 void Search::solve()
@@ -145,6 +198,7 @@ void Search::solve()
 
 		this->search_complete = true;
 		this->searching = false;
+		this->app->appState->startSearch=0;
 		std::cout << "found\n";
 		return;
 	}

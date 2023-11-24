@@ -24,10 +24,8 @@ public:
 	App *app;
 	sf::Vector2i origin = sf::Vector2i(1, 1);
 	std::vector<std::vector<Box *>> box;
-	std::vector<Button *> button;
-	sf::Texture backgroundTexture;
-	sf::RectangleShape background;
-	sf::Text back;
+	std::vector<Button *> buttons;
+	
 
 	float totalTime = .0f;
 	float switchTIme = .1f;
@@ -47,8 +45,10 @@ public:
 
 	void update();
 	void update_boxes();
+	void update_buttons();
 
 	void draw_boxes();
+	void draw_buttons();
 	void draw();
 
 	void solve();

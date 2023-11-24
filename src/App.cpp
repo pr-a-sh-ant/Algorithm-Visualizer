@@ -13,7 +13,7 @@ App::App()
 void App::init_window()
 {
 	sf::VideoMode mode = sf::VideoMode::getDesktopMode();
-	this->window = new sf::RenderWindow(mode, "SFML works!", sf::Style::Fullscreen);
+	this->window = new sf::RenderWindow(mode, "SFML works!");
 	this->mouse = new Mouse();
 	init_search();
 	init_home();
@@ -21,7 +21,9 @@ void App::init_window()
 
 void App::init_variables()
 {	
-	this->appState->screen=0;
+	this->appState->screen=1;
+	this->appState->startSearch=0;
+	this->appState->mode=3;
 	deltime = 0.0f;
 	if (!font.loadFromFile("src/public/font.ttf"))
 	{
