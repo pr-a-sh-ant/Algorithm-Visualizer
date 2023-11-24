@@ -7,12 +7,9 @@
 
 Button::Button(int x, int y, std::string text, int width, int height ,std::string func ) : Entity(x, y, width, height)
 {
-
+	this->name_button = text;
 	this->rect.setPosition(x, y);
 	this->rect.setSize(sf::Vector2f(width, height));
-	this->rect.setOutlineThickness(2);
-	this->rect.setOutlineColor(sf::Color::White);
-	this->rect.setFillColor(sf::Color::Green);
 
 	if (!font.loadFromFile("src/public/font.ttf"))
 	{
@@ -22,10 +19,13 @@ Button::Button(int x, int y, std::string text, int width, int height ,std::strin
 
 	this->text = new sf::Text(text, this->font, 60);
 	this->text->setPosition(x + 50, y + 10);
+<<<<<<< HEAD
 
 	this->func=func;
 
 	this->pressed = false;
+=======
+>>>>>>> 3a943aaee8a2ed5f9a099f7ee98fb70fa0d707a6
 }
 
 void Button::centerScale(int scale)
@@ -34,7 +34,7 @@ void Button::centerScale(int scale)
 	rect.setPosition(pos.x - scale / 2, pos.y - scale / 2);
 }
 
-void Button::update(Mouse *mouse,state *appState)
+void Button::update(Mouse *mouse, state *appState)
 
 {
 	if (this->mouse_over(mouse->pos))
@@ -42,22 +42,19 @@ void Button::update(Mouse *mouse,state *appState)
 
 		if (mouse->clicked)
 		{
-			this->pressed = true;
 			this->hovered = false;
 		}
 		else
 		{
 			this->hovered = true;
-			this->pressed = false;
 		}
 	}
 	else
 	{
 		this->hovered = false;
-		this->pressed = false;
 	}
 
-	if (this->pressed)
+	if (this->name_button == "Exit" || this->name_button == "Back" || this->name_button == "Clear")
 	{
 		this->rect.setFillColor(sf::Color::Blue);
 		stateChanger(appState);
@@ -72,7 +69,19 @@ void Button::update(Mouse *mouse,state *appState)
 	}
 	else
 	{
-		this->rect.setFillColor(sf::Color::Green);
+		this->rect.setFillColor(sf::Color(9, 57, 120));
+	}
+
+	if (this->hovered)
+	{
+		if (this->name_button == "Exit" || this->name_button == "Back")
+		{
+			this->rect.setFillColor(sf::Color(224, 15, 18));
+		}
+		else
+		{
+			this->rect.setFillColor(sf::Color(19, 98, 168));
+		}
 	}
 }
 

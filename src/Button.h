@@ -12,7 +12,7 @@ public:
     Button(int x, int y, std::string text, int width, int height,std::string func);
     ~Button();
 
-    bool pressed;
+    std::string name_button;
     bool hovered;
     sf::Text *text;
 
