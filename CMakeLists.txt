@@ -15,6 +15,7 @@ add_executable(AlgViz
     src/Entity.h
     src/Search.h
     src/App.h
+    src/Button.h
     
     src/Node.cpp 
     src/Box.cpp 
@@ -24,6 +25,8 @@ add_executable(AlgViz
     src/Search.cpp
     src/App.cpp
     src/main.cpp
+    src/Home.cpp
+    src/Button.cpp
 )
 
 target_include_directories(AlgViz PRIVATE src)

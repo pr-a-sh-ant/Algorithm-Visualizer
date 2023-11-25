@@ -12,8 +12,10 @@ public:
 	Entity() = default;
 
 	sf::Vector2i pos;
+	sf::RectangleShape rect;
 	sf::Vector2i dim;
 
-	bool entity_over(const sf::Vector2i& pos2) const;
+	bool mouse_over(sf::Vector2i pos2);
+
 
 };
