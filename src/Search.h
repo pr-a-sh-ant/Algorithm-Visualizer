@@ -14,8 +14,8 @@ class App;
 class Search
 {
 private:
-	int matrix_height = 30;
-	int matrix_width = 30;
+	int matrix_height = 16;
+	int matrix_width = 16;
 	int boxOrder = 40;
 	Box *get_box(sf::Vector2i &pos);
 
@@ -23,7 +23,7 @@ public:
 	Search(App *app);
 	~Search();
 	App *app;
-	sf::Vector2i origin = sf::Vector2i(1, 1);
+	sf::Vector2i origin = sf::Vector2i(32, 32);
 	std::vector<std::vector<Box *>> box;
 	std::vector<Button *> buttons;
 	
