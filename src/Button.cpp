@@ -61,6 +61,13 @@ void Button::update(Mouse *mouse, state *appState)
 			this->rect.setFillColor(sf::Color(224, 15, 18));
 	}
 
+	else if (this->name_button == "Search")
+	{
+		this->rect.setFillColor(sf::Color(63, 182, 143));
+		if (this->hovered)
+			this->rect.setFillColor(sf::Color(123, 216, 143));
+	}
+
 	else
 	{
 		this->rect.setFillColor(sf::Color(9, 57, 120));

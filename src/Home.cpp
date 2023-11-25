@@ -26,11 +26,11 @@ void Home::init()
 void Home::init_buttons()
 {
 
-    this->entities.push_back(new Button(1200, 650, "Sort Algorithm", 600, 100,"goSort"));
+    this->entities.push_back(new Button(1200, 650, "Sort Algorithm", 500, 80, "goSort"));
 
-    this->entities.push_back(new Button(850, 880, "Exit", 300, 100,"goBack"));
+    this->entities.push_back(new Button(850, 880, "Exit", 200, 80, "goBack"));
 
-    this->entities.push_back(new Button(250, 650, "Search Algorithm", 600, 100,"goSearch"));
+    this->entities.push_back(new Button(250, 650, "Search Algorithm", 500, 80, "goSearch"));
 }
 
 void Home::draw()
@@ -47,6 +47,6 @@ void Home::update()
 {
     for (int i = 0; i < entities.size(); i++)
     {
-        entities[i]->update(this->app->mouse,this->app->appState);
+        entities[i]->update(this->app->mouse, this->app->appState);
     }
 }

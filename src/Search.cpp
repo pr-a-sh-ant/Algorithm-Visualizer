@@ -11,11 +11,13 @@ Box *Search::get_box(sf::Vector2i &pos)
 Search::Search(App *app)
 {
 	this->app = app;
+	textAlgo = new sf::Text("Alogrithms", this->app->font, 60);
 	init();
 }
 
 void Search::init()
 {
+	this->textAlgo->setPosition(1350, 300);
 
 	init_boxes();
 	init_solve();
@@ -55,11 +57,11 @@ void Search::init_boxes()
 
 void Search::init_buttons()
 {
-	this->buttons.push_back(new Button(1400, 980, "Back", 400, 80, "goBack"));
-	this->buttons.push_back(new Button(1600, 50, "Maze", 300, 80, "modeMaze"));
-	this->buttons.push_back(new Button(1400, 680, "Destination", 300, 80, "modeDestination"));
-	this->buttons.push_back(new Button(1300, 830, "Start", 300, 80, "modeStart"));
-	this->buttons.push_back(new Button(1300, 50, "Search", 300, 80, "setSearching"));
+	this->buttons.push_back(new Button(1400, 980, "Back", 200, 80, "goBack"));
+	this->buttons.push_back(new Button(1550, 50, "Maze", 300, 80, "modeMaze"));
+	this->buttons.push_back(new Button(1550, 150, "Destination", 300, 80, "modeDestination"));
+	this->buttons.push_back(new Button(1150, 150, "Start Point", 300, 80, "modeStart"));
+	this->buttons.push_back(new Button(1150, 50, "Search", 300, 80, "setSearching"));
 }
 
 void Search::update()
@@ -194,6 +196,7 @@ void Search::draw_boxes()
 
 void Search::draw()
 {
+	this->app->window->draw(*this->textAlgo);
 	draw_boxes();
 	draw_buttons();
 }
