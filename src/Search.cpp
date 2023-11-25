@@ -17,7 +17,7 @@ Search::Search(App *app)
 
 void Search::init()
 {
-	this->textAlgo->setPosition(1350, 300);
+	this->textAlgo->setPosition(1350, 350);
 
 	init_boxes();
 	init_solve();
@@ -26,8 +26,8 @@ void Search::init()
 
 void Search::init_solve()
 {
-	search_complete=false;
-	searching=false;
+	search_complete = false;
+	searching = false;
 	maze.clear();
 	visited.clear();
 	parents.clear();
@@ -69,6 +69,7 @@ void Search::init_buttons()
 	this->buttons.push_back(new Button(1550, 150, "Destination", 300, 80, "modeDestination"));
 	this->buttons.push_back(new Button(1150, 150, "Start Point", 300, 80, "modeStart"));
 	this->buttons.push_back(new Button(1150, 50, "Search", 300, 80, "setSearching"));
+	this->buttons.push_back(new Button(1350, 250, "Clear", 300, 80, "setSearching"));
 }
 
 void Search::update()
@@ -305,14 +306,11 @@ void Search::solve()
 	}
 }
 
-void Search::reset(){
+void Search::reset()
+{
 
 	init_boxes();
 	init_solve();
-	
-	
-	
-
 }
 
 Search::~Search()
