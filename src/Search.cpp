@@ -26,6 +26,13 @@ void Search::init()
 
 void Search::init_solve()
 {
+	search_complete=false;
+	searching=false;
+	maze.clear();
+	visited.clear();
+	parents.clear();
+	queue.empty();
+
 	sf::Vector2i temp = {-1, -1};
 
 	for (int x = 0; x < this->boxOrder; x++)
@@ -296,6 +303,16 @@ void Search::solve()
 
 		queue.pop();
 	}
+}
+
+void Search::reset(){
+
+	init_boxes();
+	init_solve();
+	
+	
+	
+
 }
 
 Search::~Search()

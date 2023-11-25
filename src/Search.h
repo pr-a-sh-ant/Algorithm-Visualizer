@@ -55,4 +55,6 @@ public:
 
 	void solve();
 	void init_solve();
+
+	void reset();
 };
