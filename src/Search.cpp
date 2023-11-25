@@ -47,7 +47,7 @@ void Search::init_boxes()
 		std::vector<Box *> temp_box;
 		for (int y = 0; y < this->boxOrder; y++)
 		{
-			temp_box.push_back(new Box(origin.x + (x * matrix_width), origin.y + (y * matrix_height), 32, 32, 0));
+			temp_box.push_back(new Box(origin.x + (x * matrix_width), origin.y + (y * matrix_height), matrix_width, matrix_height, 0));
 		}
 		box.push_back(temp_box);
 	}
