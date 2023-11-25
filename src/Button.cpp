@@ -5,7 +5,7 @@
 #include "State.h"
 #include <iostream>
 
-Button::Button(int x, int y, std::string text, int width, int height ,std::string func ) : Entity(x, y, width, height)
+Button::Button(int x, int y, std::string text, int width, int height, std::string func) : Entity(x, y, width, height)
 {
 	this->name_button = text;
 	this->rect.setPosition(x, y);
@@ -17,10 +17,10 @@ Button::Button(int x, int y, std::string text, int width, int height ,std::strin
 		return;
 	}
 
-	this->text = new sf::Text(text, this->font, 60);
+	this->text = new sf::Text(text, this->font, 40);
 	this->text->setPosition(x + 50, y + 10);
 
-	this->func=func;
+	this->func = func;
 
 	this->pressed = false;
 }
@@ -40,12 +40,12 @@ void Button::update(Mouse *mouse, state *appState)
 		if (mouse->clicked)
 		{
 			this->hovered = false;
-			this->pressed =true;
+			this->pressed = true;
 		}
 		else
 		{
 			this->hovered = true;
-			this->pressed =false;
+			this->pressed = false;
 		}
 	}
 	else
@@ -54,35 +54,29 @@ void Button::update(Mouse *mouse, state *appState)
 		this->pressed = false;
 	}
 
-	if(this->pressed){
-		
-		this->rect.setFillColor(sf::Color::Blue);
-		std::cout<<"SCREEN :"<<appState->screen<<std::endl;
-		// std::cout<<"SCREEN :"<<this->func<<std::endl;
-		mouse->clicked=false;
-
-		stateChanger(appState);
-		
-	}
-	else if (this->hovered)
+	if (this->name_button == "Exit" || this->name_button == "Back")
 	{
-		this->rect.setFillColor(sf::Color::Red);
+		this->rect.setFillColor(sf::Color(208, 23, 28));
+		if (this->hovered)
+			this->rect.setFillColor(sf::Color(224, 15, 18));
 	}
+
 	else
 	{
 		this->rect.setFillColor(sf::Color(9, 57, 120));
-	}
-
-	if (this->hovered)
-	{
-		if (this->name_button == "Exit" || this->name_button == "Back")
-		{
-			this->rect.setFillColor(sf::Color(224, 15, 18));
-		}
-		else
+		if (this->hovered)
 		{
 			this->rect.setFillColor(sf::Color(19, 98, 168));
 		}
+	}
+	if (this->pressed)
+	{
+		this->rect.setFillColor(sf::Color::Blue);
+		std::cout << "SCREEN :" << appState->screen << std::endl;
+		// std::cout<<"SCREEN :"<<this->func<<std::endl;
+		mouse->clicked = false;
+
+		stateChanger(appState);
 	}
 }
 
@@ -94,32 +88,36 @@ void Button::draw(sf::RenderWindow *window)
 	window->draw(*this->text);
 }
 
+void Button::stateChanger(state *appState)
+{
 
-void Button::stateChanger(state *appState){
-
-	
-
-	if (this->func == "goSort"){
+	if (this->func == "goSort")
+	{
 		appState->screen = 2;
 	}
-	else if (this->func == "goSearch"){
+	else if (this->func == "goSearch")
+	{
 		appState->screen = 1;
 	}
-	else if (this->func == "goBack"){
+	else if (this->func == "goBack")
+	{
 		appState->screen = 0;
 	}
-	else if (this->func == "modeMaze"){
+	else if (this->func == "modeMaze")
+	{
 		appState->mode = 0;
 	}
-	else if (this->func == "modeDestination"){
+	else if (this->func == "modeDestination")
+	{
 		appState->mode = 1;
 	}
-	else if (this->func == "modeStart"){
+	else if (this->func == "modeStart")
+	{
 		appState->mode = 2;
 	}
-	
-	else if (this->func == "setSearching"){
+
+	else if (this->func == "setSearching")
+	{
 		appState->startSearch = 1;
 	}
-
 }
