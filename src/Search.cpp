@@ -49,10 +49,11 @@ void Search::init_boxes()
 		std::vector<Box *> temp_box;
 		for (int y = 0; y < 40; y++)
 		{
-			temp_box.push_back(new Box(origin.x + (x * 32), origin.y + (y * 32), 32, 32));
+			temp_box.push_back(new Box(origin.x + (x * 32), origin.y + (y * 32), 32, 32,0));
 		}
 		box.push_back(temp_box);
 	}
+	
 }
 
 void Search::init_buttons()
@@ -86,7 +87,10 @@ void Search::update()
 void Search::update_boxes()
 {	
 	
-	
+	for(int i=0;i <maze.size();i++){
+				box[maze[i].x][maze[i].y]->rect.setFillColor(sf::Color::Black);
+			}
+			
 
 	for (int x = 0; x < 40; x++)
 	{
@@ -99,7 +103,12 @@ void Search::update_boxes()
 			else if(sf::Vector2i(x, y) == final_state){
 				box[x][y]->rect.setFillColor(sf::Color{250, 0, 0});
 			}
-			
+			else if(box[x][y]->type == -1){
+				box[x][y]->rect.setFillColor(sf::Color::Black);
+			}
+			else if(box[x][y]->type == -3){
+				box[x][y]->rect.setFillColor(sf::Color::Magenta);
+			}
 			if (box[x][y]->animating)
 			{
 				box[x][y]->animate(this->app->deltime);
@@ -109,7 +118,9 @@ void Search::update_boxes()
 				// std::cout<<"MODE 0 : MAZE MODE"<<std::endl;
 				if(box[x][y]->mouse_over(this->app->mouse->pos) && this->app->mouse->clicked){
 					std::cout<<"Set Box As Maze "<<std::endl;
-				}
+					box[x][y]->type = -1;
+					box[x][y]->rect.setFillColor(sf::Color::Green);
+					}
 				
 
 			}
@@ -118,7 +129,9 @@ void Search::update_boxes()
 				// std::cout<<"MODE 1 : START MODE"<<std::endl;
 				if(box[x][y]->mouse_over(this->app->mouse->pos) && this->app->mouse->clicked){
 					box[this->final_state.x][this->final_state.y]->rect.setFillColor(sf::Color::Green);
+					box[this->final_state.x][this->final_state.y]->type=0;
 					this->final_state = sf::Vector2i(x, y);
+					box[x][y]->type = 1;
 				}
 
 			}
@@ -127,7 +140,10 @@ void Search::update_boxes()
 				// std::cout<<"MODE 2 : FInal MODE"<<std::endl;
 				if(box[x][y]->mouse_over(this->app->mouse->pos) && this->app->mouse->clicked){
 					box[this->initial_state.x][this->initial_state.y]->rect.setFillColor(sf::Color::Green);
+					box[this->initial_state.x][this->initial_state.y]->type=0;
 					this->initial_state = sf::Vector2i(x, y);
+					box[x][y]->type = 2;
+					
 				}
 			}
 		}
@@ -180,69 +196,99 @@ void Search::draw()
 
 void Search::solve()
 {
-	std::cout << "solving\n";
-	if (searching && queue.empty())
-	{
-		queue.push(this->initial_state);
-		return;
-	}
-	if (this->queue.front() == this->final_state)
-	{
-		sf::Vector2i curr_gg = this->final_state;
-		while (curr_gg != this->initial_state)
-		{
-			this->get_box(curr_gg)->animating = true;
-			curr_gg = this->parents[curr_gg.x][curr_gg.y];
-		}
-		this->get_box(curr_gg)->animating = true;
+	
 
+	if (this->queue.front() == this->final_state && this->search_complete == false)
+	{	
 		this->search_complete = true;
-		this->searching = false;
-		this->app->appState->startSearch=0;
+		this->back_state = final_state;
 		std::cout << "found\n";
+	}
+
+	if (search_complete){
+		if (this->back_state != this->initial_state)
+		{	
+			this->get_box(this->back_state)->type = 3;
+			this->get_box(this->back_state)->animating = true;
+			this->back_state = this->parents[this->back_state.x][this->back_state.y];
+			this->get_box(this->back_state)->animating = true;
+		}
+		else {
+			
+			this->app->appState->startSearch=0;
+
+		}
+
+		
+		
+	}
+
+	if (search_complete==false && queue.empty())
+	{
+		std::cout << "initializing............\n";
+		queue.push(this->initial_state);
+		for (int x = 0; x < 40; x++)
+	{
+		for (int y = 0; y < 40; y++)
+		{
+			if(box[x][y]->type==-1){
+				this->maze.push_back({x,y});
+			}
+		}
+	}
 		return;
 	}
+	
+	if(search_complete == false){
+		std::cout << "solving............\n";
+		auto &curr = queue.front();
+		for (int i = 0;i < maze.size();i++){
+			if(curr == this->maze[i]){
+				queue.pop();
+				return;
+			}
 
-	auto &curr = queue.front();
-	this->get_box(curr)->animating = true;
-	if (curr.x > 0)
-	{
-		if (!this->visited[curr.x - 1][curr.y])
-		{
-			queue.push({curr.x - 1, curr.y});
-			this->parents[curr.x - 1][curr.y] = curr;
-			this->visited[curr.x - 1][curr.y] = true;
 		}
-	}
-	if (curr.x < 39)
-	{
-		if (!this->visited[curr.x + 1][curr.y])
+		this->get_box(curr)->animating = true;
+		if (curr.x > 0)
 		{
-			queue.push({curr.x + 1, curr.y});
-			this->parents[curr.x + 1][curr.y] = curr;
-			this->visited[curr.x + 1][curr.y] = true;
+			if (!this->visited[curr.x - 1][curr.y])
+			{
+				queue.push({curr.x - 1, curr.y});
+				this->parents[curr.x - 1][curr.y] = curr;
+				this->visited[curr.x - 1][curr.y] = true;
+			}
 		}
-	}
-	if (curr.y > 0)
-	{
-		if (!this->visited[curr.x][curr.y - 1])
+		if (curr.x < 39)
 		{
-			queue.push({curr.x, curr.y - 1});
-			this->parents[curr.x][curr.y - 1] = curr;
-			this->visited[curr.x][curr.y - 1] = true;
+			if (!this->visited[curr.x + 1][curr.y])
+			{
+				queue.push({curr.x + 1, curr.y});
+				this->parents[curr.x + 1][curr.y] = curr;
+				this->visited[curr.x + 1][curr.y] = true;
+			}
 		}
-	}
-	if (curr.y < 39)
-	{
-		if (!this->visited[curr.x][curr.y + 1])
+		if (curr.y > 0)
 		{
-			queue.push({curr.x, curr.y + 1});
-			this->parents[curr.x][curr.y + 1] = curr;
-			this->visited[curr.x][curr.y + 1] = true;
+			if (!this->visited[curr.x][curr.y - 1])
+			{
+				queue.push({curr.x, curr.y - 1});
+				this->parents[curr.x][curr.y - 1] = curr;
+				this->visited[curr.x][curr.y - 1] = true;
+			}
 		}
-	}
+		if (curr.y < 39)
+		{
+			if (!this->visited[curr.x][curr.y + 1])
+			{
+				queue.push({curr.x, curr.y + 1});
+				this->parents[curr.x][curr.y + 1] = curr;
+				this->visited[curr.x][curr.y + 1] = true;
+			}
+		}
 
-	queue.pop();
+		queue.pop();
+	}
 }
 
 Search::~Search()

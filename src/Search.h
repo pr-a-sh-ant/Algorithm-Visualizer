@@ -36,8 +36,10 @@ public:
 	std::queue<sf::Vector2i> queue;
 	std::vector<std::vector<bool>> visited;
 	std::vector<std::vector<sf::Vector2i>> parents;
+	std::vector<sf::Vector2i> maze;
 	sf::Vector2i initial_state = sf::Vector2i(5, 5);
 	sf::Vector2i final_state = sf::Vector2i(20, 20);
+	sf::Vector2i back_state =final_state;
 
 	void init_boxes();
 	void init_buttons();

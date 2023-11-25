@@ -14,6 +14,7 @@ public:
 
     std::string name_button;
     bool hovered;
+    bool pressed;
     sf::Text *text;
 
     sf::Font font;

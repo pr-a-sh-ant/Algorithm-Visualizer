@@ -19,13 +19,10 @@ Button::Button(int x, int y, std::string text, int width, int height ,std::strin
 
 	this->text = new sf::Text(text, this->font, 60);
 	this->text->setPosition(x + 50, y + 10);
-<<<<<<< HEAD
 
 	this->func=func;
 
 	this->pressed = false;
-=======
->>>>>>> 3a943aaee8a2ed5f9a099f7ee98fb70fa0d707a6
 }
 
 void Button::centerScale(int scale)
@@ -43,25 +40,29 @@ void Button::update(Mouse *mouse, state *appState)
 		if (mouse->clicked)
 		{
 			this->hovered = false;
+			this->pressed =true;
 		}
 		else
 		{
 			this->hovered = true;
+			this->pressed =false;
 		}
 	}
 	else
 	{
 		this->hovered = false;
+		this->pressed = false;
 	}
 
-	if (this->name_button == "Exit" || this->name_button == "Back" || this->name_button == "Clear")
-	{
+	if(this->pressed){
+		
 		this->rect.setFillColor(sf::Color::Blue);
-		stateChanger(appState);
-		// std::cout<<"SCREEN :"<<appState->screen<<std::endl;
+		std::cout<<"SCREEN :"<<appState->screen<<std::endl;
 		// std::cout<<"SCREEN :"<<this->func<<std::endl;
 		mouse->clicked=false;
 
+		stateChanger(appState);
+		
 	}
 	else if (this->hovered)
 	{
