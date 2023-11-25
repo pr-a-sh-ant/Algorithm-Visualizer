@@ -26,11 +26,11 @@ void Search::init_solve()
 {
 	sf::Vector2i temp = {-1, -1};
 
-	for (int x = 0; x < 40; x++)
+	for (int x = 0; x < this->boxOrder; x++)
 	{
 		std::vector<bool> visited_temp;
 		std::vector<sf::Vector2i> parents_temp;
-		for (int y = 0; y < 40; y++)
+		for (int y = 0; y < this->boxOrder; y++)
 		{
 			visited_temp.emplace_back(false);
 			parents_temp.emplace_back(temp);
@@ -42,10 +42,10 @@ void Search::init_solve()
 
 void Search::init_boxes()
 {
-	for (int x = 0; x < 40; x++)
+	for (int x = 0; x < this->boxOrder; x++)
 	{
 		std::vector<Box *> temp_box;
-		for (int y = 0; y < 40; y++)
+		for (int y = 0; y < this->boxOrder; y++)
 		{
 			temp_box.push_back(new Box(origin.x + (x * 32), origin.y + (y * 32), 32, 32, 0));
 		}
@@ -89,9 +89,9 @@ void Search::update_boxes()
 		box[maze[i].x][maze[i].y]->rect.setFillColor(sf::Color::Black);
 	}
 
-	for (int x = 0; x < 40; x++)
+	for (int x = 0; x < this->boxOrder; x++)
 	{
-		for (int y = 0; y < 40; y++)
+		for (int y = 0; y < this->boxOrder; y++)
 		{
 			if (sf::Vector2i(x, y) == initial_state)
 			{
@@ -174,17 +174,17 @@ void Search::draw_buttons()
 void Search::draw_boxes()
 {
 	// Draw
-	for (int x = 0; x < 40; x++)
+	for (int x = 0; x < this->boxOrder; x++)
 	{
-		for (int y = 0; y < 40; y++)
+		for (int y = 0; y < this->boxOrder; y++)
 		{
 			if (!box[x][y]->animating)
 				app->window->draw(box[x][y]->rect);
 		}
 	}
-	for (int x = 0; x < 40; x++)
+	for (int x = 0; x < this->boxOrder; x++)
 	{
-		for (int y = 0; y < 40; y++)
+		for (int y = 0; y < this->boxOrder; y++)
 		{
 			if (box[x][y]->animating)
 				app->window->draw(box[x][y]->rect);
@@ -228,9 +228,9 @@ void Search::solve()
 	{
 		std::cout << "initializing............\n";
 		queue.push(this->initial_state);
-		for (int x = 0; x < 40; x++)
+		for (int x = 0; x < this->boxOrder; x++)
 		{
-			for (int y = 0; y < 40; y++)
+			for (int y = 0; y < this->boxOrder; y++)
 			{
 				if (box[x][y]->type == -1)
 				{

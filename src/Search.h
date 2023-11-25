@@ -14,8 +14,9 @@ class App;
 class Search
 {
 private:
-	int matrix_height = 32;
-	int matrix_width = 32;
+	int matrix_height = 30;
+	int matrix_width = 30;
+	int boxOrder = 40;
 	Box *get_box(sf::Vector2i &pos);
 
 public:
