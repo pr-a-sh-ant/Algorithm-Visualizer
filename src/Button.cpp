@@ -127,4 +127,8 @@ void Button::stateChanger(state *appState)
 	{
 		appState->startSearch = 1;
 	}
+	else if (this->func == "setClear")
+	{
+		appState->clear = 1;
+	}
 }

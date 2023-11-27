@@ -11,6 +11,7 @@ Node Algorithm::remove()
 	if (empty())
 	{
 		std::cout << "EMPTY FRONTIER" << std::endl;
+		
 	}
 	else
 	{
