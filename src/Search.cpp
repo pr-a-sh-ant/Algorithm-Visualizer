@@ -210,23 +210,37 @@ void Search::solve()
 
 		currentNode = new Node(initial_state,box[initial_state.x][initial_state.y]);
 
-		alg.add(*currentNode);
+		alg.add(*currentNode);	
 
+		
+		for (int x = 0; x < boxOrder; x++)
+			{
+				for (int y = 0; y < boxOrder; y++)
+				{
+					if(box[x][y]->type==-1){
+						this->maze.push_back({x,y});
+					}
+				}
+
+			}
+	
 		std::cout << "Initialized \n";
-		std::cout << searching;
+		std::cout << "\n My Initial State     " << currentNode->state.x << " " << currentNode->state.y << std::endl;
+		std::cout << "\n My Final State     " << final_state.x << " " << final_state.y << std::endl;
+		
 	}
 
 	if (search_complete)
 	{
-		std::cout << "current out " << this->currentNode->state.x <<" "<<this->currentNode->state.x << std::endl;
+		std::cout << "current out " << this->currentNode->parent->state.x <<" "<<this->currentNode->parent->state.y << std::endl;
 		std::cout << this->initial_state.x <<" "<< this->initial_state.y << std::endl;
 
 		if (this->currentNode->state != this->initial_state)
 		{
-			std::cout << "current in " << this->currentNode->state.x <<" "<<this->currentNode->state.x << std::endl;
 			this->currentNode->box->type = 3;
 			this->currentNode->box->animating = true;			
-			this->currentNode = this->currentNode->parent;
+			this->currentNode = new Node(*this->currentNode->parent);
+			Node *parent = this->currentNode->parent;
 			
 		}
 		else
@@ -242,28 +256,28 @@ void Search::solve()
 
 
 		Node node = alg.remove();
+		std::cout << "CURRENT NODE " <<node.state.x<<" "<<node.state.y <<std::endl;
+		std::cout << "CURRENT Parent " <<node.parent->state.x<<" "<<node.parent->state.y <<std::endl;
+		
 
 		if(node.state == final_state ){
 			search_complete = true;
+			
 			this->currentNode = new Node(node);
-			std::cout << "t " << std::endl;
+			std::cout << "Searching Complete.... " << std::endl;
 			std::cout << this->currentNode->box->type<< std::endl;
 			return;
 			
 		}
+
 
 		node.box->animating = true;
 
 		alg.explored.push_back(node.state);
 
 
-		std::cout << "Explored  " << alg.explored.size() << std::endl;
+		std::cout << "\n Explored  " << alg.explored.size() << std::endl;
 
-		if (node.state != initial_state)
-		{
-			std::cout << "State  " << node.state.x << " " << node.state.y << std::endl;
-			std::cout << "Parent  " << node.parent->action.x << " " << node.parent->action.y << std::endl;
-		}
 
 		std::vector<sf::Vector2i> act = node.get_actions();
 
@@ -272,15 +286,12 @@ void Search::solve()
 		{
 			if (!alg.contains_state(act[a]) && !alg.inExplored(act[a]))
 			{
-				std::cout << std::endl;
-				std::cout <<  box[act[a].x][act[a].y]->type  << std::endl;
-
 				Box* box_ = box[act[a].x][act[a].y];
 
 
 				auto child = new Node(sf::Vector2i(act[a].x, act[a].y), &node, sf::Vector2i(act[a].x, act[a].y), box_);
 
-				std::cout << "CHILD     " << child->state.x << " " << child->state.y << std::endl;
+				std::cout << "\nCHILD     " << child->state.x << " " << child->state.y << std::endl;
 				std::cout << "PARENT    " << child->parent->state.x << " " << child->parent->state.y << std::endl;
 
 				if(child->state.x < boxOrder && child->state.y < boxOrder){
