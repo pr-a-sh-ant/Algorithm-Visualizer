@@ -11,55 +11,37 @@ Box *Search::get_box(sf::Vector2i &pos)
 Search::Search(App *app)
 {
 	this->app = app;
+	textAlgo = new sf::Text("Alogrithms", this->app->font, 60);
 	init();
-	init_boxes();
-	init_solve();
 }
 
 void Search::init()
 {
-	if (!backgroundTexture.loadFromFile("src/Public/search.jpg"))
-	{
-		std::cout << "Error loading Texture" << std::endl;
-		return;
-	}
-	background.setSize((sf::Vector2f(1920, 1080)));
-	background.setTexture(&backgroundTexture);
-	background.setPosition(sf::Vector2f(0, 0));
+	this->textAlgo->setPosition(1350, 350);
 
-	back.setString("Back");
-	back.setFont(app->font);
-	back.setCharacterSize(50);
-	back.setPosition(sf::Vector2f(1600, 910));
-	back.setFillColor(sf::Color::Black);
+	init_boxes();
+	init_solve();
+	init_buttons();
 }
 
 void Search::init_solve()
 {
-	sf::Vector2i temp = {-1, -1};
-
-	for (int x = 0; x < 40; x++)
-	{
-		std::vector<bool> visited_temp;
-		std::vector<sf::Vector2i> parents_temp;
-		for (int y = 0; y < 40; y++)
-		{
-			visited_temp.emplace_back(false);
-			parents_temp.emplace_back(temp);
-		}
-		this->parents.emplace_back(parents_temp);
-		this->visited.emplace_back(visited_temp);
-	}
+	search_complete = false;
+	searching = false;	
+	back_state = final_state;
+	back_propagating=false;
+	
 }
 
 void Search::init_boxes()
-{
-	for (int x = 0; x < 40; x++)
+{	
+	box.clear();
+	for (int x = 0; x < this->boxOrder; x++)
 	{
 		std::vector<Box *> temp_box;
-		for (int y = 0; y < 40; y++)
+		for (int y = 0; y < this->boxOrder; y++)
 		{
-			temp_box.push_back(new Box(origin.x + (x * 32), origin.y + (y * 32), 32, 32));
+			temp_box.push_back(new Box(origin.x + (x * matrix_width), origin.y + (y * matrix_height), matrix_width, matrix_height, 0));
 		}
 		box.push_back(temp_box);
 	}
@@ -67,19 +49,27 @@ void Search::init_boxes()
 
 void Search::init_buttons()
 {
+	this->buttons.push_back(new Button(1400, 980, "Back", 200, 80, "goBack"));
+	this->buttons.push_back(new Button(1550, 50, "Maze", 300, 80, "modeMaze"));
+	this->buttons.push_back(new Button(1550, 150, "Destination", 300, 80, "modeDestination"));
+	this->buttons.push_back(new Button(1150, 150, "Start Point", 300, 80, "modeStart"));
+	this->buttons.push_back(new Button(1150, 50, "Search", 300, 80, "setSearching"));
+	this->buttons.push_back(new Button(1350, 250, "Clear", 300, 80, "setClear"));
 }
 
 void Search::update()
 {
-	if (app->sfEvent.type == sf::Event::MouseButtonPressed)
-	{
-		if (back.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
-		{
-			*(app->current) = 0;
-		}
-	}
 
 	totalTime += this->app->deltime;
+
+	if (this->app->appState->startSearch == 1)
+	{
+		searching = true;
+	}
+	if (this->app->appState->clear == 1 )
+	{
+		reset();
+	}
 
 	if (searching)
 	{
@@ -87,36 +77,113 @@ void Search::update()
 		totalTime = 0;
 	}
 	update_boxes();
+	update_buttons();
 }
 
 void Search::update_boxes()
 {
-	for (int x = 0; x < 40; x++)
+
+	for (int i = 0; i < maze.size(); i++)
 	{
-		for (int y = 0; y < 40; y++)
+		box[maze[i].x][maze[i].y]->rect.setFillColor(sf::Color::Black);
+	}
+
+	for (int x = 0; x < this->boxOrder; x++)
+	{
+		for (int y = 0; y < this->boxOrder; y++)
 		{
+			if (sf::Vector2i(x, y) == initial_state)
+			{
+
+				box[x][y]->rect.setFillColor(sf::Color{250, 100, 150});
+			}
+			else if (sf::Vector2i(x, y) == final_state)
+			{
+				box[x][y]->rect.setFillColor(sf::Color{250, 0, 0});
+			}
+			else if (box[x][y]->type == -1)
+			{
+				box[x][y]->rect.setFillColor(sf::Color::Black);
+			}
+			else if (box[x][y]->type == -3)
+			{
+				box[x][y]->rect.setFillColor(sf::Color::Magenta);
+			}
 			if (box[x][y]->animating)
 			{
 				box[x][y]->animate(this->app->deltime);
 			}
+
+			if (this->app->appState->mode == 0)
+			{
+				// std::cout<<"MODE 0 : MAZE MODE"<<std::endl;
+				if (box[x][y]->mouse_over(this->app->mouse->pos) && this->app->mouse->clicked)
+				{
+					std::cout << "Set Box As Maze " << std::endl;
+					box[x][y]->type = -1;
+					box[x][y]->rect.setFillColor(sf::Color::Green);
+				}
+			}
+
+			else if (this->app->appState->mode == 1)
+			{
+				// std::cout<<"MODE 1 : START MODE"<<std::endl;
+				if (box[x][y]->mouse_over(this->app->mouse->pos) && this->app->mouse->clicked)
+				{
+					box[this->final_state.x][this->final_state.y]->rect.setFillColor(sf::Color::Green);
+					box[this->final_state.x][this->final_state.y]->type = 0;
+					this->final_state = sf::Vector2i(x, y);
+					box[x][y]->type = 1;
+				}
+			}
+
+			else if (this->app->appState->mode == 2)
+			{
+				// std::cout<<"MODE 2 : FInal MODE"<<std::endl;
+				if (box[x][y]->mouse_over(this->app->mouse->pos) && this->app->mouse->clicked)
+				{
+					box[this->initial_state.x][this->initial_state.y]->rect.setFillColor(sf::Color::Green);
+					box[this->initial_state.x][this->initial_state.y]->type = 0;
+					this->initial_state = sf::Vector2i(x, y);
+					box[x][y]->type = 2;
+				}
+			}
 		}
+	}
+}
+
+void Search::update_buttons()
+{
+
+	for (int i = 0; i < buttons.size(); i++)
+	{
+		buttons[i]->update(this->app->mouse, this->app->appState);
+	}
+}
+
+void Search::draw_buttons()
+{
+	for (int i = 0; i < buttons.size(); i++)
+	{
+
+		buttons[i]->draw(this->app->window);
 	}
 }
 
 void Search::draw_boxes()
 {
 	// Draw
-	for (int x = 0; x < 40; x++)
+	for (int x = 0; x < this->boxOrder; x++)
 	{
-		for (int y = 0; y < 40; y++)
+		for (int y = 0; y < this->boxOrder; y++)
 		{
 			if (!box[x][y]->animating)
 				app->window->draw(box[x][y]->rect);
 		}
 	}
-	for (int x = 0; x < 40; x++)
+	for (int x = 0; x < this->boxOrder; x++)
 	{
-		for (int y = 0; y < 40; y++)
+		for (int y = 0; y < this->boxOrder; y++)
 		{
 			if (box[x][y]->animating)
 				app->window->draw(box[x][y]->rect);
@@ -126,75 +193,133 @@ void Search::draw_boxes()
 
 void Search::draw()
 {
-	app->window->draw(background);
+	this->app->window->draw(*this->textAlgo);
 	draw_boxes();
-	app->window->draw(back);
+	draw_buttons();
 }
 
 void Search::solve()
 {
-	std::cout << "solving\n";
-	if (searching && queue.empty())
-	{
-		queue.push(this->initial_state);
-		return;
-	}
-	if (this->queue.front() == this->final_state)
-	{
-		sf::Vector2i curr_gg = this->final_state;
-		while (curr_gg != this->initial_state)
-		{
-			this->get_box(curr_gg)->animating = true;
-			curr_gg = this->parents[curr_gg.x][curr_gg.y];
-		}
-		this->get_box(curr_gg)->animating = true;
 
-		this->search_complete = true;
-		this->searching = false;
-		std::cout << "found\n";
-		return;
+	
+
+	if (alg.empty() && this->search_complete == false)
+	{
+		
+		this->back_state = final_state;
+
+		currentNode = new Node(initial_state,box[initial_state.x][initial_state.y]);
+
+		alg.add(currentNode);	
+
+		
+		for (int x = 0; x < boxOrder; x++)
+			{
+				for (int y = 0; y < boxOrder; y++)
+				{
+					if(box[x][y]->type==-1){
+						this->maze.push_back({x,y});
+					}
+				}
+
+			}
+	
+		std::cout << "Initialized \n";
+		std::cout << "\n My Initial State     " << currentNode->state.x << " " << currentNode->state.y << std::endl;
+		std::cout << "\n My Final State     " << final_state.x << " " << final_state.y << std::endl;
+		
 	}
 
-	auto &curr = queue.front();
-	this->get_box(curr)->animating = true;
-	if (curr.x > 0)
+	if (search_complete && back_propagating)
 	{
-		if (!this->visited[curr.x - 1][curr.y])
+		std::cout << "current out " << this->currentNode->state.x <<" "<<this->currentNode->state.y << std::endl;
+		std::cout << this->initial_state.x <<" "<< this->initial_state.y << std::endl;
+
+		if (this->currentNode->state != this->initial_state)
 		{
-			queue.push({curr.x - 1, curr.y});
-			this->parents[curr.x - 1][curr.y] = curr;
-			this->visited[curr.x - 1][curr.y] = true;
+			this->currentNode->box->type = 3;
+			
+			this->currentNode->box->animating = true;			
+			this->currentNode = new Node(*this->currentNode->parent);
+			Node *parent = this->currentNode->parent;
+			
 		}
-	}
-	if (curr.x < 39)
-	{
-		if (!this->visited[curr.x + 1][curr.y])
+		else
 		{
-			queue.push({curr.x + 1, curr.y});
-			this->parents[curr.x + 1][curr.y] = curr;
-			this->visited[curr.x + 1][curr.y] = true;
-		}
-	}
-	if (curr.y > 0)
-	{
-		if (!this->visited[curr.x][curr.y - 1])
-		{
-			queue.push({curr.x, curr.y - 1});
-			this->parents[curr.x][curr.y - 1] = curr;
-			this->visited[curr.x][curr.y - 1] = true;
-		}
-	}
-	if (curr.y < 39)
-	{
-		if (!this->visited[curr.x][curr.y + 1])
-		{
-			queue.push({curr.x, curr.y + 1});
-			this->parents[curr.x][curr.y + 1] = curr;
-			this->visited[curr.x][curr.y + 1] = true;
+			back_propagating = false;
+			this->app->appState->startSearch = 0;
+			std::cout << "BACK PROPAGATING......" << std::endl;
+			
 		}
 	}
 
-	queue.pop();
+	
+
+	if ( !search_complete){
+
+
+		Node *node = alg.remove();
+		std::cout << "CURRENT NODE " <<node->state.x<<" "<<node->state.y <<std::endl;
+		
+
+		if(node->state == final_state ){
+			search_complete = true;
+			back_propagating = true;
+			
+			this->currentNode = node;
+			std::cout << "Searching Complete.... " << std::endl;
+			return;
+			
+		}
+
+
+		node->box->animating = true;
+
+		alg.explored.push_back(node->state);
+
+
+		std::cout << "\n Explored  " << alg.explored.size() << std::endl;
+
+
+		std::vector<sf::Vector2i> act = node->get_actions();
+
+
+		for (int a = 0; a < act.size(); a++)
+		{
+			if (!alg.contains_state(act[a]) && !alg.inExplored(act[a]))
+			{
+				Box* box_ = box[act[a].x][act[a].y];
+
+
+				auto child = new Node(sf::Vector2i(act[a].x, act[a].y), node, sf::Vector2i(act[a].x, act[a].y), box_);
+
+				std::cout << "\nCHILD     " << child->state.x << " " << child->state.y << std::endl;
+				std::cout << "PARENT    " << child->parent->state.x << " " << child->parent->state.y << std::endl;
+
+				if(child->state.x < boxOrder && child->state.y < boxOrder && !child->in_maze(maze) ){
+
+					alg.add(child);
+				}
+			}
+		}
+		std::cout << "Frontier  " << alg.frontier.size() << std::endl;
+
+		std::cout << std::endl;
+		std::cout << std::endl;
+		std::cout << std::endl;
+	}
+
+}
+
+void Search::reset()
+{
+
+	init_boxes();
+	init_solve();
+	alg.reset();
+	maze.clear();	
+	this->app->appState->clear=0;
+	this->app->appState->startSearch=0;
 }
 
 Search::~Search()
