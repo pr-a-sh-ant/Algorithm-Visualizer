@@ -22,4 +22,5 @@ public:
 
 
 	std::vector<sf::Vector2i> get_actions();
+	bool in_maze(std::vector<sf::Vector2i> maze);
 };

@@ -296,7 +296,7 @@ void Search::solve()
 				std::cout << "\nCHILD     " << child->state.x << " " << child->state.y << std::endl;
 				std::cout << "PARENT    " << child->parent->state.x << " " << child->parent->state.y << std::endl;
 
-				if(child->state.x < boxOrder && child->state.y < boxOrder){
+				if(child->state.x < boxOrder && child->state.y < boxOrder && !child->in_maze(maze) ){
 
 					alg.add(child);
 				}
@@ -317,7 +317,9 @@ void Search::reset()
 	init_boxes();
 	init_solve();
 	alg.reset();
+	maze.clear();	
 	this->app->appState->clear=0;
+	this->app->appState->startSearch=0;
 }
 
 Search::~Search()
