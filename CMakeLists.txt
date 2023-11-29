@@ -15,8 +15,10 @@ add_executable(AlgViz
     src/Entity.h
     src/Search.h
     src/App.h
-    src/Home.h
     src/Button.h
+    src/sort_alg.h
+    src/array.h
+    src/Sort.h
     
     src/Node.cpp 
     src/Box.cpp 
@@ -28,6 +30,10 @@ add_executable(AlgViz
     src/main.cpp
     src/Home.cpp
     src/Button.cpp
+    src/sort_alg.cpp
+    src/array.cpp
+    src/navin_main.cpp
+    src/Sort.cpp
 )
 
 target_include_directories(AlgViz PRIVATE src)
