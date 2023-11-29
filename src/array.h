@@ -1,18 +1,16 @@
-#ifndef ARRAY_H
-#define ARRAY_H
+#pragma once
 
 #include <vector>
 
-class Array {
+class Array
+{
 public:
     Array(int size);
 
     void swap(size_t i, size_t j);
     void shuffle();
-    const std::vector<int>& getData();
+    const std::vector<int> &getData();
 
 private:
     std::vector<int> data;
 };
-
-#endif 

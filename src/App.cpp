@@ -17,13 +17,14 @@ void App::init_window()
 	this->mouse = new Mouse();
 	init_search();
 	init_home();
+	init_sort();
 }
 
 void App::init_variables()
-{	
-	this->appState->screen=1;
-	this->appState->startSearch=0;
-	this->appState->mode=3;
+{
+	this->appState->screen = 1;
+	this->appState->startSearch = 0;
+	this->appState->mode = 3;
 	deltime = 0.0f;
 	if (!font.loadFromFile("src/public/font.ttf"))
 	{
@@ -43,12 +44,25 @@ void App::init_home()
 	this->home = new Home(this);
 }
 
+void App::init_sort()
+{
+	this->sort = new Sort(this);
+}
+
 void App::draw()
 {
 	this->window->clear();
 	if (appState->screen == 0)
 	{
 		this->home->draw();
+	}
+	else if (appState->screen == 1)
+	{
+		this->search->draw();
+	}
+	else if (appState->screen == 2)
+	{
+		this->sort->draw();
 	}
 	else if (appState->screen == 1)
 	{
@@ -67,6 +81,10 @@ void App::update()
 	else if (appState->screen == 1)
 	{
 		this->search->update();
+	}
+	else if (appState->screen == 2)
+	{
+		this->sort->update();
 	}
 	else if (appState->screen == -1)
 	{
