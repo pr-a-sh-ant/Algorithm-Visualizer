@@ -33,6 +33,7 @@ public:
 	float switchTIme = .1f;
 	bool searching = false;
 	bool search_complete = false;
+	bool back_propagating = false;
 
 	// For search
 	std::queue<sf::Vector2i> queue;

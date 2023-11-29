@@ -29,7 +29,7 @@ void Search::init_solve()
 	search_complete = false;
 	searching = false;	
 	back_state = final_state;
-	
+	back_propagating=false;
 	
 }
 
@@ -210,7 +210,7 @@ void Search::solve()
 
 		currentNode = new Node(initial_state,box[initial_state.x][initial_state.y]);
 
-		alg.add(*currentNode);	
+		alg.add(currentNode);	
 
 		
 		for (int x = 0; x < boxOrder; x++)
@@ -230,14 +230,15 @@ void Search::solve()
 		
 	}
 
-	if (search_complete)
+	if (search_complete && back_propagating)
 	{
-		std::cout << "current out " << this->currentNode->parent->state.x <<" "<<this->currentNode->parent->state.y << std::endl;
+		std::cout << "current out " << this->currentNode->state.x <<" "<<this->currentNode->state.y << std::endl;
 		std::cout << this->initial_state.x <<" "<< this->initial_state.y << std::endl;
 
 		if (this->currentNode->state != this->initial_state)
 		{
 			this->currentNode->box->type = 3;
+			
 			this->currentNode->box->animating = true;			
 			this->currentNode = new Node(*this->currentNode->parent);
 			Node *parent = this->currentNode->parent;
@@ -245,8 +246,10 @@ void Search::solve()
 		}
 		else
 		{
-
+			back_propagating = false;
 			this->app->appState->startSearch = 0;
+			std::cout << "BACK PROPAGATING......" << std::endl;
+			
 		}
 	}
 
@@ -255,31 +258,30 @@ void Search::solve()
 	if ( !search_complete){
 
 
-		Node node = alg.remove();
-		std::cout << "CURRENT NODE " <<node.state.x<<" "<<node.state.y <<std::endl;
-		std::cout << "CURRENT Parent " <<node.parent->state.x<<" "<<node.parent->state.y <<std::endl;
+		Node *node = alg.remove();
+		std::cout << "CURRENT NODE " <<node->state.x<<" "<<node->state.y <<std::endl;
 		
 
-		if(node.state == final_state ){
+		if(node->state == final_state ){
 			search_complete = true;
+			back_propagating = true;
 			
-			this->currentNode = new Node(node);
+			this->currentNode = node;
 			std::cout << "Searching Complete.... " << std::endl;
-			std::cout << this->currentNode->box->type<< std::endl;
 			return;
 			
 		}
 
 
-		node.box->animating = true;
+		node->box->animating = true;
 
-		alg.explored.push_back(node.state);
+		alg.explored.push_back(node->state);
 
 
 		std::cout << "\n Explored  " << alg.explored.size() << std::endl;
 
 
-		std::vector<sf::Vector2i> act = node.get_actions();
+		std::vector<sf::Vector2i> act = node->get_actions();
 
 
 		for (int a = 0; a < act.size(); a++)
@@ -289,14 +291,14 @@ void Search::solve()
 				Box* box_ = box[act[a].x][act[a].y];
 
 
-				auto child = new Node(sf::Vector2i(act[a].x, act[a].y), &node, sf::Vector2i(act[a].x, act[a].y), box_);
+				auto child = new Node(sf::Vector2i(act[a].x, act[a].y), node, sf::Vector2i(act[a].x, act[a].y), box_);
 
 				std::cout << "\nCHILD     " << child->state.x << " " << child->state.y << std::endl;
 				std::cout << "PARENT    " << child->parent->state.x << " " << child->parent->state.y << std::endl;
 
 				if(child->state.x < boxOrder && child->state.y < boxOrder){
 
-					alg.add(*child);
+					alg.add(child);
 				}
 			}
 		}
@@ -314,6 +316,7 @@ void Search::reset()
 
 	init_boxes();
 	init_solve();
+	alg.reset();
 	this->app->appState->clear=0;
 }
 
