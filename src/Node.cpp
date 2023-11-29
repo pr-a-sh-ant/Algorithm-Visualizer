@@ -10,6 +10,7 @@ Node::Node(sf::Vector2i state, Node* parent, sf::Vector2i action, Box* box)
 	this->action = action;
 	this->box = box;
 	this->state = state;
+	
 }
 
 Node::Node(sf::Vector2i state, Box* box)
@@ -41,4 +42,16 @@ std::vector<sf::Vector2i> Node::get_actions()
 	}
 
 	return actions;
+}
+
+bool Node::in_maze(std::vector<sf::Vector2i> maze){
+
+	for (int i = 0; i < maze.size(); i++)
+		{
+			if (this->state == maze[i])
+			{
+				return true;
+			}
+		}
+	return false;
 }

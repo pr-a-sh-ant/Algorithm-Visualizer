@@ -20,53 +20,33 @@ void Home::init()
     background.setTexture(&backgroundTexture);
     background.setPosition(sf::Vector2f(0, 0));
 
-    searchAlgo.setString("Search \nAlgorithm");
-    searchAlgo.setFont(app->font);
-    searchAlgo.setCharacterSize(60);
-    searchAlgo.setPosition(sf::Vector2f(350, 530));
-
-    sortAlgo.setString("Sort \nAlgorithm");
-    sortAlgo.setFont(app->font);
-    sortAlgo.setCharacterSize(60);
-    sortAlgo.setPosition(sf::Vector2f(1300, 530));
-
-    exit.setString("Exit");
-    exit.setFont(app->font);
-    exit.setCharacterSize(60);
-    exit.setPosition(sf::Vector2f(900, 880));
-    exit.setFillColor(sf::Color::Black);
-
     init_buttons();
 }
 
 void Home::init_buttons()
 {
 
-    this->entities.push_back(new Button(1300, 530,256,64));
-    
-    
-    this->entities.push_back(new Button(900, 880,256,64));
-    
-    this->entities.push_back(new Button(350, 530,256,64));
+    this->entities.push_back(new Button(1200, 650, "Sort Algorithm", 500, 80, "goSort"));
 
+    this->entities.push_back(new Button(850, 880, "Exit", 200, 80, "goBack"));
 
+    this->entities.push_back(new Button(250, 650, "Search Algorithm", 500, 80, "goSearch"));
 }
-
 
 void Home::draw()
 {
     app->window->draw(background);
-    app->window->draw(sortAlgo);
-    app->window->draw(searchAlgo);
-    app->window->draw(exit);
-    for(int i=0; i < entities.size(); i++){
-        std::cout<<std::endl<<"entity"<<entities[i]->pos.x<<std::endl;
-        app->window->draw(entities[i]->rect);
-            
-    }    
+    for (int i = 0; i < entities.size(); i++)
+    {
+
+        entities[i]->draw(this->app->window);
+    }
 }
 
 void Home::update()
 {
-  
+    for (int i = 0; i < entities.size(); i++)
+    {
+        entities[i]->update(this->app->mouse, this->app->appState);
+    }
 }

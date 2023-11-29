@@ -16,7 +16,7 @@ public:
 	sf::RectangleShape rect;
 	sf::Vector2i dim;
 
-	bool mouse_over(sf::Vector2i& pos2);
+	bool mouse_over(sf::Vector2i pos2);
 
 
 };
