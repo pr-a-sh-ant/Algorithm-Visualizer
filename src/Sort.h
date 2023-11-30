@@ -16,13 +16,14 @@ public:
     App *app;
     AlgorithmSort algorithm;
     Array array;
-    const std::vector<int> &current_state;
+    std::vector<int> &current_state;
 
     sf::RectangleShape renderbox;
     sf::RectangleShape bar;
 
     int currentAlgorithm = 1;
     float barwidth;
+    int i,j;
 
     
 

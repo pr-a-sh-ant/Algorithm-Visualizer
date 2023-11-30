@@ -7,7 +7,7 @@ class AlgorithmSort
 public:
     AlgorithmSort(Array &arr);
     void bubbleSort();
-    void insertionSort();
+    void insertionSort(int &i,int &j);
     void mergeSort();
     void quickSort();
 

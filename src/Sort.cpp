@@ -42,7 +42,7 @@ void Sort::update()
         algorithm.bubbleSort();
         break;
     case 1:
-        algorithm.insertionSort();
+        algorithm.insertionSort(this->i,this->j);
         break;
     case 2:
         algorithm.mergeSort();
