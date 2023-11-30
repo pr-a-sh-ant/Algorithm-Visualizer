@@ -24,20 +24,25 @@ void AlgorithmSort::bubbleSort()
 
 void AlgorithmSort::insertionSort()
 {
-    if (i < array.getData().size())
+    if (this->i < array.getData().size())
     {
-        int key = array.getData()[i];
-        int k = i;
+        int key = array.getData()[this->j];
+        
 
-        if (k > 0 && array.getData()[k - 1] > key)
+        if (this->j > 0 && array.getData()[this->j - 1] > key)
         {
-            array.swap(k, k - 1);
-            k--;
+            array.swap(this->j, this->j - 1);
+            this->j--;
         }
 
-        array.swap(k, i);
-        i++;
-    }
+            else{
+                this->i++;
+                
+                this->j = this->i;
+            }
+        }
+        
+    
 }
 
 void AlgorithmSort::mergeSort()
@@ -63,18 +68,6 @@ void AlgorithmSort::quickSort()
     }
 }
 
-void AlgorithmSort::mergeSortRecursive(size_t left, size_t right)
-{
-    if (left < right)
-    {
-        size_t middle = left + (right - left) / 2;
-
-        mergeSortRecursive(left, middle);
-        mergeSortRecursive(middle + 1, right);
-
-        merge(left, middle, right);
-    }
-}
 
 void AlgorithmSort::merge(size_t left, size_t middle, size_t right)
 {
@@ -124,16 +117,7 @@ void AlgorithmSort::merge(size_t left, size_t middle, size_t right)
     }
 }
 
-void AlgorithmSort::quickSortRecursive(int low, int high)
-{
-    if (low < high)
-    {
-        pivotIndex = partition(low, high);
 
-        quickSortRecursive(low, pivotIndex - 1);
-        quickSortRecursive(pivotIndex + 1, high);
-    }
-}
 
 int AlgorithmSort::partition(int low, int high)
 {
