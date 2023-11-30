@@ -19,6 +19,7 @@ add_executable(AlgViz
     src/sort_alg.h
     src/array.h
     src/Sort.h
+    src/State.h
     
     src/Node.cpp 
     src/Box.cpp 

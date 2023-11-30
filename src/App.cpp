@@ -2,13 +2,14 @@
 #include "Search.h"
 #include <iostream>
 #include "Home.h"
+#include "State.h"
 
 App::App()
 {
 	init_window();
-	std::cout << "window inited............." << std::endl;
+	// std::cout << "window inited............." << std::endl;
 	init_variables();
-	std::cout << "APP INIT DONE......" << std::endl;
+	// std::cout << "APP INIT DONE......" << std::endl;
 }
 
 void App::init_window()
@@ -24,9 +25,11 @@ void App::init_window()
 
 void App::init_variables()
 {
-	
-	
-	std::cout << "numeric variables inited............." << std::endl;
+	this->appState = new state;
+	this->appState->screen = 0;
+	this->appState->startSearch = 0;
+	this->appState->mode = 3;
+	// std::cout << "numeric variables inited............." << std::endl;
 	deltime = 0.0f;
 	if (!font.loadFromFile("src/public/font.ttf"))
 	{
@@ -55,12 +58,12 @@ void App::init_sort()
 
 void App::draw()
 {
-	std::cout << "drawing............." << std::endl;
+	// std::cout << "drawing............." << std::endl;
 		
 	this->window->clear();
-	if (0 == 0)
+	if (appState->screen == 0)
 	{	
-		std::cout << "drawing home............." << std::endl;
+		// std::cout << "drawing home............." << std::endl;
 		this->home->draw();
 	}
 	else if (appState->screen == 1)
@@ -81,11 +84,11 @@ void App::draw()
 
 void App::update()
 {	
-	std::cout << "updating............." << std::endl;
+	// std::cout << "updating............." << std::endl;
 	updateSFMLevents();
 	if (appState->screen == 0)
 	{
-		std::cout << "updating Home............." << std::endl;
+		// std::cout << "updating Home............." << std::endl;
 		this->home->update();
 	}
 	else if (appState->screen == 1)
@@ -94,7 +97,7 @@ void App::update()
 	}
 	else if (appState->screen == 2)
 	{	
-		std::cout << "updating sort............." << std::endl;
+		// std::cout << "updating sort............." << std::endl;
 		this->sort->update();
 	}
 	else if (appState->screen == -1)
@@ -138,7 +141,7 @@ void App::run()
 {
 	while (this->window->isOpen())
 	{	
-		std::cout << "running............." << std::endl;
+		// std::cout << "running............." << std::endl;
 		this->update();
 
 		this->draw();

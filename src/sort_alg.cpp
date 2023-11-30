@@ -29,7 +29,7 @@ void AlgorithmSort::insertionSort()
         int key = array.getData()[i];
         int k = i;
 
-        while (k > 0 && array.getData()[k - 1] > key)
+        if (k > 0 && array.getData()[k - 1] > key)
         {
             array.swap(k, k - 1);
             k--;

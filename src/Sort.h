@@ -21,8 +21,10 @@ public:
     sf::RectangleShape renderbox;
     sf::RectangleShape bar;
 
-    int currentAlgorithm = 0;
+    int currentAlgorithm = 1;
     float barwidth;
+
+    
 
     void init();
     void draw();
