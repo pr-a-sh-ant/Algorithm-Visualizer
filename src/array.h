@@ -9,7 +9,7 @@ public:
 
     void swap(size_t i, size_t j);
     void shuffle();
-    const std::vector<int> &getData();
+    std::vector<int> &getData();
 
 private:
     std::vector<int> data;

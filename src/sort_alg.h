@@ -11,9 +11,9 @@ public:
     void mergeSort();
     void quickSort();
 
-    const std::vector<int> &getCurrentState() const;
+    std::vector<int> &getCurrentState();
 
-    bool isSortingComplete() const;
+    bool isSortingComplete();
     void resetSorting();
 
 private:

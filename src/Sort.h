@@ -14,8 +14,8 @@ public:
     Sort(App *app);
     ~Sort();
     App *app;
-    AlgorithmSort algorithm;
-    Array array;
+    AlgorithmSort *algorithm;
+    Array *array;
     std::vector<int> &current_state;
 
     sf::RectangleShape renderbox;
@@ -25,9 +25,8 @@ public:
     float barwidth;
     int i,j;
 
-    
-
     void init();
     void draw();
     void update();
+    void reset();
 };
