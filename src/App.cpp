@@ -6,6 +6,7 @@
 App::App()
 {
 	init_window();
+	std::cout << "window inited............." << std::endl;
 	init_variables();
 	std::cout << "APP INIT DONE......" << std::endl;
 }
@@ -18,19 +19,21 @@ void App::init_window()
 	init_search();
 	init_home();
 	init_sort();
+
 }
 
 void App::init_variables()
 {
-	this->appState->screen = 1;
-	this->appState->startSearch = 0;
-	this->appState->mode = 3;
+	
+	
+	std::cout << "numeric variables inited............." << std::endl;
 	deltime = 0.0f;
 	if (!font.loadFromFile("src/public/font.ttf"))
 	{
 		std::cout << "Error loading font" << std::endl;
 		return;
 	}
+	std::cout << "variables loaded............." << std::endl;
 }
 
 void App::init_search()
@@ -45,15 +48,19 @@ void App::init_home()
 }
 
 void App::init_sort()
-{
+{	
 	this->sort = new Sort(this);
+	
 }
 
 void App::draw()
 {
+	std::cout << "drawing............." << std::endl;
+		
 	this->window->clear();
-	if (appState->screen == 0)
-	{
+	if (0 == 0)
+	{	
+		std::cout << "drawing home............." << std::endl;
 		this->home->draw();
 	}
 	else if (appState->screen == 1)
@@ -65,17 +72,20 @@ void App::draw()
 		this->sort->draw();
 	}
 	else if (appState->screen == 1)
-	{
+	{	
+		
 		this->search->draw();
 	}
 	this->window->display();
 }
 
 void App::update()
-{
+{	
+	std::cout << "updating............." << std::endl;
 	updateSFMLevents();
 	if (appState->screen == 0)
 	{
+		std::cout << "updating Home............." << std::endl;
 		this->home->update();
 	}
 	else if (appState->screen == 1)
@@ -83,7 +93,8 @@ void App::update()
 		this->search->update();
 	}
 	else if (appState->screen == 2)
-	{
+	{	
+		std::cout << "updating sort............." << std::endl;
 		this->sort->update();
 	}
 	else if (appState->screen == -1)
@@ -126,8 +137,8 @@ void App::updateSFMLevents()
 void App::run()
 {
 	while (this->window->isOpen())
-	{
-
+	{	
+		std::cout << "running............." << std::endl;
 		this->update();
 
 		this->draw();

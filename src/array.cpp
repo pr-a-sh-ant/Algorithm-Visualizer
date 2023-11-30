@@ -1,5 +1,6 @@
 #include "array.h"
 #include <algorithm>
+#include <numeric>
 #include <random>
 
 Array::Array(int size) {

@@ -32,7 +32,6 @@ add_executable(AlgViz
     src/Button.cpp
     src/sort_alg.cpp
     src/array.cpp
-    src/navin_main.cpp
     src/Sort.cpp
 )
 

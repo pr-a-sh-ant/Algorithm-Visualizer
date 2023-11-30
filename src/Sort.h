@@ -6,10 +6,6 @@
 #include "sort_alg.h"
 #include "array.h"
 
-using namespace sf;
-
-class Algorithm;
-class Array;
 class App;
 
 class Sort
@@ -22,8 +18,8 @@ public:
     Array array;
     const std::vector<int> &current_state;
 
-    RectangleShape renderbox;
-    RectangleShape bar;
+    sf::RectangleShape renderbox;
+    sf::RectangleShape bar;
 
     int currentAlgorithm = 0;
     float barwidth;
