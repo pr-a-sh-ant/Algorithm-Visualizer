@@ -101,14 +101,17 @@ void Button::stateChanger(state *appState)
 	if (this->func == "goSort")
 	{
 		appState->screen = 2;
+		appState->resetScreen = 1;
 	}
 	else if (this->func == "goSearch")
 	{
 		appState->screen = 1;
+		appState->resetScreen = 1;
 	}
 	else if (this->func == "goBack")
 	{
 		appState->screen = 0;
+		appState->resetScreen = 1;
 	}
 	else if (this->func == "modeMaze")
 	{
@@ -130,5 +133,21 @@ void Button::stateChanger(state *appState)
 	else if (this->func == "setClear")
 	{
 		appState->clear = 1;
+	}
+	else if (this->func == "resetSort")
+	{
+		appState->clear = 1;
+	}
+	else if (this->func == "setSorting")
+	{
+		appState->startSort = 1;
+	}
+	else if (this->func == "insertMode")
+	{
+		appState->sortAlg = 1;
+	}
+	else if (this->func == "bubbleMode")
+	{
+		appState->sortAlg = 0;
 	}
 }

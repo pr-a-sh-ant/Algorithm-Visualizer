@@ -5,6 +5,7 @@
 #include <queue>
 #include "sort_alg.h"
 #include "array.h"
+#include "Button.h"
 
 class App;
 
@@ -18,11 +19,14 @@ public:
     Array array;
     const std::vector<int> &current_state;
 
+    std::vector<Button *> buttons;
+
     sf::RectangleShape renderbox;
     sf::RectangleShape bar;
 
-    int currentAlgorithm = 1;
+    int currentAlgorithm = 0;
     float barwidth;
+    bool sorting;
 
     
 

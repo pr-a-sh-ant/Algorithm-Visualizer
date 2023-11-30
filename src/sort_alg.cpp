@@ -167,7 +167,7 @@ bool AlgorithmSort::isSortingComplete() const
 
 void AlgorithmSort::resetSorting()
 {
-
+    this->array.shuffle();
     i = 0;
     j = 0;
     pivotIndex = -1;
