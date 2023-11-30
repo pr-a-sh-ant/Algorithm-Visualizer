@@ -153,13 +153,13 @@ int AlgorithmSort::partition(int low, int high)
     return (i + 1);
 }
 
-const std::vector<int> &AlgorithmSort::getCurrentState() const
+std::vector<int> &AlgorithmSort::getCurrentState()
 {
     return array.getData();
 }
 
 // Implementation of added functions
-bool AlgorithmSort::isSortingComplete() const
+bool AlgorithmSort::isSortingComplete()
 {
 
     return i >= array.getData().size() - 1;
