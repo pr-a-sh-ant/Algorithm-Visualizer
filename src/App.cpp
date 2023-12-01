@@ -15,7 +15,7 @@ App::App()
 void App::init_window()
 {
 	sf::VideoMode mode = sf::VideoMode::getDesktopMode();
-	this->window = new sf::RenderWindow(mode, "SFML works!");
+	this->window = new sf::RenderWindow(mode, "SFML works!", sf::Style::Fullscreen);
 	this->mouse = new Mouse();
 	init_search();
 	init_home();
@@ -28,6 +28,7 @@ void App::init_variables()
 	this->appState = new state;
 	this->appState->screen = 0;
 	this->appState->startSearch = 0;
+	this->appState->resetScreen = 1;
 	this->appState->mode = 3;
 	// std::cout << "numeric variables inited............." << std::endl;
 	deltime = 0.0f;
@@ -36,7 +37,7 @@ void App::init_variables()
 		std::cout << "Error loading font" << std::endl;
 		return;
 	}
-	std::cout << "variables loaded............." << std::endl;
+
 }
 
 void App::init_search()
@@ -90,6 +91,11 @@ void App::update()
 	{
 		// std::cout << "updating Home............." << std::endl;
 		this->home->update();
+		if(this->appState->resetScreen){
+			this->search->reset();
+			this->sort->init();
+			this->appState->resetScreen=0;
+		}
 	}
 	else if (appState->screen == 1)
 	{
@@ -105,6 +111,9 @@ void App::update()
 		this->window->clear();
 		this->window->close();
 	}
+
+	
+
 	mouse->update(*this->window);
 }
 

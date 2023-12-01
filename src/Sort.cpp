@@ -12,15 +12,45 @@ Sort::Sort(App *app)
 
     renderbox.setSize(sf::Vector2f(1000, 1000));
     renderbox.setPosition(25, 25);
+    
+    textAlgo = new sf::Text("Sort Alogrithms", this->app->font, 60);
+    this->textAlgo->setPosition(1250, 200);
+    // this->app->appState->sortAlg = 0;
+
+    this->buttons.push_back(new Button(1150, 50, "Start Sort", 300, 80, "setSorting"));
+
+    this->buttons.push_back(new Button(1550, 50, "Reset", 300, 80, "resetSort"));
+
+    this->buttons.push_back(new Button(1350, 400, "Insertion", 300, 80, "insertMode"));
+
+    this->buttons.push_back(new Button(1350, 300, "Bubble", 300, 80, "bubbleMode"));
+
+    this->buttons.push_back(new Button(1200, 880, "Back", 200, 80, "goBack"));
+
 }
 
+
+
 void Sort::init()
-{
+{   
+        sorting=false;
+        this->app->appState->startSort=false;
+        algorithm.resetSorting();
+        this->app->appState->clear=0;
 }
 
 void Sort::draw()
 {
     barwidth = static_cast<float>(renderbox.getSize().x) / current_state.size();
+
+    this->app->window->draw(*this->textAlgo);
+    
+    for (int i = 0; i < buttons.size(); i++)
+    {
+
+        buttons[i]->draw(this->app->window);
+    }
+
 
     this->app->window->draw(renderbox);
     for (size_t i = 0; i < current_state.size(); i++)
@@ -47,19 +77,41 @@ void Sort::reset()
 
 void Sort::update()
 {
-    switch (currentAlgorithm)
-    {
-    case 0:
-        algorithm->bubbleSort();
-        break;
-    case 1:
-        algorithm.insertionSort(this->i,this->j);
-        break;
-    case 2:
-        algorithm->mergeSort();
-        break;
-    case 3:
-        algorithm->quickSort();
-        break;
+
+    
+    if(this->app->appState->startSort){
+        sorting=true;
     }
+
+        if (!this->app->appState->clearSort){
+            this->init();
+            this->app->appState->clearSort = 1;
+        }
+    if(sorting){
+
+
+        switch (currentAlgorithm)
+        {
+        case 0:
+            algorithm.bubbleSort();
+
+            break;
+        case 1:
+            algorithm.insertionSort();
+            break;
+        case 2:
+            algorithm.bogo();
+            break;
+        }
+    }
+    this->currentAlgorithm = this->app->appState->sortAlg;
+     for (int i = 0; i < buttons.size(); i++)
+    {
+        buttons[i]->update(this->app->mouse, this->app->appState);
+    }
+
+    if(this->app->appState->clear){
+        this->init();
+    }
+
 }

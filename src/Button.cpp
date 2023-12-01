@@ -61,7 +61,7 @@ void Button::update(Mouse *mouse, state *appState)
 			this->rect.setFillColor(sf::Color(224, 15, 18));
 	}
 
-	else if (this->name_button == "Search")
+	else if (this->name_button == "Search" || this->name_button == "Start Sort")
 	{
 		this->rect.setFillColor(sf::Color(63, 182, 143));
 		if (this->hovered)
@@ -79,7 +79,7 @@ void Button::update(Mouse *mouse, state *appState)
 	if (this->pressed)
 	{
 		this->rect.setFillColor(sf::Color::Blue);
-		std::cout << "SCREEN :" << appState->screen << std::endl;
+
 		// std::cout<<"SCREEN :"<<this->func<<std::endl;
 		mouse->clicked = false;
 
@@ -101,14 +101,17 @@ void Button::stateChanger(state *appState)
 	if (this->func == "goSort")
 	{
 		appState->screen = 2;
+		appState->resetScreen = 1;
 	}
 	else if (this->func == "goSearch")
 	{
 		appState->screen = 1;
+		appState->resetScreen = 1;
 	}
 	else if (this->func == "goBack")
 	{
 		appState->screen = 0;
+		appState->resetScreen = 1;
 	}
 	else if (this->func == "modeMaze")
 	{
@@ -130,5 +133,26 @@ void Button::stateChanger(state *appState)
 	else if (this->func == "setClear")
 	{
 		appState->clear = 1;
+	}
+	else if (this->func == "resetSort")
+	{
+		appState->clear = 1;
+	}
+	else if (this->func == "setSorting")
+	{
+		appState->startSort = 1;
+	}
+	else if (this->func == "insertMode")
+	{
+		appState->sortAlg = 1;
+		appState->clearSort = 0;
+	}
+	else if (this->func == "bubbleMode")
+	{
+		appState->sortAlg = 0;
+		appState->clearSort = 0;
+	}
+	else if(this->func == "exit"){
+		appState->screen = -1;
 	}
 }
