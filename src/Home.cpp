@@ -20,46 +20,33 @@ void Home::init()
     background.setTexture(&backgroundTexture);
     background.setPosition(sf::Vector2f(0, 0));
 
-    searchAlgo.setString("Search \nAlgorithm");
-    searchAlgo.setFont(app->font);
-    searchAlgo.setCharacterSize(60);
-    searchAlgo.setPosition(sf::Vector2f(350, 530));
+    init_buttons();
+}
 
-    sortAlgo.setString("Sort \nAlgorithm");
-    sortAlgo.setFont(app->font);
-    sortAlgo.setCharacterSize(60);
-    sortAlgo.setPosition(sf::Vector2f(1300, 530));
+void Home::init_buttons()
+{
 
-    exit.setString("Exit");
-    exit.setFont(app->font);
-    exit.setCharacterSize(60);
-    exit.setPosition(sf::Vector2f(900, 880));
-    exit.setFillColor(sf::Color::Black);
+    this->entities.push_back(new Button(1200, 650, "Sort Algorithm", 500, 80, "goSort"));
+
+    this->entities.push_back(new Button(850, 880, "Exit", 200, 80, "exit"));
+
+    this->entities.push_back(new Button(250, 650, "Search Algorithm", 500, 80, "goSearch"));
 }
 
 void Home::draw()
 {
     app->window->draw(background);
-    app->window->draw(sortAlgo);
-    app->window->draw(searchAlgo);
-    app->window->draw(exit);
+    for (int i = 0; i < entities.size(); i++)
+    {
+
+        entities[i]->draw(this->app->window);
+    }
 }
 
 void Home::update()
 {
-    if (app->sfEvent.type == sf::Event::MouseButtonPressed)
+    for (int i = 0; i < entities.size(); i++)
     {
-        if (searchAlgo.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
-        {
-            *(app->current) = 1;
-        }
-        if (sortAlgo.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
-        {
-            *(app->current) = 2;
-        }
-        if (exit.getGlobalBounds().contains(sf::Mouse::getPosition(*(app->window)).x, sf::Mouse::getPosition(*(app->window)).y))
-        {
-            *(app->current) = -1;
-        }
+        entities[i]->update(this->app->mouse, this->app->appState);
     }
 }

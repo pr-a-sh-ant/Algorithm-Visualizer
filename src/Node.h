@@ -2,6 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include "Box.h"
 
+class Box;
+
 class Node
 {
 private:
@@ -20,4 +22,5 @@ public:
 
 
 	std::vector<sf::Vector2i> get_actions();
+	bool in_maze(std::vector<sf::Vector2i> maze);
 };

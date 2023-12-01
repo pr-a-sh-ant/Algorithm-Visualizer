@@ -4,18 +4,22 @@
 #include "Search.h"
 #include <SFML/Graphics.hpp>
 #include "Home.h"
+#include "State.h"
+#include "Sort.h"
 
 class Search;
 class Mouse;
 class Home;
+class Sort;
 
 class App
 {
 public:
 	App();
-	Mouse *mouse;
 	Search *search;
+	Mouse *mouse;
 	Home *home;
+	Sort *sort;
 
 	float deltime;
 
@@ -24,11 +28,13 @@ public:
 	sf::Event sfEvent;
 	sf::Font font;
 
-	int *current;
+	state *appState;
+
 	void init_window();
 	void init_variables();
 	void init_search();
 	void init_home();
+	void init_sort();
 
 	void draw();
 

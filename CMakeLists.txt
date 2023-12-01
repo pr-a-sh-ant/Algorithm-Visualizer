@@ -15,6 +15,11 @@ add_executable(AlgViz
     src/Entity.h
     src/Search.h
     src/App.h
+    src/Button.h
+    src/sort_alg.h
+    src/array.h
+    src/Sort.h
+    src/State.h
     src/Home.h
     src/Animation.h
     
@@ -27,6 +32,10 @@ add_executable(AlgViz
     src/App.cpp
     src/main.cpp
     src/Home.cpp
+    src/Button.cpp
+    src/sort_alg.cpp
+    src/array.cpp
+    src/Sort.cpp
     src/Animation.cpp
 )
 

@@ -6,15 +6,16 @@ Algorithm::Algorithm()
 {
 }
 
-Node Algorithm::remove()
+Node* Algorithm::remove()
 {
 	if (empty())
 	{
 		std::cout << "EMPTY FRONTIER" << std::endl;
+		
 	}
 	else
 	{
-		Node node = frontier[0];
+		Node *node = frontier[0];
 		frontier.erase(frontier.begin());
 		return node;
 	}
@@ -25,7 +26,7 @@ bool Algorithm::empty()
 	return frontier.size() == 0;
 }
 
-void Algorithm::add(Node node)
+void Algorithm::add(Node *node)
 {
 	frontier.push_back(node);
 }
@@ -34,7 +35,7 @@ bool Algorithm::contains_state(sf::Vector2i state)
 {
 	for (unsigned x = 0; x < frontier.size(); x++)
 	{
-		if (state == frontier[x].state)
+		if (state == frontier[x]->state)
 		{
 			return true;
 		}
@@ -52,4 +53,12 @@ bool Algorithm::inExplored(sf::Vector2i state)
 		}
 	}
 	return false;
+}
+
+void Algorithm::reset(){
+
+	frontier.clear();
+	explored.clear();
+
+
 }
