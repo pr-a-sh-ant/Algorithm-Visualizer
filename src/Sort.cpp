@@ -3,12 +3,9 @@
 #include <iostream>
 #include "App.h"
 
-Sort::Sort(App *app)
+Sort::Sort(App *app): array(Array(100)), algorithm(array), current_state(algorithm.getCurrentState())
 {
     this->app = app;
-    this->array = new Array(100);
-    this->algorithm = new AlgorithmSort(*array);
-    this->current_state = algorithm->getCurrentState();
 
     renderbox.setSize(sf::Vector2f(1000, 1000));
     renderbox.setPosition(25, 25);
