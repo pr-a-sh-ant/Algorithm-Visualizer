@@ -8,5 +8,6 @@ struct state
 		int clear = 0;
 		int sortAlg = 0;
 		int resetScreen = 0;
+		int clearSort = 0;
 	} ;
 	

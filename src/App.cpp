@@ -15,7 +15,7 @@ App::App()
 void App::init_window()
 {
 	sf::VideoMode mode = sf::VideoMode::getDesktopMode();
-	this->window = new sf::RenderWindow(mode, "SFML works!");
+	this->window = new sf::RenderWindow(mode, "SFML works!", sf::Style::Fullscreen);
 	this->mouse = new Mouse();
 	init_search();
 	init_home();
@@ -37,7 +37,7 @@ void App::init_variables()
 		std::cout << "Error loading font" << std::endl;
 		return;
 	}
-	std::cout << "variables loaded............." << std::endl;
+
 }
 
 void App::init_search()

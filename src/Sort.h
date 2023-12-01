@@ -21,6 +21,8 @@ public:
 
     std::vector<Button *> buttons;
 
+    sf::Text *textAlgo;
+    
     sf::RectangleShape renderbox;
     sf::RectangleShape bar;
 
