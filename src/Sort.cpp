@@ -61,16 +61,6 @@ void Sort::draw()
     }
 }
 
-void Sort::reset()
-{
-    delete array;
-    delete algorithm;
-
-    this->array = new Array(100);
-    this->algorithm = new AlgorithmSort(*array);
-
-    this->current_state = algorithm->getCurrentState();
-}
 
 void Sort::update()
 {
