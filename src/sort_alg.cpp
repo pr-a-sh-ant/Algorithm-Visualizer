@@ -24,7 +24,7 @@ void AlgorithmSort::bubbleSort()
     }
 }
 
-void AlgorithmSort::insertionSort(int &i,int &j)
+void AlgorithmSort::insertionSort()
 {
     if (this->i < array.getData().size())
     {
