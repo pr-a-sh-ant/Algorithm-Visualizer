@@ -11,6 +11,7 @@ public:
 	Algorithm(/* args */);
 	std::vector<Node*> frontier;
 	std::vector<sf::Vector2i> explored;
+	int type=0;
 
 
 	Node* remove();

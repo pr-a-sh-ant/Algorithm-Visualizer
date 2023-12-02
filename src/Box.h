@@ -29,6 +29,7 @@ private:
 		sf::Color{0, 0, 230},
 		sf::Color{0, 0, 250}
 	};
+	static inline float switchTIme = 0.05f;
 
 	static inline int scale[10] = {2, 4, 6, 8, 10, 10, 8, 6, 4, 2};
 
@@ -37,9 +38,13 @@ public:
 	void animate(float deltime);
 	int currentAnimation = 0;
 	float totalTime = 0.0f;
-	float switchTIme = 0.05f;
 	bool animating = false;
 	int type;
 	void centerScale(int scale);
 	void is_path();
+
+	static void changeSwitchTime(float time){
+		switchTIme = time;
+	}
 };
+

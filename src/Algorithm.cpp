@@ -15,9 +15,18 @@ Node* Algorithm::remove()
 	}
 	else
 	{
-		Node *node = frontier[0];
-		frontier.erase(frontier.begin());
-		return node;
+		if(this->type == 1){
+			
+			Node *node = frontier[0];
+			frontier.erase(frontier.begin());
+			return node;
+		}
+		else if(this->type == 0){
+			
+			Node *node = frontier[frontier.size()-1];
+			frontier.erase(frontier.begin()+frontier.size()-1);
+			return node;
+		}
 	}
 }
 

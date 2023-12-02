@@ -132,7 +132,7 @@ void App::updateSFMLevents()
 			}
 			else if (sfEvent.key.code == sf::Keyboard::S)
 			{
-				this->appState->screen = 1;
+				Box::changeSwitchTime(1.0f);
 			}
 		}
 		else if (sfEvent.type == sf::Event::MouseButtonPressed)

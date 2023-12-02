@@ -41,7 +41,13 @@ void Search::init_boxes()
 		std::vector<Box *> temp_box;
 		for (int y = 0; y < this->boxOrder; y++)
 		{
-			temp_box.push_back(new Box(origin.x + (x * matrix_width), origin.y + (y * matrix_height), matrix_width, matrix_height, 0));
+			Box *bo = new Box(origin.x + (x * matrix_width), origin.y + (y * matrix_height), matrix_width, matrix_height, 0);
+			for (int a =0;a<defaultMaze.size();a++){
+				if(defaultMaze[a].x ==x && defaultMaze[a].y==y){
+					bo->type=-1		;
+				}
+			}
+			temp_box.push_back(bo);
 		}
 		box.push_back(temp_box);
 	}
@@ -55,8 +61,8 @@ void Search::init_buttons()
 	this->buttons.push_back(new Button(1200, 150, "Start Point", 300, 80, "modeStart"));
 	this->buttons.push_back(new Button(1200, 50, "Search", 300, 80, "setSearching"));
 	this->buttons.push_back(new Button(1450, 250, "Clear", 200, 80, "setClear"));
-	this->buttons.push_back(new Button(1450, 450, "Algo 1", 200, 80, "setClear"));
-	this->buttons.push_back(new Button(1450, 550, "Algo 2", 200, 80, "setClear"));
+	this->buttons.push_back(new Button(1450, 450, "BFS", 200, 80, "bfs"));
+	this->buttons.push_back(new Button(1450, 550, "DFS", 200, 80, "dfs"));
 }
 
 void Search::update()
@@ -73,7 +79,7 @@ void Search::update()
 		reset();
 	}
 
-	if (searching)
+	if (searching && totalTime > switchTIme)
 	{
 		solve();
 		totalTime = 0;
@@ -209,6 +215,10 @@ void Search::solve()
 	{
 		
 		this->back_state = final_state;
+		this->alg.type = this->app->appState->searchAlg;
+		std::cout << "Alg type " << this->alg.type << std::endl;
+		Box::changeSwitchTime(switchTIme);
+		
 
 		currentNode = new Node(initial_state,box[initial_state.x][initial_state.y]);
 
@@ -221,21 +231,19 @@ void Search::solve()
 				{
 					if(box[x][y]->type==-1){
 						this->maze.push_back({x,y});
+						
 					}
 				}
 
 			}
 	
 		std::cout << "Initialized \n";
-		std::cout << "\n My Initial State     " << currentNode->state.x << " " << currentNode->state.y << std::endl;
-		std::cout << "\n My Final State     " << final_state.x << " " << final_state.y << std::endl;
 		
 	}
 
 	if (search_complete && back_propagating)
 	{
-		std::cout << "current out " << this->currentNode->state.x <<" "<<this->currentNode->state.y << std::endl;
-		std::cout << this->initial_state.x <<" "<< this->initial_state.y << std::endl;
+		
 
 		if (this->currentNode->state != this->initial_state)
 		{
@@ -261,7 +269,6 @@ void Search::solve()
 
 
 		Node *node = alg.remove();
-		std::cout << "CURRENT NODE " <<node->state.x<<" "<<node->state.y <<std::endl;
 		
 
 		if(node->state == final_state ){
@@ -295,8 +302,8 @@ void Search::solve()
 
 				auto child = new Node(sf::Vector2i(act[a].x, act[a].y), node, sf::Vector2i(act[a].x, act[a].y), box_);
 
-				std::cout << "\nCHILD     " << child->state.x << " " << child->state.y << std::endl;
-				std::cout << "PARENT    " << child->parent->state.x << " " << child->parent->state.y << std::endl;
+				// std::cout << "\nCHILD     " << child->state.x << " " << child->state.y << std::endl;
+				// std::cout << "PARENT    " << child->parent->state.x << " " << child->parent->state.y << std::endl;
 
 				if(child->state.x < boxOrder && child->state.y < boxOrder && !child->in_maze(maze) ){
 

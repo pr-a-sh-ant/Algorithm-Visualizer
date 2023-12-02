@@ -155,4 +155,10 @@ void Button::stateChanger(state *appState)
 	else if(this->func == "exit"){
 		appState->screen = -1;
 	}
+	else if(this->func == "bfs"){
+		appState->searchAlg = 0;
+	}
+	else if(this->func == "dfs"){
+		appState->searchAlg = 1;
+	}
 }
