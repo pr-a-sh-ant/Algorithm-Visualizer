@@ -5,7 +5,6 @@ AlgorithmSort::AlgorithmSort(Array &arr) : array(arr), i(0), j(0), pivotIndex(-1
 
 void AlgorithmSort::bubbleSort()
 {
-    
     if (i < array.getData().size() - 1)
     {
         if (j < array.getData().size() - i - 1)
@@ -29,7 +28,6 @@ void AlgorithmSort::insertionSort()
     if (this->i < array.getData().size())
     {
         int key = array.getData()[this->j];
-        
 
         if (this->j > 0 && array.getData()[this->j - 1] > key)
         {
@@ -37,25 +35,23 @@ void AlgorithmSort::insertionSort()
             this->j--;
         }
 
-            else{
-                this->i++;
-                
-                this->j = this->i;
-            }
-        }    
+        else
+        {
+            this->i++;
+
+            this->j = this->i;
+        }
+    }
 }
 
 void AlgorithmSort::bogo()
-{   
+{
 
-    if(!isSortingComplete()){
-
+    if (!isSortingComplete())
+    {
         array.shuffle();
-
     }
-    
 }
-
 
 int AlgorithmSort::partition(int low, int high)
 {
