@@ -17,6 +17,4 @@ public:
 	sf::Vector2i dim;
 
 	bool mouse_over(sf::Vector2i pos2);
-
-
 };

@@ -62,4 +62,6 @@ public:
 	void init_solve();
 
 	void reset();
+
+	void handle_user_input(sf::Event& event);
 };

@@ -48,4 +48,8 @@ if (WIN32 AND BUILD_SHARED_LIBS)
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:AlgViz> $<TARGET_FILE_DIR:AlgViz> COMMAND_EXPAND_LISTS)
 endif()
 
+# copy src/Public folder to build directory
+add_custom_command(TARGET AlgViz POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/src/Public $<TARGET_FILE_DIR:AlgViz>/Public)
+
 install(TARGETS AlgViz)

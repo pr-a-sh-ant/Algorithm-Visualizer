@@ -20,7 +20,12 @@ sf::Color calculate_color(const sf::Color& initial_color, const sf::Color& final
 }
 
 viz::anim::Animation::Animation(const float time)
-	: displacement(sf::Vector2f(0, 0)), color({255, 255, 255, 0}), time(time), scale(0), reversing(false)
+	: displacement(sf::Vector2f(0, 0)), color({255, 255, 255, 0}), time(time), scale(0), reversing(false), center_scale(true)
+{
+}
+
+viz::anim::Animation::Animation(const sf::Vector2f& displacement, const sf::Color& color, float time, float scale, bool reversing, bool center_scale)
+	: displacement(displacement), color(color), time(time), scale(scale), reversing(reversing), center_scale(center_scale)
 {
 }
 
@@ -62,6 +67,13 @@ viz::anim::AnimatableRectangle::AnimatableRectangle(sf::RectangleShape rectangle
 viz::anim::AnimatableRectangle::AnimatableRectangle(sf::RectangleShape rectangle)
 	: Animatable(), rectangle_(std::move(rectangle))
 {
+}
+
+viz::anim::AnimatableRectangle::AnimatableRectangle(const sf::Vector2f& position, const sf::Vector2f& dimensions, const sf::Color& color, Animation* animation)
+	: Animatable(animation), rectangle_(dimensions)
+{
+	this->rectangle_.setPosition(position);
+	this->rectangle_.setFillColor(color);
 }
 
 void viz::anim::AnimatableRectangle::update(const float& delta_time_seconds)
@@ -141,6 +153,11 @@ void viz::anim::AnimatableRectangle::update(const float& delta_time_seconds)
 		}
 	}
 
+	if (this->current_animation_->center_scale)
+	{
+		calculated_position -= (calculated_dimensions - this->initial_dimensions_) / 2.0f;
+	}
+
 	this->rectangle_.setPosition(calculated_position);
 	this->rectangle_.setSize(calculated_dimensions);
 	this->rectangle_.setFillColor(calculated_color);
@@ -157,4 +174,9 @@ void viz::anim::AnimatableRectangle::start_animation()
 	this->initial_dimensions_ = this->rectangle_.getSize();
 	this->initial_position_ = this->rectangle_.getPosition();
 	this->initial_color_ = this->rectangle_.getFillColor();
+}
+
+void viz::anim::AnimatableRectangle::change_rectangle_color(const sf::Color& color)
+{
+	this->rectangle_.setFillColor(color);
 }

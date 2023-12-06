@@ -11,7 +11,7 @@ Button::Button(int x, int y, std::string text, int width, int height, std::strin
 	this->rect.setPosition(x, y);
 	this->rect.setSize(sf::Vector2f(width, height));
 
-	if (!font.loadFromFile("src/public/font.ttf"))
+	if (!font.loadFromFile("Public/font.ttf"))
 	{
 		std::cout << "Error loading font" << std::endl;
 		return;

@@ -1,7 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include "Box.h"
 
-Box::Box(int x, int y, int width = 32, int height = 32,int type=0) : Entity(x, y, width, height)
+Box::Box(int x, int y, const sf::RectangleShape& sample_rect, int width, int height,int type)
+	: Entity(x, y, width, height), animatable_rectangle_(sample_rect)
 {
 	this->rect.setPosition(x, y);
 	this->rect.setSize(sf::Vector2f(width, height));
@@ -11,6 +12,7 @@ Box::Box(int x, int y, int width = 32, int height = 32,int type=0) : Entity(x, y
 	this->rect.setOutlineColor(sf::Color::White);
 	this->rect.setFillColor(sf::Color::Green);
 	this->type=type;
+	// PP code
 }
 
 void Box::animate(float deltime)
@@ -56,6 +58,11 @@ void Box::is_path()
 	this->animating = false;
 	this->rect.setFillColor(sf::Color::Black);
 	this->centerScale(scale[0]);
+}
+
+const sf::Drawable* Box::get_drawable()
+{
+	return this->animatable_rectangle_.get_drawable();
 }
 
 void Box::centerScale(int scale)

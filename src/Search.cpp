@@ -34,14 +34,20 @@ void Search::init_solve()
 }
 
 void Search::init_boxes()
-{	
+{
+	sf::RectangleShape sample_rect(sf::Vector2f(matrix_width, matrix_height));
+	sample_rect.setOutlineThickness(2);
+	sample_rect.setOutlineColor(sf::Color::White);
+	sample_rect.setFillColor(sf::Color::Green);
+
 	box.clear();
 	for (int x = 0; x < this->boxOrder; x++)
 	{
 		std::vector<Box *> temp_box;
 		for (int y = 0; y < this->boxOrder; y++)
 		{
-			temp_box.push_back(new Box(origin.x + (x * matrix_width), origin.y + (y * matrix_height), matrix_width, matrix_height, 0));
+			sample_rect.setPosition(origin.x + (x * matrix_width), origin.y + (y * matrix_height));
+			temp_box.push_back(new Box(origin.x + (x * matrix_width), origin.y + (y * matrix_height), sample_rect, matrix_width, matrix_height, 0));
 		}
 		box.push_back(temp_box);
 	}
@@ -322,6 +328,10 @@ void Search::reset()
 	maze.clear();	
 	this->app->appState->clear=0;
 	this->app->appState->startSearch=0;
+}
+
+void Search::handle_user_input(sf::Event& event)
+{
 }
 
 Search::~Search()

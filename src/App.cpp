@@ -32,7 +32,7 @@ void App::init_variables()
 	this->appState->mode = 3;
 	// std::cout << "numeric variables inited............." << std::endl;
 	deltime = 0.0f;
-	if (!font.loadFromFile("src/public/font.ttf"))
+	if (!font.loadFromFile("Public/font.ttf"))
 	{
 		std::cout << "Error loading font" << std::endl;
 		return;

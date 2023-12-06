@@ -11,7 +11,7 @@ Home::Home(App *app)
 
 void Home::init()
 {
-    if (!backgroundTexture.loadFromFile("src/Public/start.jpg"))
+    if (!backgroundTexture.loadFromFile("Public/start.jpg"))
     {
         std::cout << "Error loading Texture" << std::endl;
         return;

@@ -12,12 +12,14 @@ namespace viz::anim
 		float time;
 		float scale;
 		bool reversing;
+		bool center_scale;
 
 		// Constructors
 		Animation(const float time);
+		// Parameterized Constructor
+		Animation(const sf::Vector2f& displacement, const sf::Color& color, float time, float scale, bool reversing, bool center_scale);
 		// Copy Constructor
 		Animation(const Animation& other) = default;
-
 	};
 
 	class Animatable
@@ -55,9 +57,11 @@ namespace viz::anim
 		// Constructors
 		AnimatableRectangle(sf::RectangleShape rectangle, Animation* animation);
 		AnimatableRectangle(sf::RectangleShape rectangle);
+		AnimatableRectangle(const sf::Vector2f& position, const sf::Vector2f& dimensions, const sf::Color& color, Animation* animation);
 
 		void update(const float& delta_time_seconds) override;
 		const sf::Drawable* get_drawable() const override;
 		void start_animation() override;
+		void change_rectangle_color(const sf::Color& color);
 	};
 }
