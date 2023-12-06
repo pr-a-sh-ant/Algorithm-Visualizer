@@ -26,21 +26,23 @@ namespace viz::anim
 	{
 	protected:
 		bool is_animating_; // Whether the object is currently animating
-		Animation* current_animation_; // Pointer to the current animation (not owned)
+		const Animation* current_animation_; // Pointer to the current animation (not owned)
 		float animation_clock_; // Time since animation started
 
 	public:
 		// Constructors
 		Animatable();
-		Animatable(Animation* animation);
+		Animatable(const Animation* animation);
 		// Destructor
 		virtual ~Animatable();
 
 		[[nodiscard]]
 		bool is_animating() const;
-		void set_animation(Animation* animation);
+		void set_animation(const Animation* animation);
 		virtual void start_animation();
 
+		virtual void set_position(const sf::Vector2f& position) = 0; // Sets the position of the object
+		virtual void stop_animation_and_reset() = 0; // Stops the animation and resets the object to its initial state
 		virtual void update(const float& delta_time_seconds) = 0; // Updates the animation
 		virtual const sf::Drawable* get_drawable() const = 0; // Returns a pointer to the drawable object
 	};
@@ -55,10 +57,12 @@ namespace viz::anim
 
 	public:
 		// Constructors
-		AnimatableRectangle(sf::RectangleShape rectangle, Animation* animation);
+		AnimatableRectangle(sf::RectangleShape rectangle, const Animation* animation);
 		AnimatableRectangle(sf::RectangleShape rectangle);
-		AnimatableRectangle(const sf::Vector2f& position, const sf::Vector2f& dimensions, const sf::Color& color, Animation* animation);
+		AnimatableRectangle(const sf::Vector2f& position, const sf::Vector2f& dimensions, const sf::Color& color, const Animation* animation);
 
+		void set_position(const sf::Vector2f& position) override;
+		void stop_animation_and_reset() override;
 		void update(const float& delta_time_seconds) override;
 		const sf::Drawable* get_drawable() const override;
 		void start_animation() override;

@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include "Animation.h"
 #include "App.h"
+#include "Maze.h"
+#include "State.h"
 
 /*
 int main()
@@ -40,8 +42,49 @@ int main()
 
 int main()
 {
-	App app;
-	app.run();
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Maze Solver");
+	viz::Maze maze({28.0f, 28.0f}, {40, 40}, {10.0f, 10.0f});
+	sf::Clock clock;
 
-	return 0;
+	auto& state = viz::State::get_state_instance();
+	float delta_time_seconds = 0.0f;
+	while (window.isOpen())
+	{
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+			case (sf::Event::Closed):
+				window.close();
+				break;
+			case (sf::Event::KeyPressed):
+				if (event.key.code == sf::Keyboard::Escape)
+				{
+					window.close();
+				}
+				break;
+			case (sf::Event::MouseButtonPressed):
+				if (event.mouseButton.button == sf::Mouse::Left)
+				{
+					state.update_mouse({ float(event.mouseButton.x), float(event.mouseButton.y) });
+					maze.handle_event(event);
+					state.mouse.is_left_button_down = true;
+				}
+			case (sf::Event::MouseButtonReleased):
+				if (event.mouseButton.button == sf::Mouse::Left)
+				{
+					state.mouse.is_left_button_down = false;
+				}
+				break;
+			default:
+				break;
+			}
+		}
+
+		delta_time_seconds = clock.restart().asSeconds();
+
+		window.clear();
+		maze.update_animation(delta_time_seconds);
+	}
 }

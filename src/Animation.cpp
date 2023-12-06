@@ -34,7 +34,7 @@ viz::anim::Animatable::Animatable()
 {
 }
 
-viz::anim::Animatable::Animatable(Animation* animation)
+viz::anim::Animatable::Animatable(const Animation* animation)
 	: is_animating_(false), current_animation_(animation), animation_clock_(0.0f)
 {
 }
@@ -48,18 +48,23 @@ bool viz::anim::Animatable::is_animating() const
 	return this->is_animating_;
 }
 
-void viz::anim::Animatable::set_animation(Animation* animation)
+void viz::anim::Animatable::set_animation(const Animation* animation)
 {
 	this->current_animation_ = animation;
 }
 
 void viz::anim::Animatable::start_animation()
 {
+	if (this->current_animation_ == nullptr)
+	{
+		throw std::runtime_error("Animation not set");
+	}
+
 	this->is_animating_ = true;
 	this->animation_clock_ = 0.0f;
 }
 
-viz::anim::AnimatableRectangle::AnimatableRectangle(sf::RectangleShape rectangle, Animation* animation)
+viz::anim::AnimatableRectangle::AnimatableRectangle(sf::RectangleShape rectangle, const Animation* animation)
 	: Animatable(animation), rectangle_(std::move(rectangle))
 {
 }
@@ -69,11 +74,25 @@ viz::anim::AnimatableRectangle::AnimatableRectangle(sf::RectangleShape rectangle
 {
 }
 
-viz::anim::AnimatableRectangle::AnimatableRectangle(const sf::Vector2f& position, const sf::Vector2f& dimensions, const sf::Color& color, Animation* animation)
+viz::anim::AnimatableRectangle::AnimatableRectangle(const sf::Vector2f& position, const sf::Vector2f& dimensions, const sf::Color& color, const Animation* animation)
 	: Animatable(animation), rectangle_(dimensions)
 {
 	this->rectangle_.setPosition(position);
 	this->rectangle_.setFillColor(color);
+}
+
+void viz::anim::AnimatableRectangle::set_position(const sf::Vector2f& position)
+{
+	this->rectangle_.setPosition(position);
+}
+
+void viz::anim::AnimatableRectangle::stop_animation_and_reset()
+{
+	this->rectangle_.setPosition(this->initial_position_);
+	this->rectangle_.setSize(this->initial_dimensions_);
+	this->rectangle_.setFillColor(this->initial_color_);
+	this->is_animating_ = false;
+	this->animation_clock_ = 0.0f;
 }
 
 void viz::anim::AnimatableRectangle::update(const float& delta_time_seconds)

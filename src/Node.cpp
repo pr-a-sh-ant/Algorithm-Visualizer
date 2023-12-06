@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Node.h"
-#include "Box.h"
+#include "MazeBox.h"
 #include <iostream>
 
 

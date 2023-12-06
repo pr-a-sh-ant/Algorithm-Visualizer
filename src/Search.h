@@ -5,7 +5,7 @@
 #include <queue>
 #include "App.h"
 #include "Algorithm.h"
-#include "Box.h"
+#include "MazeBox.h"
 
 class Box;
 class Button;

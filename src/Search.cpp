@@ -127,7 +127,7 @@ void Search::update_boxes()
 				// std::cout<<"MODE 0 : MAZE MODE"<<std::endl;
 				if (box[x][y]->mouse_over(this->app->mouse->pos) && this->app->mouse->clicked)
 				{
-					std::cout << "Set Box As Maze " << std::endl;
+					std::cout << "Set MazeBox As Maze " << std::endl;
 					box[x][y]->type = -1;
 					box[x][y]->rect.setFillColor(sf::Color::Green);
 				}

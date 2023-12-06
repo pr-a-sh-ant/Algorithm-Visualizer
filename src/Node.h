@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Box.h"
+#include "MazeBox.h"
 
 class Box;
 
