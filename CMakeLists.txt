@@ -7,43 +7,61 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(AlgViz 
-    src/Node.h
-    # src/Box.h
-    src/Algorithm.h
-    src/Mouse.h
-    src/Entity.h
-    src/Search.h
-    src/App.h
-    src/Button.h
-    src/sort_alg.h
-    src/array.h
-    src/Sort.h
-    src/State.h
-    src/Home.h
-    src/Animation.h
-    src/Maze.h
-    src/MazeBox.h
-    
-    src/main.cpp
-    src/Mouse.cpp 
-    src/Animation.cpp
-    src/Maze.cpp
-    src/MazeBox.cpp
-    # src/Node.cpp 
-    # src/Box.cpp 
-    # src/Algorithm.cpp 
-    # src/Entity.cpp 
-    # src/Search.cpp
-    # src/App.cpp
-    # src/Home.cpp
-    # src/Button.cpp
-    # src/sort_alg.cpp
-    # src/array.cpp
-    # src/Sort.cpp
+# set source directory
+set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
+# set include directory
+set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
+
+# set include files
+set(INCLUDE_FILES
+    ${INCLUDE_DIR}/Node.h
+    # ${INCLUDE_DIR}/Box.h
+    ${INCLUDE_DIR}/Algorithm.h
+    ${INCLUDE_DIR}/Mouse.h
+    ${INCLUDE_DIR}/Entity.h
+    ${INCLUDE_DIR}/Search.h
+    ${INCLUDE_DIR}/App.h
+    ${INCLUDE_DIR}/Button.h
+    ${INCLUDE_DIR}/sort_alg.h
+    ${INCLUDE_DIR}/array.h
+    ${INCLUDE_DIR}/Sort.h
+    ${INCLUDE_DIR}/State.h
+    ${INCLUDE_DIR}/Home.h
+    ${INCLUDE_DIR}/Animation.h
+    ${INCLUDE_DIR}/Maze.h
+    ${INCLUDE_DIR}/MazeBox.h
+    ${INCLUDE_DIR}/Window.h
+    ${INCLUDE_DIR}/SearchWindow.h
+)
+# set source files
+set(SOURCE_FILES_GG
+    ${SOURCE_DIR}/main.cpp
+    ${SOURCE_DIR}/Mouse.cpp
+    ${SOURCE_DIR}/Animation.cpp
+    ${SOURCE_DIR}/Maze.cpp
+    ${SOURCE_DIR}/MazeBox.cpp
+    ${SOURCE_DIR}/Window.cpp
+    ${SOURCE_DIR}/SearchWindow.cpp
+    ${SOURCE_DIR}/Button.cpp
+    # ${SOURCE_DIR}/Node.cpp
+    # ${SOURCE_DIR}/Box.cpp
+    # ${SOURCE_DIR}/Algorithm.cpp
+    # ${SOURCE_DIR}/Entity.cpp
+    # ${SOURCE_DIR}/Search.cpp
+    # ${SOURCE_DIR}/App.cpp
+    # ${SOURCE_DIR}/sort_alg.cpp
+    # ${SOURCE_DIR}/array.cpp
+    # ${SOURCE_DIR}/Sort.cpp
+    # ${SOURCE_DIR}/State.cpp
+    # ${SOURCE_DIR}/Home.cpp
 )
 
-target_include_directories(AlgViz PRIVATE src)
+add_executable(AlgViz 
+    ${INCLUDE_FILES}
+    ${SOURCE_FILES_GG}
+)
+
+include_directories(${INCLUDE_DIR})
 target_link_libraries(AlgViz PRIVATE sfml-graphics)
 target_compile_features(AlgViz PRIVATE cxx_std_20)
 
