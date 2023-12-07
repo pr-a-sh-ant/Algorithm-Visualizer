@@ -57,8 +57,8 @@ namespace viz::anim
 
 	public:
 		// Constructors
-		AnimatableRectangle(sf::RectangleShape rectangle, const Animation* animation);
-		AnimatableRectangle(sf::RectangleShape rectangle);
+		AnimatableRectangle(const sf::RectangleShape& rectangle, const Animation* animation);
+		AnimatableRectangle(const sf::RectangleShape& rectangle);
 		AnimatableRectangle(const sf::Vector2f& position, const sf::Vector2f& dimensions, const sf::Color& color, const Animation* animation);
 
 		void set_position(const sf::Vector2f& position) override;

@@ -64,14 +64,24 @@ void viz::anim::Animatable::start_animation()
 	this->animation_clock_ = 0.0f;
 }
 
-viz::anim::AnimatableRectangle::AnimatableRectangle(sf::RectangleShape rectangle, const Animation* animation)
-	: Animatable(animation), rectangle_(std::move(rectangle))
+viz::anim::AnimatableRectangle::AnimatableRectangle(const sf::RectangleShape& rectangle, const Animation* animation)
+	: Animatable(animation)
 {
+	this->rectangle_.setPosition(rectangle.getPosition());
+	this->rectangle_.setSize(rectangle.getSize());
+	this->rectangle_.setFillColor(rectangle.getFillColor());
+	this->rectangle_.setOutlineColor(rectangle.getOutlineColor());
+	this->rectangle_.setOutlineThickness(rectangle.getOutlineThickness());
 }
 
-viz::anim::AnimatableRectangle::AnimatableRectangle(sf::RectangleShape rectangle)
-	: Animatable(), rectangle_(std::move(rectangle))
+viz::anim::AnimatableRectangle::AnimatableRectangle(const sf::RectangleShape& rectangle)
+	: Animatable()
 {
+	this->rectangle_.setPosition(rectangle.getPosition());
+	this->rectangle_.setSize(rectangle.getSize());
+	this->rectangle_.setFillColor(rectangle.getFillColor());
+	this->rectangle_.setOutlineColor(rectangle.getOutlineColor());
+	this->rectangle_.setOutlineThickness(rectangle.getOutlineThickness());
 }
 
 viz::anim::AnimatableRectangle::AnimatableRectangle(const sf::Vector2f& position, const sf::Vector2f& dimensions, const sf::Color& color, const Animation* animation)

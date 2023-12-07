@@ -3,6 +3,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "MazeBox.h"
+#include "State.h"
 
 namespace viz
 {
@@ -11,7 +12,7 @@ namespace viz
 	{
 	private:
 		sf::Vector2f box_dimensions_; // Dimensions of the box
-		std::vector<MazeBox> boxes_; // Boxes in the maze
+		std::vector<MazeBox*> boxes_; // Boxes in the maze
 		sf::Vector2i start_box_; // Position of the start box
 		sf::Vector2i goal_box_; // Position of the goal box
 		sf::Vector2i boxes_in_maze_; // Dimensions of the maze(number of boxes)
@@ -39,6 +40,7 @@ namespace viz
 
 		void set_box_type(const sf::Vector2i& position, const MazeBoxType type, const bool animate = true); // Set the type of the box at position
 		void handle_event(const sf::Event& event); // Handle events (user input)
+		void handle_state_change(const viz::State& state); // Handle state changes (mouse input)
 
 		void set_goal_box(const sf::Vector2i& position); // Set the goal box
 		void set_start_box(const sf::Vector2i& position); // Set the start box
@@ -51,18 +53,18 @@ namespace viz
 #pragma region Inline functions
 	inline MazeBox& Maze::operator[](const sf::Vector2i position)
 	{
-		return this->boxes_[position.x * this->boxes_in_maze_.x + position.y];
+		return *this->boxes_[position.x * this->boxes_in_maze_.x + position.y];
 	}
 
 	inline MazeBox& Maze::operator()(const int x, const int y)
 	{
-		return this->boxes_[x * this->boxes_in_maze_.x + y];
+		return *this->boxes_[x * this->boxes_in_maze_.x + y];
 	}
 
 	[[nodiscard]]
 	inline const MazeBox& Maze::at(const sf::Vector2i position) const
 	{
-		return this->boxes_.at(position.x * this->boxes_in_maze_.x + position.y);
+		return *this->boxes_.at(position.x * this->boxes_in_maze_.x + position.y);
 	}
 
 	[[nodiscard]]

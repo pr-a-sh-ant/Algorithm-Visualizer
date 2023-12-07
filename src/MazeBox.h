@@ -41,11 +41,11 @@ namespace viz
 
 	public:
 		// Constructor
-		explicit MazeBox(const sf::RectangleShape& sample_rect, const MazeBoxType type = MazeBoxType::empty);
+		MazeBox(const sf::RectangleShape& sample_rect, const MazeBoxType type = MazeBoxType::empty);
 		// Delete the default constructor
 		MazeBox() = delete;
 		// Delete the copy constructor
-		MazeBox(const MazeBox&) = delete;
+		MazeBox(const MazeBox&);
 
 		// Getters
 		MazeBoxType get_type() const; // Returns the type of the current box

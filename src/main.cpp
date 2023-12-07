@@ -1,8 +1,7 @@
 #include <SFML/Graphics.hpp>
-#include "Animation.h"
-#include "App.h"
 #include "Maze.h"
 #include "State.h"
+#include <iostream>
 
 /*
 int main()
@@ -39,18 +38,25 @@ int main()
 	}
 }*/
 
+viz::State* viz::State::state_instance_ptr_ = nullptr;
+
 
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Maze Solver");
-	viz::Maze maze({28.0f, 28.0f}, {40, 40}, {10.0f, 10.0f});
+	viz::Maze maze({24.0f, 24.0f}, {40, 40}, {10.0f, 10.0f});
 	sf::Clock clock;
 
 	auto& state = viz::State::get_state_instance();
+	state.search.mouse_click_mode = viz::search_mouse_click_mode::wall;
 	float delta_time_seconds = 0.0f;
+
+
 	while (window.isOpen())
 	{
 		sf::Event event;
+		state.mouse.is_left_button_pressed = false;
+
 		while (window.pollEvent(event))
 		{
 			switch (event.type)
@@ -67,24 +73,32 @@ int main()
 			case (sf::Event::MouseButtonPressed):
 				if (event.mouseButton.button == sf::Mouse::Left)
 				{
-					state.update_mouse({ float(event.mouseButton.x), float(event.mouseButton.y) });
-					maze.handle_event(event);
 					state.mouse.is_left_button_down = true;
+					state.mouse.is_left_button_pressed = true;
 				}
+				break;
 			case (sf::Event::MouseButtonReleased):
 				if (event.mouseButton.button == sf::Mouse::Left)
 				{
 					state.mouse.is_left_button_down = false;
 				}
 				break;
+			case (sf::Event::MouseMoved):
+				state.update_mouse({ float(event.mouseMove.x), float(event.mouseMove.y) });
 			default:
 				break;
 			}
 		}
 
+		maze.handle_state_change(state);
+
 		delta_time_seconds = clock.restart().asSeconds();
 
 		window.clear();
+
 		maze.update_animation(delta_time_seconds);
+		maze.draw_maze(window);
+		
+		window.display();
 	}
 }

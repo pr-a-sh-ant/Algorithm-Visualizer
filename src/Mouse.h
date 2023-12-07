@@ -19,12 +19,11 @@ namespace viz
 		sf::Vector2f pos;
 		sf::Vector2f prev_pos;
 		bool is_left_button_down;
+		bool is_left_button_pressed;
 
 		Mouse()
+			: pos(0, 0), prev_pos(0, 0), is_left_button_down(false), is_left_button_pressed(false)
 		{
-			this->is_left_button_down = false;
-			pos = sf::Vector2f(0, 0);
-			prev_pos = sf::Vector2f(0, 0);
 		}
 	};
 }

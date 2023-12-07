@@ -38,16 +38,16 @@ namespace viz
 		search_mouse_click_mode mouse_click_mode = search_mouse_click_mode::none;
 		search_visualizer_mode visualizer_mode = search_visualizer_mode::none;
 	};
-
+	class State;
 	// Singleton class for storing the state of the application
 	class State
 	{
 	private:
 		static State* state_instance_ptr_;
-
 		// constructor
 		State() = default;
 	public:
+
 		search_state search; // State for the search visualization
 		viz::Mouse mouse; // State of mouse
 
@@ -58,15 +58,17 @@ namespace viz
 		}
 
 		// Returns the instance of the state
-		static State& get_state_instance()
+		inline static State& get_state_instance()
 		{
-			if (state_instance_ptr_ == nullptr)
+			if (State::state_instance_ptr_ == nullptr)
 			{
-				state_instance_ptr_ = new State();
+				State::state_instance_ptr_ = new State();
 			}
 
-			return *state_instance_ptr_;
+			return *State::state_instance_ptr_;
 		}
 	};
+
 }
+
 	

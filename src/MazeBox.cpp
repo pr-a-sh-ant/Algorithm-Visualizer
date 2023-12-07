@@ -31,7 +31,10 @@ bool viz::MazeBox::is_animating() const
 void viz::MazeBox::set_type(const MazeBoxType type, const bool animate)
 {
 	this->type_ = type;
-	this->animatable_rectangle_.stop_animation_and_reset();
+	if (this->animatable_rectangle_.is_animating())
+	{
+		this->animatable_rectangle_.stop_animation_and_reset();
+	}
 	this->animatable_rectangle_.change_rectangle_color(MazeBox::get_box_color(type));
 
 	switch (type)

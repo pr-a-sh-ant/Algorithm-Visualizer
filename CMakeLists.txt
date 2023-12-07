@@ -9,7 +9,7 @@ FetchContent_MakeAvailable(SFML)
 
 add_executable(AlgViz 
     src/Node.h
-    src/Box.h
+    # src/Box.h
     src/Algorithm.h
     src/Mouse.h
     src/Entity.h
@@ -22,21 +22,25 @@ add_executable(AlgViz
     src/State.h
     src/Home.h
     src/Animation.h
+    src/Maze.h
+    src/MazeBox.h
     
-    src/Node.cpp 
-    src/Box.cpp 
-    src/Algorithm.cpp 
-    src/Mouse.cpp 
-    src/Entity.cpp 
-    src/Search.cpp
-    src/App.cpp
     src/main.cpp
-    src/Home.cpp
-    src/Button.cpp
-    src/sort_alg.cpp
-    src/array.cpp
-    src/Sort.cpp
+    src/Mouse.cpp 
     src/Animation.cpp
+    src/Maze.cpp
+    src/MazeBox.cpp
+    # src/Node.cpp 
+    # src/Box.cpp 
+    # src/Algorithm.cpp 
+    # src/Entity.cpp 
+    # src/Search.cpp
+    # src/App.cpp
+    # src/Home.cpp
+    # src/Button.cpp
+    # src/sort_alg.cpp
+    # src/array.cpp
+    # src/Sort.cpp
 )
 
 target_include_directories(AlgViz PRIVATE src)
@@ -48,8 +52,8 @@ if (WIN32 AND BUILD_SHARED_LIBS)
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:AlgViz> $<TARGET_FILE_DIR:AlgViz> COMMAND_EXPAND_LISTS)
 endif()
 
-# copy src/Public folder to build directory
+# copy Public folder to build directory
 add_custom_command(TARGET AlgViz POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/src/Public $<TARGET_FILE_DIR:AlgViz>/Public)
+	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/Public $<TARGET_FILE_DIR:AlgViz>/Public)
 
 install(TARGETS AlgViz)
