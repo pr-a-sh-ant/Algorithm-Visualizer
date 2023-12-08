@@ -38,8 +38,8 @@ viz::Maze::Maze(const sf::Vector2f& box_dimensions, const sf::Vector2i& boxes_in
 	// Sets the dimensions of the maze
 	this->maze_dimensions_ = sf::Vector2f(box_dimensions_.x * boxes_in_maze_.x, box_dimensions_.y * boxes_in_maze_.y);
 	// Sets the start and goal box
-	this->start_box_ = sf::Vector2i(boxes_in_maze_.x / 3, boxes_in_maze_.y / 3);
-	this->start_box_ = sf::Vector2i(boxes_in_maze_.x - 1, boxes_in_maze_.y - 1);
+	this->start_box_ = sf::Vector2i(boxes_in_maze_.x / 4, boxes_in_maze_.y / 4);
+	this->goal_box_ = sf::Vector2i(boxes_in_maze_.x - this->start_box_.x, boxes_in_maze_.y - this->start_box_.y);
 
 	// Sets the type of the start and goal box
 	this->operator[](this->start_box_).set_type(MazeBoxType::start, false);
@@ -213,6 +213,21 @@ void viz::Maze::handle_state_change(const State& state)
 	}
 }
 
+sf::Vector2i viz::Maze::get_start_box() const
+{
+	return this->start_box_;
+}
+
+sf::Vector2i viz::Maze::get_goal_box() const
+{
+	return this->goal_box_;
+}
+
+sf::Vector2i viz::Maze::get_boxes_in_maze() const
+{
+	return this->boxes_in_maze_;
+}
+
 void viz::Maze::set_goal_box(const sf::Vector2i& position)
 {
 	// if clicking in non-empty box, return
@@ -261,6 +276,22 @@ void viz::Maze::reset()
 
 	this->operator[](this->start_box_).set_type(MazeBoxType::start, false);
 	this->operator[](this->goal_box_).set_type(MazeBoxType::goal, false);
+
+	auto& state = State::get_state_instance();
+	state.search.visualizer_mode = search_visualizer_mode::none;
+	state.search.mouse_click_mode = search_mouse_click_mode::none;
+}
+
+void viz::Maze::clear()
+{
+	for (MazeBox* & box : this->boxes_)
+	{
+		if (box->get_type() != MazeBoxType::obstacle && box->get_type() != MazeBoxType::start &&
+			box->get_type() != MazeBoxType::goal)
+		{
+			box->set_type(MazeBoxType::empty, false);
+		}
+	}
 
 	auto& state = State::get_state_instance();
 	state.search.visualizer_mode = search_visualizer_mode::none;

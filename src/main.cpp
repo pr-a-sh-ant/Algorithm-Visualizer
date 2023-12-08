@@ -43,7 +43,7 @@ viz::State* viz::State::state_instance_ptr_ = nullptr;
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Maze Solver");
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Maze Solver", sf::Style::Fullscreen);
 	sf::Clock clock;
 
 	viz::window::SearchWindow search_window({ 1920, 1080 }, "Maze Solver");

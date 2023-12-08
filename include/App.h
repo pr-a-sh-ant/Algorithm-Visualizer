@@ -1,5 +1,5 @@
 #pragma once
-
+/*
 #include "Mouse.h"
 #include "Search.h"
 #include <SFML/Graphics.hpp>
@@ -43,4 +43,4 @@ public:
 
 	void run();
 	~App();
-};
+};*/

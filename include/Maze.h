@@ -45,6 +45,13 @@ namespace viz
 		void handle_event(const sf::Event& event); // Handle events (user input)
 		void handle_state_change(const viz::State& state); // Handle state changes (mouse input)
 
+		[[nodiscard]]
+		sf::Vector2i get_start_box() const; // Get the start box
+		[[nodiscard]]
+		sf::Vector2i get_goal_box() const; // Get the goal box
+		[[nodiscard]]
+		sf::Vector2i get_boxes_in_maze() const; // Get the dimensions of the maze (number of boxes)
+
 		void set_goal_box(const sf::Vector2i& position); // Set the goal box
 		void set_start_box(const sf::Vector2i& position); // Set the start box
 		void set_wall(const sf::Vector2i& position, const bool revert = false); // Set the wall at position (changes back to normal if revert is true and the box is already a wall)

@@ -1,7 +1,10 @@
 #pragma once
 
+#include <map>
 #include "Window.h"
 #include "Maze.h"
+#include "SearchSpace.h"
+#include "Search.h"
 
 namespace viz::window
 {
@@ -18,6 +21,11 @@ namespace viz::window
 		void draw_button(sf::RenderWindow& window) override;
 	public:
 		viz::Maze* maze;
+		viz::search::SearchSpace* search_space;
+		viz::search::Search* selected_search_algorithm;
+		std::map<std::string, viz::search::Search*> search_algorithms;
+		sf::Text algorithm_text;
+		
 
 		SearchWindow(const sf::Vector2u& window_size, const std::string& title);
 		~SearchWindow() override;

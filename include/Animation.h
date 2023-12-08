@@ -44,6 +44,7 @@ namespace viz::anim
 		virtual void set_position(const sf::Vector2f& position) = 0; // Sets the position of the object
 		virtual void stop_animation_and_reset() = 0; // Stops the animation and resets the object to its initial state
 		virtual void update(const float& delta_time_seconds) = 0; // Updates the animation
+		[[nodiscard]]
 		virtual const sf::Drawable* get_drawable() const = 0; // Returns a pointer to the drawable object
 	};
 

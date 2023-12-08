@@ -197,7 +197,7 @@ void viz::Button::draw(sf::RenderWindow& window) const
 
 void viz::Button::update()
 {
-	if (this->hovered && this->callback)
+	if (this->pressed && this->callback)
 	{
 		this->callback();
 	}
