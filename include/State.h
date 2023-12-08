@@ -2,6 +2,7 @@
 
 #include "Mouse.h"
 
+/*
 struct state
 	{
 		int screen = 0;
@@ -13,6 +14,7 @@ struct state
 		int resetScreen = 0;
 		int clearSort = 0;
 	} ;
+*/
 
 namespace viz
 {

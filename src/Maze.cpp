@@ -46,6 +46,14 @@ viz::Maze::Maze(const sf::Vector2f& box_dimensions, const sf::Vector2i& boxes_in
 	this->operator[](this->goal_box_).set_type(MazeBoxType::goal, false);
 }
 
+viz::Maze::~Maze()
+{
+	for (MazeBox* & box : this->boxes_)
+	{
+		delete box;
+	}
+}
+
 void viz::Maze::update_animation(const float& delta_time_seconds)
 {
 	for (MazeBox* box : this->boxes_)

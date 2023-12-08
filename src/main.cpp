@@ -1,7 +1,7 @@
-#include <SFML/Graphics.hpp>
-#include "Maze.h"
-#include "State.h"
 #include <iostream>
+#include <SFML/Graphics.hpp>
+#include "State.h"
+#include "SearchWindow.h"
 
 /*
 int main()
@@ -44,11 +44,11 @@ viz::State* viz::State::state_instance_ptr_ = nullptr;
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Maze Solver");
-	viz::Maze maze({24.0f, 24.0f}, {40, 40}, {10.0f, 10.0f});
 	sf::Clock clock;
 
+	viz::window::SearchWindow search_window({ 1920, 1080 }, "Maze Solver");
+
 	auto& state = viz::State::get_state_instance();
-	state.search.mouse_click_mode = viz::search_mouse_click_mode::wall;
 	float delta_time_seconds = 0.0f;
 
 
@@ -89,16 +89,17 @@ int main()
 				break;
 			}
 		}
-
-		maze.handle_state_change(state);
-
+		
 		delta_time_seconds = clock.restart().asSeconds();
+		search_window.handle_state_change(state);
 
 		window.clear();
 
-		maze.update_animation(delta_time_seconds);
-		maze.draw_maze(window);
+		search_window.update(delta_time_seconds);
+		search_window.draw(window);
 		
 		window.display();
 	}
 }
+
+

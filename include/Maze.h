@@ -28,6 +28,9 @@ namespace viz
 		Maze(const sf::Vector2f& box_dimensions, const sf::Vector2i& boxes_in_maze,
 		     const sf::Vector2f& maze_start_position);
 
+		// Destructor (deletes all the boxes)
+		~Maze();
+
 		Maze() = delete; // Delete default constructor
 		Maze(const Maze&) = delete; // Delete copy constructor
 

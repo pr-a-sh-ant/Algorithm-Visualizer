@@ -1,27 +1,42 @@
 #pragma once
-#include "Entity.h"
+#include <functional>
+
 #include "Mouse.h"
 #include <SFML/Graphics.hpp>
-#include "State.h"
+#include <string>
 
-class Button : public Entity
+namespace viz
 {
-private:
-    /* data */
-public:
-    Button(int x, int y, std::string text, int width, int height,std::string func);
-    ~Button();
+	class Button
+	{
+	private:
+		/* data */
+	public:
+        Button(const sf::Vector2f& position, const sf::Vector2f& dimensions, std::string text, const std::string& font, const sf::Color fill_color, const sf::Color fill_color_hover, const std::function<void()>& callback);
+        ~Button();
 
-    std::string name_button;
-    bool hovered;
-    bool pressed;
-    sf::Text *text;
+        sf::RectangleShape rectangle;
+        sf::Text* text;
+        std::string button_name;
 
-    sf::Font font;
-    std::string func;
+        sf::Color fill_color;
+        sf::Color fill_color_hover;
 
-    void centerScale(int scale);
-    void update(Mouse *mouse,state* appState);
-    void draw(sf::RenderWindow *window);
-    void stateChanger(state *appState);
-};
+        bool pressed;
+        bool hovered;
+
+        // callback function
+		std::function<void()> callback;
+
+        sf::Font font;
+
+        // Returns true if the mouse is over the button
+        bool is_mouse_over(const sf::Vector2f& mouse_position) const;
+        // Handle the mouse state
+        void handle_mouse(const viz::Mouse& mouse);
+        // Draw the button
+        void draw(sf::RenderWindow& window) const;
+        // Updates the button
+        void update();
+	};
+}
