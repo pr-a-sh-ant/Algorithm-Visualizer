@@ -6,7 +6,7 @@ void viz::sort::Sort::swap(const size_t index_first, const size_t index_second)
 	std::swap(sort_space_->box_heights[index_first], sort_space_->box_heights[index_second]);
 }
 
-viz::sort::Sort::Sort(SortSpace* sort_space, const float step_delay)
+viz::sort::Sort::Sort(SortSpace *sort_space, const float step_delay)
 	: sort_space_(sort_space), step_delay_(step_delay), step_clock_(0.0f)
 {
 }
@@ -57,14 +57,14 @@ void viz::sort::Sort::start_sort()
 	State::get_state_instance().sort.visualizer_mode = sort_visualizer_mode::sorting;
 }
 
-viz::sort::BubbleSort::BubbleSort(viz::sort::SortSpace* sort_space, const float step_delay)
-	: Sort(sort_space, step_delay),outer_loop_index_(0), inner_loop_index_(0)
+viz::sort::BubbleSort::BubbleSort(viz::sort::SortSpace *sort_space, const float step_delay)
+	: Sort(sort_space, step_delay), outer_loop_index_(0), inner_loop_index_(0)
 {
 }
 
 void viz::sort::BubbleSort::run_sort_step()
 {
-if (this->outer_loop_index_ < this->sort_space_->box_heights.size())
+	if (this->outer_loop_index_ < this->sort_space_->box_heights.size())
 	{
 		if (this->inner_loop_index_ < this->sort_space_->box_heights.size() - this->outer_loop_index_ - 1)
 		{

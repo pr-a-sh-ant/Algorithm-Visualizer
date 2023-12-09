@@ -1,13 +1,13 @@
 #include "SearchSpace.h"
 
-viz::search::SearchSpace::SearchSpace(Maze* maze)
+viz::search::SearchSpace::SearchSpace(Maze *maze)
 	: dimensions_(maze->get_boxes_in_maze()), maze_(maze)
 {
 	this->parents_.resize(this->dimensions_.x * this->dimensions_.y, -1);
 	this->visited_.resize(this->dimensions_.x * this->dimensions_.y, false);
 }
 
-sf::Vector2i viz::search::SearchSpace::get_parent(const sf::Vector2i& box_index) const
+sf::Vector2i viz::search::SearchSpace::get_parent(const sf::Vector2i &box_index) const
 {
 	if (this->parents_[box_index.y * this->dimensions_.x + box_index.x] == -1)
 	{
@@ -16,11 +16,10 @@ sf::Vector2i viz::search::SearchSpace::get_parent(const sf::Vector2i& box_index)
 
 	return {
 		this->parents_[box_index.y * this->dimensions_.x + box_index.x] % this->dimensions_.x,
-		this->parents_[box_index.y * this->dimensions_.x + box_index.x] / this->dimensions_.x
-	};
+		this->parents_[box_index.y * this->dimensions_.x + box_index.x] / this->dimensions_.x};
 }
 
-bool viz::search::SearchSpace::is_visited(const sf::Vector2i& box_index) const
+bool viz::search::SearchSpace::is_visited(const sf::Vector2i &box_index) const
 {
 	return this->visited_[box_index.y * this->dimensions_.x + box_index.x];
 }
@@ -30,7 +29,7 @@ sf::Vector2i viz::search::SearchSpace::get_dimensions() const
 	return this->dimensions_;
 }
 
-viz::Maze* viz::search::SearchSpace::get_maze() const
+viz::Maze *viz::search::SearchSpace::get_maze() const
 {
 	return this->maze_;
 }
@@ -45,33 +44,33 @@ sf::Vector2i viz::search::SearchSpace::get_goal_box() const
 	return this->maze_->get_goal_box();
 }
 
-void viz::search::SearchSpace::set_parent(const sf::Vector2i& parent_box_index, const sf::Vector2i& child_box_index)
+void viz::search::SearchSpace::set_parent(const sf::Vector2i &parent_box_index, const sf::Vector2i &child_box_index)
 {
 	this->parents_[child_box_index.y * this->dimensions_.x + child_box_index.x] =
 		parent_box_index.y * this->dimensions_.x + parent_box_index.x;
 }
 
-void viz::search::SearchSpace::set_as_visited(const sf::Vector2i& box_index)
+void viz::search::SearchSpace::set_as_visited(const sf::Vector2i &box_index)
 {
 	this->visited_[box_index.y * this->dimensions_.x + box_index.x] = true;
 }
 
-void viz::search::SearchSpace::set_as_explored(const sf::Vector2i& box_index)
+void viz::search::SearchSpace::set_as_explored(const sf::Vector2i &box_index)
 {
 	this->maze_->operator[](box_index).set_type(MazeBoxType::searched, true);
 }
 
-void viz::search::SearchSpace::set_as_path(const sf::Vector2i& box_index)
+void viz::search::SearchSpace::set_as_path(const sf::Vector2i &box_index)
 {
 	this->maze_->operator[](box_index).set_type(MazeBoxType::path, true);
 }
 
-std::vector<sf::Vector2i> viz::search::SearchSpace::get_valid_actions(const sf::Vector2i& box_index) const
+std::vector<sf::Vector2i> viz::search::SearchSpace::get_valid_actions(const sf::Vector2i &box_index) const
 {
 	std::vector<sf::Vector2i> valid_actions;
 
 	// If box to left, right, top and bottom exists, and are either empty or the goal, add them to the valid actions
-	for (const auto& relative_position : std::vector<sf::Vector2i>{{-1, 0}, {0, 1}, {0, -1}, {1, 0}})
+	for (const auto &relative_position : std::vector<sf::Vector2i>{{-1, 0}, {0, 1}, {0, -1}, {1, 0}})
 	{
 		const auto absolute_position = box_index + relative_position;
 		// Check if box is within bounds
@@ -101,7 +100,7 @@ std::vector<sf::Vector2i> viz::search::SearchSpace::get_valid_actions(const sf::
 
 void viz::search::SearchSpace::reset()
 {
-	for (auto& parent : this->parents_)
+	for (auto &parent : this->parents_)
 	{
 		parent = -1;
 	}

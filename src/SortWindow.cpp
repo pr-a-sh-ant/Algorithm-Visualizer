@@ -7,14 +7,14 @@
 #pragma region button callback functions
 namespace sort_callbacks
 {
-	void back(viz::window::SortWindow& sort_window)
+	void back(viz::window::SortWindow &sort_window)
 	{
 		sort_window.back_callback();
 	}
 
-	void start_sort(viz::window::SortWindow& sort_window)
+	void start_sort(viz::window::SortWindow &sort_window)
 	{
-		auto& state = viz::State::get_state_instance().get_state_instance();
+		auto &state = viz::State::get_state_instance().get_state_instance();
 		if (state.sort.visualizer_mode == viz::sort_visualizer_mode::sorting)
 		{
 			return;
@@ -28,9 +28,9 @@ namespace sort_callbacks
 		sort_window.selected_sort_algorithm->start_sort();
 	}
 
-	void bubble_sort(viz::window::SortWindow& sort_window)
+	void bubble_sort(viz::window::SortWindow &sort_window)
 	{
-		auto& state = viz::State::get_state_instance().get_state_instance();
+		auto &state = viz::State::get_state_instance().get_state_instance();
 		if (state.sort.visualizer_mode == viz::sort_visualizer_mode::sorting)
 		{
 			return;
@@ -39,6 +39,11 @@ namespace sort_callbacks
 		// Reset the sort space
 		sort_window.selected_sort_algorithm->reset();
 		state.sort.visualizer_mode = viz::sort_visualizer_mode::none;
+	}
+
+	void reset(viz::window::SortWindow &sort_window)
+	{
+		sort_window.selected_sort_algorithm->reset();
 	}
 }
 #pragma endregion
@@ -50,28 +55,33 @@ struct ButtonInfo
 	std::string text;
 	sf::Color fill_color;
 	sf::Color fill_color_hover;
-	void (*callback)(viz::window::SortWindow& sort_window);
+	void (*callback)(viz::window::SortWindow &sort_window);
 };
 
 void viz::window::SortWindow::init_buttons()
 {
 	const std::vector<ButtonInfo> button_infos = {
-		{{1400, 900}, {200, 80}, "Back", {9, 57, 120}, {0, 0, 0}, sort_callbacks::back}, // Back Button
-		{{1600, 50}, {300, 80}, "Start", {9, 57, 120}, {19, 98, 168}, sort_callbacks::start_sort}, // Start Button
-		{{1600, 150}, {300, 80}, "Bubble", {9, 57, 120}, {0, 0, 0}, sort_callbacks::bubble_sort}, // Bubble sort
+		{{1400, 900}, {200, 80}, "Back", {204, 0, 0}, {255, 0, 0}, sort_callbacks::back},				 // Back Button
+		{{1250, 50}, {300, 80}, "Start", {58, 107, 102}, {116, 216, 143}, sort_callbacks::start_sort},	 // Start Button
+		{{1250, 350}, {300, 80}, "Bubble", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort},	 // Bubble sort
+		{{1600, 50}, {300, 80}, "Reset", {9, 57, 120}, {19, 98, 168}, sort_callbacks::reset},			 // Reset
+		{{1600, 550}, {300, 80}, "Insertion", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort}, // Insertion sort
+		{{1600, 550}, {300, 80}, "Quick", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort},	 // Quick sort
+		{{1600, 550}, {300, 80}, "Merge", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort},	 // Merge Sort
 	};
 
-	for (const auto& button_info : button_infos)
+	for (const auto &button_info : button_infos)
 	{
 		auto button = new Button(button_info.position, button_info.dimensions, button_info.text, "Public/font.ttf",
-			button_info.fill_color, button_info.fill_color_hover, [this, button_info]() {button_info.callback(*this); });
+								 button_info.fill_color, button_info.fill_color_hover, [this, button_info]()
+								 { button_info.callback(*this); });
 		this->buttons_.push_back(button);
 	}
 }
 
-void viz::window::SortWindow::handle_state_change_button(viz::State& state)
+void viz::window::SortWindow::handle_state_change_button(viz::State &state)
 {
-	for (const auto& button : this->buttons_)
+	for (const auto &button : this->buttons_)
 	{
 		button->handle_mouse(state.mouse);
 	}
@@ -79,36 +89,36 @@ void viz::window::SortWindow::handle_state_change_button(viz::State& state)
 
 void viz::window::SortWindow::update_button(const float delta_time_seconds)
 {
-	for (const auto& button : this->buttons_)
+	for (const auto &button : this->buttons_)
 	{
 		button->update();
 	}
 }
 
-void viz::window::SortWindow::draw_button(sf::RenderWindow& window)
+void viz::window::SortWindow::draw_button(sf::RenderWindow &window)
 {
-	for (const auto& button : this->buttons_)
+	for (const auto &button : this->buttons_)
 	{
 		button->draw(window);
 	}
 }
 
-
-
-viz::window::SortWindow::SortWindow(const sf::Vector2u& window_size, const std::string& title,
-                                    std::function<void()> back_callback)
+viz::window::SortWindow::SortWindow(const sf::Vector2u &window_size, const std::string &title,
+									std::function<void()> back_callback)
 	: Window(window_size, title), back_callback(std::move(back_callback))
 {
 	bar_width = SortWindow::bounding_rect_width / SortWindow::number_of_bars;
 
 	this->sort_space = new sort::SortSpace(sort_space_start_position, bar_min_height, bar_max_height, bar_width,
-	                                       number_of_bars, SortWindow::bars_offset);
+										   number_of_bars, SortWindow::bars_offset);
 
 	// Initialize the sort algorithms
 	this->sort_algorithms["BubbleSort"] = new sort::BubbleSort(sort_space, step_delay);
 	this->selected_sort_algorithm = sort_algorithms["BubbleSort"];
 
 	// Initialize button
+	this->sort_text = sf::Text("Sort Algorithm", this->buttons_[0]->font, 60);
+	sort_text.setPosition(1350, 350);
 	this->init_buttons();
 }
 
@@ -117,7 +127,7 @@ viz::window::SortWindow::~SortWindow()
 	delete sort_space;
 
 	// Delete the sort algorithms
-	for (auto& [name, algorithm] : sort_algorithms)
+	for (auto &[name, algorithm] : sort_algorithms)
 	{
 		delete algorithm;
 	}
@@ -128,8 +138,9 @@ void viz::window::SortWindow::reset()
 	this->selected_sort_algorithm->reset();
 }
 
-void viz::window::SortWindow::draw(sf::RenderWindow& window)
+void viz::window::SortWindow::draw(sf::RenderWindow &window)
 {
+	window.draw(sort_text);
 	this->sort_space->draw(window);
 	this->draw_button(window);
 }
@@ -140,7 +151,7 @@ void viz::window::SortWindow::update(const float delta_time_seconds)
 	this->update_button(delta_time_seconds);
 }
 
-void viz::window::SortWindow::handle_state_change(viz::State& state)
+void viz::window::SortWindow::handle_state_change(viz::State &state)
 {
 	this->handle_state_change_button(state);
 }
