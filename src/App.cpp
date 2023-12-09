@@ -179,13 +179,18 @@ void back_callback(viz::App &app)
 	app.selected_window->reset();
 	app.selected_window = app.home_window;
 }
+
+void exit_callback(viz::App &app)
+{
+	app.window->close();
+}
 #pragma endregion
 
 viz::App::App()
 	: delta_time_seconds(0.0f)
 {
 	// Initialize the sfml window
-	this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Algorithm Visualizer", sf::Style::Fullscreen);
+	this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Algorithm Visualizer");
 	// Initialize the search window
 	this->search_window = new viz::window::SearchWindow({1920, 1080}, "Search", [this]()
 														{ back_callback(*this); });
@@ -194,7 +199,9 @@ viz::App::App()
 		{1920, 1080}, "Home", [this]()
 		{ search_callback(*this); },
 		[this]()
-		{ sort_callback(*this); });
+		{ sort_callback(*this); },
+		[this]()
+		{ exit_callback(*this); });
 	viz::State::get_state_instance();
 	// Set the default window
 	this->selected_window = this->home_window;

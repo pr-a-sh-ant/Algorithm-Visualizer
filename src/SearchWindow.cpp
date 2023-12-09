@@ -8,30 +8,30 @@
 #pragma region button_callback_functions
 namespace search_callbacks
 {
-	void back(viz::window::SearchWindow& search_window)
+	void back(viz::window::SearchWindow &search_window)
 	{
 		search_window.back_callback();
 	}
 
-	void maze(viz::window::SearchWindow& search_window)
+	void maze(viz::window::SearchWindow &search_window)
 	{
-		auto& state = viz::State::get_state_instance();
+		auto &state = viz::State::get_state_instance();
 		state.search.mouse_click_mode = viz::search_mouse_click_mode::wall;
 	}
 
-	void destination(viz::window::SearchWindow& search_window)
+	void destination(viz::window::SearchWindow &search_window)
 	{
-		auto& state = viz::State::get_state_instance();
+		auto &state = viz::State::get_state_instance();
 		state.search.mouse_click_mode = viz::search_mouse_click_mode::goal;
 	}
 
-	void start_point(viz::window::SearchWindow& search_window)
+	void start_point(viz::window::SearchWindow &search_window)
 	{
-		auto& state = viz::State::get_state_instance();
+		auto &state = viz::State::get_state_instance();
 		state.search.mouse_click_mode = viz::search_mouse_click_mode::start;
 	}
 
-	void search(viz::window::SearchWindow& search_window)
+	void search(viz::window::SearchWindow &search_window)
 	{
 		if (viz::State::get_state_instance().search.visualizer_mode != viz::search_visualizer_mode::none)
 		{
@@ -42,25 +42,26 @@ namespace search_callbacks
 		search_window.selected_search_algorithm->start_search();
 	}
 
-	void clear(viz::window::SearchWindow& search_window)
-	{
-		search_window.maze->clear();
-		search_window.selected_search_algorithm->reset();
-		viz::State::get_state_instance().search.visualizer_mode = viz::search_visualizer_mode::none;
-	}
-
-	void bfs(viz::window::SearchWindow& search_window)
+	void bfs(viz::window::SearchWindow &search_window)
 	{
 		search_window.selected_search_algorithm = search_window.search_algorithms["BreadthFirstSearch"];
 		search_window.maze->clear();
 		search_window.selected_search_algorithm->reset();
 	}
 
-	void dfs(viz::window::SearchWindow& search_window)
+	void dfs(viz::window::SearchWindow &search_window)
 	{
 		search_window.selected_search_algorithm = search_window.search_algorithms["DepthFirstSearch"];
 		search_window.maze->clear();
 		search_window.selected_search_algorithm->reset();
+	}
+
+	void clearMaze(viz::window::SearchWindow &search_window)
+	{
+		search_window.maze->clear();
+		search_window.selected_search_algorithm->reset();
+		search_window.maze->reset();
+		viz::State::get_state_instance().search.visualizer_mode = viz::search_visualizer_mode::none;
 	}
 }
 #pragma endregion
@@ -72,36 +73,38 @@ struct ButtonInfo
 	std::string text;
 	sf::Color fill_color;
 	sf::Color fill_color_hover;
-	void (*callback)(viz::window::SearchWindow& search_window);
+	void (*callback)(viz::window::SearchWindow &search_window);
 };
 
 void viz::window::SearchWindow::init_buttons()
 {
 	const std::vector<ButtonInfo> button_info = {
-		{{1400, 900}, {200, 80}, "Back", {9, 57, 120}, {0, 0, 0}, search_callbacks::back}, // Back Button
-		{{1600, 50}, {300, 80}, "Maze", {9, 57, 120}, {19, 98, 168}, search_callbacks::maze}, // Maze Button
-		{{1600, 150}, {300, 80}, "Destination", {9, 57, 120}, {0, 0, 0}, search_callbacks::destination},
+		{{1400, 950}, {200, 80}, "Back", {204, 0, 0}, {255, 0, 0}, search_callbacks::back},	  // Back Button
+		{{1550, 50}, {300, 80}, "Maze", {9, 57, 120}, {19, 98, 168}, search_callbacks::maze}, // Maze Button
+		{{1550, 150}, {300, 80}, "Destination", {9, 57, 120}, {19, 98, 168}, search_callbacks::destination},
 		// Destination Button
-		{{1200, 150}, {300, 80}, "Start Point", {9, 57, 120}, {0, 0, 0}, search_callbacks::start_point},
+		{{1150, 150}, {300, 80}, "Start Point", {9, 57, 120}, {19, 98, 168}, search_callbacks::start_point},
 		// Start Point Button
-		{{1200, 50}, {300, 80}, "Search", {9, 57, 120}, {19, 98, 168}, search_callbacks::search}, // Search Button
-		{{1450, 250}, {200, 80}, "Clear", {9, 57, 120}, {0, 0, 0}, search_callbacks::clear}, // Clear Button
-		{{1450, 450}, {200, 80}, "BFS", {9, 57, 120}, {0, 0, 0}, search_callbacks::bfs}, // BFS Button
-		{{1450, 550}, {200, 80}, "DFS", {9, 57, 120}, {0, 0, 0}, search_callbacks::dfs}, // DFS Button
+		{{1150, 50}, {300, 80}, "Search", {58, 107, 102}, {116, 216, 143}, search_callbacks::search},		 // Search Button
+		{{1150, 250}, {300, 80}, "Clear", {9, 57, 120}, {19, 98, 168}, search_callbacks::clearMaze},		 // Clear Button
+		{{1400, 550}, {200, 80}, "BFS", {9, 57, 120}, {19, 98, 168}, search_callbacks::bfs},				 // BFS Button
+		{{1400, 650}, {200, 80}, "DFS", {9, 57, 120}, {19, 98, 168}, search_callbacks::dfs},				 // DFS Button
+		{{1550, 250}, {300, 80}, "Generate Maze", {9, 57, 120}, {19, 98, 168}, search_callbacks::clearMaze}, // Generate Maze Button
 	};
 	const std::string font_path = "Public/font.ttf";
 
-	for (const auto& info : button_info)
+	for (const auto &info : button_info)
 	{
 		this->buttons_.push_back(new Button(info.position, info.dimensions, info.text, font_path, info.fill_color,
-		                                    info.fill_color_hover,
-		                                    [this, info]() { info.callback(std::ref(*this)); }));
+											info.fill_color_hover,
+											[this, info]()
+											{ info.callback(std::ref(*this)); }));
 	}
 }
 
-void viz::window::SearchWindow::handle_state_change_button(State& state)
+void viz::window::SearchWindow::handle_state_change_button(State &state)
 {
-	for (const auto& button : this->buttons_)
+	for (const auto &button : this->buttons_)
 	{
 		button->handle_mouse(state.mouse);
 	}
@@ -109,21 +112,21 @@ void viz::window::SearchWindow::handle_state_change_button(State& state)
 
 void viz::window::SearchWindow::update_button(const float delta_time_seconds)
 {
-	for (const auto& button : this->buttons_)
+	for (const auto &button : this->buttons_)
 	{
 		button->update();
 	}
 }
 
-void viz::window::SearchWindow::draw_button(sf::RenderWindow& window)
+void viz::window::SearchWindow::draw_button(sf::RenderWindow &window)
 {
-	for (const auto& button : this->buttons_)
+	for (const auto &button : this->buttons_)
 	{
 		button->draw(window);
 	}
 }
 
-viz::window::SearchWindow::SearchWindow(const sf::Vector2u& window_size, const std::string& title, std::function<void()> back_callback)
+viz::window::SearchWindow::SearchWindow(const sf::Vector2u &window_size, const std::string &title, std::function<void()> back_callback)
 	: Window(window_size, title), back_callback(std::move(back_callback))
 {
 	this->maze = new Maze(maze_box_dimensions, maze_size_boxes, maze_position);
@@ -133,10 +136,10 @@ viz::window::SearchWindow::SearchWindow(const sf::Vector2u& window_size, const s
 		{"DepthFirstSearch", new search::DepthFirstSearch(this->search_space, 0.01f)},
 	};
 	this->selected_search_algorithm = this->search_algorithms["BreadthFirstSearch"]; // Set BFS as default
-	this->init_buttons();	// initialize the buttons
+	this->init_buttons();															 // initialize the buttons
 	// Setup text
 	this->algorithm_text = sf::Text("Algorithm", this->buttons_.front()->font, 60);
-	algorithm_text.setPosition(1400, 350);
+	algorithm_text.setPosition(1350, 450);
 }
 
 viz::window::SearchWindow::~SearchWindow()
@@ -145,7 +148,7 @@ viz::window::SearchWindow::~SearchWindow()
 	delete this->search_space;
 
 	// delete all the algorithms in this->search_algorithms
-	for (auto& [name, algorithm] : this->search_algorithms)
+	for (auto &[name, algorithm] : this->search_algorithms)
 	{
 		delete algorithm;
 	}
@@ -157,7 +160,7 @@ void viz::window::SearchWindow::reset()
 	this->selected_search_algorithm->reset();
 }
 
-void viz::window::SearchWindow::draw(sf::RenderWindow& window)
+void viz::window::SearchWindow::draw(sf::RenderWindow &window)
 {
 	window.draw(this->algorithm_text);
 	this->draw_button(window);
@@ -171,7 +174,7 @@ void viz::window::SearchWindow::update(const float delta_time_seconds)
 	this->selected_search_algorithm->update(delta_time_seconds);
 }
 
-void viz::window::SearchWindow::handle_state_change(State& state)
+void viz::window::SearchWindow::handle_state_change(State &state)
 {
 	this->handle_state_change_button(state);
 	this->maze->handle_state_change(state);
