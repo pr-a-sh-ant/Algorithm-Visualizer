@@ -52,4 +52,35 @@ namespace viz::sort
 		void reset() override;
 		void start_sort() override;
 	};;
+
+	class SelectionSort: public Sort
+	{
+	private:
+		size_t outer_loop_index_; // The index of the outer loop
+		size_t inner_loop_index_; // The index of the inner loop
+		size_t min_index_; // The index of the minimum value
+	public:
+		SelectionSort(viz::sort::SortSpace* sort_space, const float step_delay);
+
+		void run_sort_step() override;
+		void reset() override;
+		void start_sort() override;
+	};
+
+	class MergeSort : public Sort {
+	private:
+		size_t left_index_;   // Index for the left subarray
+		size_t right_index_;  // Index for the right subarray
+		size_t merge_index_;  // Index for merging the subarrays
+
+		// Merge function for merging two subarrays
+		void merge(size_t left, size_t middle, size_t right);
+
+	public:
+		MergeSort(viz::sort::SortSpace* sort_space, const float step_delay);
+
+		void run_sort_step() override;
+		void reset() override;
+		void start_sort() override;
+	};
 }
