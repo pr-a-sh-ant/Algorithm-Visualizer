@@ -50,18 +50,18 @@ void App::init_home()
 }
 
 void App::init_sort()
-{	
+{
 	this->sort = new Sort(this);
-	
+
 }
 
 void App::draw()
 {
 	// std::cout << "drawing............." << std::endl;
-		
+
 	this->window->clear();
 	if (appState->screen == 0)
-	{	
+	{
 		// std::cout << "drawing home............." << std::endl;
 		this->home->draw();
 	}
@@ -74,15 +74,15 @@ void App::draw()
 		this->sort->draw();
 	}
 	else if (appState->screen == 1)
-	{	
-		
+	{
+
 		this->search->draw();
 	}
 	this->window->display();
 }
 
 void App::update()
-{	
+{
 	// std::cout << "updating............." << std::endl;
 	updateSFMLevents();
 	if (appState->screen == 0)
@@ -100,7 +100,7 @@ void App::update()
 		this->search->update();
 	}
 	else if (appState->screen == 2)
-	{	
+	{
 		// std::cout << "updating sort............." << std::endl;
 		this->sort->update();
 	}
@@ -110,7 +110,7 @@ void App::update()
 		this->window->close();
 	}
 
-	
+
 
 	mouse->update(*this->window);
 }
@@ -147,7 +147,7 @@ void App::updateSFMLevents()
 void App::run()
 {
 	while (this->window->isOpen())
-	{	
+	{
 		// std::cout << "running............." << std::endl;
 		this->update();
 
@@ -161,23 +161,28 @@ App::~App()
 }
 */
 
-#pragma callback functions
-void search_callback(viz::App& app)
+#pragma region callback functions
+void search_callback(viz::App &app)
 {
 	app.selected_window->reset();
 	app.selected_window = app.search_window;
 }
 
-void sort_callback(viz::App& app)
+void sort_callback(viz::App &app)
 {
 	app.selected_window->reset();
 	app.selected_window = app.sort_window;
 }
 
-void back_callback(viz::App& app)
+void back_callback(viz::App &app)
 {
 	app.selected_window->reset();
 	app.selected_window = app.home_window;
+}
+
+void exit_callback(viz::App &app)
+{
+	app.window->close();
 }
 #pragma endregion
 
@@ -185,11 +190,18 @@ viz::App::App()
 	: delta_time_seconds(0.0f)
 {
 	// Initialize the sfml window
-	this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Algorithm Visualizer", sf::Style::Fullscreen);
+	this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Algorithm Visualizer");
 	// Initialize the search window
-	this->search_window = new viz::window::SearchWindow({ 1920, 1080 }, "Search", [this]() {back_callback(*this); });
+	this->search_window = new viz::window::SearchWindow({1920, 1080}, "Search", [this]()
+														{ back_callback(*this); });
 	// Initialize the home window
-	this->home_window = new viz::window::HomeWindow({ 1920, 1080 }, "Home", [this]() {search_callback(*this); }, [this]() {sort_callback(*this); });
+	this->home_window = new viz::window::HomeWindow(
+		{1920, 1080}, "Home", [this]()
+		{ search_callback(*this); },
+		[this]()
+		{ sort_callback(*this); },
+		[this]()
+		{ exit_callback(*this); });
 	viz::State::get_state_instance();
 	// Initialize the sort window
 	this->sort_window = new viz::window::SortWindow({ 1920, 1080 }, "Sort", [this]() {back_callback(*this); });
@@ -235,12 +247,12 @@ void viz::App::handle_state()
 				this->window->close();
 			}
 			break;
-		case(sf::Event::MouseButtonPressed) :
-				if (this->sf_event.mouseButton.button == sf::Mouse::Left)
-				{
-					viz::State::get_state_instance().mouse.is_left_button_down = true;
-					viz::State::get_state_instance().mouse.is_left_button_pressed = true;
-				}
+		case (sf::Event::MouseButtonPressed):
+			if (this->sf_event.mouseButton.button == sf::Mouse::Left)
+			{
+				viz::State::get_state_instance().mouse.is_left_button_down = true;
+				viz::State::get_state_instance().mouse.is_left_button_pressed = true;
+			}
 			break;
 		case (sf::Event::MouseButtonReleased):
 			if (this->sf_event.mouseButton.button == sf::Mouse::Left)
@@ -249,12 +261,12 @@ void viz::App::handle_state()
 			}
 			break;
 		case sf::Event::MouseMoved:
-			viz::State::get_state_instance().update_mouse({ this->sf_event.mouseMove.x, this->sf_event.mouseMove.y });
+			viz::State::get_state_instance().update_mouse({this->sf_event.mouseMove.x, this->sf_event.mouseMove.y});
 		default:
 			break;
 		}
 	}
-	//viz::State::get_state_instance().update_mouse(sf::Mouse::getPosition(std::ref(*this->window)));	// Update the mouse position
+	// viz::State::get_state_instance().update_mouse(sf::Mouse::getPosition(std::ref(*this->window)));	// Update the mouse position
 	this->selected_window->handle_state_change(viz::State::get_state_instance());
 }
 

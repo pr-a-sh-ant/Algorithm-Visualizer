@@ -14,7 +14,7 @@ set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 
 # set include files
 set(INCLUDE_FILES
-    ${INCLUDE_DIR}/Node.h
+    # ${INCLUDE_DIR}/Node.h
     ${INCLUDE_DIR}/Algorithm.h
     ${INCLUDE_DIR}/Mouse.h
     ${INCLUDE_DIR}/Entity.h
@@ -48,18 +48,19 @@ set(SOURCE_FILES_GG
     ${SOURCE_DIR}/SearchWindow.cpp
     ${SOURCE_DIR}/Button.cpp
     ${SOURCE_DIR}/Search.cpp
-    ${SOURCE_DIR}/Node.cpp
+    # ${SOURCE_DIR}/Node.cpp
     ${SOURCE_DIR}/State.cpp
     ${SOURCE_DIR}/SearchSpace.cpp
     ${SOURCE_DIR}/App.cpp
     ${SOURCE_DIR}/HomeWindow.cpp
     ${SOURCE_DIR}/SortWindow.cpp
+    ${SOURCE_DIR}/SortSpace.cpp
+    ${SOURCE_DIR}/Sort.cpp
     # ${SOURCE_DIR}/Box.cpp
     # ${SOURCE_DIR}/Algorithm.cpp
     # ${SOURCE_DIR}/Entity.cpp
     # ${SOURCE_DIR}/sort_alg.cpp
     # ${SOURCE_DIR}/array.cpp
-    # ${SOURCE_DIR}/Sort.cpp
     # ${SOURCE_DIR}/Home.cpp
 )
 
