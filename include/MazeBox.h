@@ -23,10 +23,10 @@ namespace viz
 		anim::AnimatableRectangle animatable_rectangle_;
 		// Animation for searching
 		static const inline anim::Animation search_animation = anim::Animation(
-			{0, 0}, sf::Color{170, 0, 170}, 0.5f, 2.0f, true, true);
+			{0, 0}, sf::Color{170, 0, 170}, 0.5f, 1.6f, true, true);
 		// Animation for if the box is in the path
 		static const inline anim::Animation found_animation = anim::Animation(
-			{0, 0}, sf::Color{0, 0, 170}, 0.5f, 2.0f, true, true);
+			{0, 0}, sf::Color{0, 0, 170}, 0.5f, 1.6f, true, true);
 		// Colors for the box types
 		static const inline sf::Color box_colors[6] = {
 			sf::Color::Green, // Default box type

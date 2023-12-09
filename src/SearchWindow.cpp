@@ -8,6 +8,32 @@
 #pragma region button_callback_functions
 namespace search_callbacks
 {
+	void recursiveDivision(std::vector<std::vector<int>>& maze, int startRow, int endRow, int startCol, int endCol) {
+    if (startRow + 1 >= endRow || startCol + 1 >= endCol) {
+        return;
+    }
+
+    // Choose a random point to create a passage
+    int wallRow = rand() % (endRow - startRow - 1) + startRow + 1;
+    int wallCol = rand() % (endCol - startCol - 1) + startCol + 1;
+
+    // Create a horizontal passage
+    for (int col = startCol; col <= endCol; ++col) {
+        maze[wallRow][col] = 0;
+    }
+
+    // Create a vertical passage
+    for (int row = startRow; row <= endRow; ++row) {
+        maze[row][wallCol] = 0;
+    }
+
+    // Create three more walls to divide the maze into four chambers
+    recursiveDivision(maze, startRow, wallRow - 1, startCol, wallCol - 1);  // Top-left chamber
+    recursiveDivision(maze, startRow, wallRow - 1, wallCol + 1, endCol);     // Top-right chamber
+    recursiveDivision(maze, wallRow + 1, endRow, startCol, wallCol - 1);     // Bottom-left chamber
+    recursiveDivision(maze, wallRow + 1, endRow, wallCol + 1, endCol);        // Bottom-right chamber
+}
+
 	void back(viz::window::SearchWindow &search_window)
 	{
 		search_window.back_callback();
@@ -59,10 +85,35 @@ namespace search_callbacks
 	void clearMaze(viz::window::SearchWindow &search_window)
 	{
 		search_window.maze->clear();
-		search_window.selected_search_algorithm->reset();
+		search_window.selected_search_algorithm->reset();	
 		search_window.maze->reset();
 		viz::State::get_state_instance().search.visualizer_mode = viz::search_visualizer_mode::none;
 	}
+	void generate_maze(viz::window::SearchWindow& search_window){
+
+		
+		clearMaze(search_window);
+		
+		std::vector<std::vector<int>> maze_ko_tauko(search_window.maze->get_boxes_in_maze().x, std::vector<int>(search_window.maze->get_boxes_in_maze().y, 1));
+		recursiveDivision(maze_ko_tauko, 0, search_window.maze->get_boxes_in_maze().x - 1, 0, search_window.maze->get_boxes_in_maze().y - 1);
+
+		for(int x=0;x<maze_ko_tauko.size();x++)	
+			{
+				for(int y=0;y<maze_ko_tauko[x].size();y++)
+				{
+
+						std::cout<<x<<","<<y<<std::endl;
+						if(maze_ko_tauko[x][y] == 1){
+							search_window.maze->set_wall({x,y});				
+						}
+
+				}	
+			}
+
+	}
+
+	
+	
 }
 #pragma endregion
 
@@ -89,7 +140,7 @@ void viz::window::SearchWindow::init_buttons()
 		{{1150, 250}, {300, 80}, "Clear", {9, 57, 120}, {19, 98, 168}, search_callbacks::clearMaze},		 // Clear Button
 		{{1400, 550}, {200, 80}, "BFS", {9, 57, 120}, {19, 98, 168}, search_callbacks::bfs},				 // BFS Button
 		{{1400, 650}, {200, 80}, "DFS", {9, 57, 120}, {19, 98, 168}, search_callbacks::dfs},				 // DFS Button
-		{{1550, 250}, {300, 80}, "Generate Maze", {9, 57, 120}, {19, 98, 168}, search_callbacks::clearMaze}, // Generate Maze Button
+		{{1550, 250}, {300, 80}, "Generate Maze", {9, 57, 120}, {19, 98, 168}, search_callbacks::generate_maze}, // Generate Maze Button
 	};
 	const std::string font_path = "Public/font.ttf";
 
