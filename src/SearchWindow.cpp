@@ -85,6 +85,12 @@ namespace search_callbacks
 		search_window.maze->clear();
 		search_window.selected_search_algorithm->reset();
 	}
+	void astar(viz::window::SearchWindow &search_window)
+	{
+		search_window.selected_search_algorithm = search_window.search_algorithms["AStarSearch"];
+		search_window.maze->clear();
+		search_window.selected_search_algorithm->reset();
+	}
 
 	void clearMaze(viz::window::SearchWindow &search_window)
 	{
@@ -139,6 +145,7 @@ void viz::window::SearchWindow::init_buttons()
 		{{1150, 250}, {300, 80}, "Clear", {9, 57, 120}, {19, 98, 168}, search_callbacks::clearMaze},			 // Clear Button
 		{{1400, 450}, {200, 80}, "BFS", {9, 57, 120}, {19, 98, 168}, search_callbacks::bfs},					 // BFS Button
 		{{1400, 550}, {200, 80}, "DFS", {9, 57, 120}, {19, 98, 168}, search_callbacks::dfs},					 // DFS Button
+		{{1400, 650}, {200, 80}, "A*", {9, 57, 120}, {19, 98, 168}, search_callbacks::astar},					 // DFS Button
 		{{1500, 250}, {400, 80}, "Generate Maze", {9, 57, 120}, {19, 98, 168}, search_callbacks::generate_maze}, // Generate Maze Button
 	};
 	const std::string font_path = "Public/font.ttf";
@@ -184,6 +191,7 @@ viz::window::SearchWindow::SearchWindow(const sf::Vector2u &window_size, const s
 	this->search_algorithms = {
 		{"BreadthFirstSearch", new search::BreadthFirstSearch(this->search_space, 0.01f)},
 		{"DepthFirstSearch", new search::DepthFirstSearch(this->search_space, 0.01f)},
+		{"AStarSearch", new search::AStarSearch(this->search_space, 0.01f)}
 	};
 	this->selected_search_algorithm = this->search_algorithms["BreadthFirstSearch"]; // Set BFS as default
 	this->init_buttons();															 // initialize the buttons
