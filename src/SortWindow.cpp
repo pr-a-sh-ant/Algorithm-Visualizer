@@ -61,13 +61,15 @@ struct ButtonInfo
 void viz::window::SortWindow::init_buttons()
 {
 	const std::vector<ButtonInfo> button_infos = {
-		{{1400, 900}, {200, 80}, "Back", {204, 0, 0}, {255, 0, 0}, sort_callbacks::back},				 // Back Button
+		{{1450, 900}, {200, 80}, "Back", {204, 0, 0}, {255, 0, 0}, sort_callbacks::back},				 // Back Button
 		{{1250, 50}, {300, 80}, "Start", {58, 107, 102}, {116, 216, 143}, sort_callbacks::start_sort},	 // Start Button
-		{{1250, 350}, {300, 80}, "Bubble", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort},	 // Bubble sort
 		{{1600, 50}, {300, 80}, "Reset", {9, 57, 120}, {19, 98, 168}, sort_callbacks::reset},			 // Reset
-		{{1600, 550}, {300, 80}, "Insertion", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort}, // Insertion sort
-		{{1600, 550}, {300, 80}, "Quick", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort},	 // Quick sort
-		{{1600, 550}, {300, 80}, "Merge", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort},	 // Merge Sort
+		{{1400, 250}, {300, 80}, "Bubble", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort},	 // Bubble sort
+		{{1400, 350}, {300, 80}, "Insertion", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort}, // Insertion sort
+		{{1400, 450}, {300, 80}, "Quick", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort},	 // Quick sort
+		{{1400, 550}, {300, 80}, "Merge", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort},	 // Merge Sort
+		{{1400, 650}, {300, 80}, "Radix", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort},	 // Merge Sort
+		{{1400, 750}, {300, 80}, "Bogo", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort},		 // Merge Sort
 	};
 
 	for (const auto &button_info : button_infos)
@@ -117,9 +119,9 @@ viz::window::SortWindow::SortWindow(const sf::Vector2u &window_size, const std::
 	this->selected_sort_algorithm = sort_algorithms["BubbleSort"];
 
 	// Initialize button
-	this->sort_text = sf::Text("Sort Algorithm", this->buttons_[0]->font, 60);
-	sort_text.setPosition(1350, 350);
 	this->init_buttons();
+	this->sort_text = sf::Text("Sort Algorithm", this->buttons_[0]->font, 60);
+	sort_text.setPosition(1350, 150);
 }
 
 viz::window::SortWindow::~SortWindow()
