@@ -1,7 +1,12 @@
 #include "sort_alg.h"
 #include <iostream>
+#include <vector>
+#include <stack>
+#include <algorithm>
+
 
 AlgorithmSort::AlgorithmSort(Array &arr) : array(arr), i(0), j(0), pivotIndex(-1), tempArray(arr.getData().size()) {}
+ 
 
 void AlgorithmSort::bubbleSort()
 {
@@ -53,22 +58,56 @@ void AlgorithmSort::bogo()
     }
 }
 
-int AlgorithmSort::partition(int low, int high)
-{
-    int pivot = array.getData()[high];
-    int i = (low - 1);
+void AlgorithmSort::merge(){
 
-    for (int j = low; j <= high - 1; j++)
-    {
-        if (array.getData()[j] < pivot)
-        {
-            array.swap(i + 1, j);
-            i++;
+    
+
+    if ( this->currSize <= array.getData().size() - 1) {
+        if ( this->left < array.getData().size() - 1 ) {
+            int mid = std::min<int>(this->left + this->currSize - 1, array.getData().size() - 1);
+            int right = std::min<int>(this->left + 2 * this->currSize - 1, array.getData().size() - 1);
+
+
+            // Merge the two halves:array.getData()[this->left...mid] and arr[mid+1...right]
+            int n1 = mid - this->left + 1;
+            int n2 = right - mid;
+
+            std::vector<int> tempArr(n1 + n2);
+
+            int i = this->left;
+            int j = mid + 1;
+            int k = 0;
+
+            while (i <= mid && j <= right) {
+                if (array.getData()[i] <= array.getData()[j]) {
+                    tempArr[k++] =array.getData()[i++];
+                } else {
+                    tempArr[k++] =array.getData()[j++];
+                }
+            }
+
+            while (i <= mid) {
+                tempArr[k++] =array.getData()[i++];
+            }
+
+            while (j <= right) {
+                tempArr[k++] =array.getData()[j++];
+            }
+
+            // Copy merged elements back to the original array
+            for (int p = 0; p < k; p++) {
+               array.getData()[this->left + p] = tempArr[p];
+            }
+            this->left += 2 * this->currSize;
         }
-    }
+            else{
 
-    array.swap(i + 1, high);
-    return (i + 1);
+            this->currSize *= 2;
+            this->left = 0;
+            }
+    }
+    
+
 }
 
 std::vector<int> &AlgorithmSort::getCurrentState()

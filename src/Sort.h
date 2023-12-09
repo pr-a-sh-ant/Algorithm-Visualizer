@@ -29,6 +29,8 @@ public:
     int currentAlgorithm = 0;
     float barwidth;
     bool sorting;
+    float totalTime;
+    float switchTIme = .01f;
 
     
 

@@ -3,7 +3,7 @@
 #include <iostream>
 #include "App.h"
 
-Sort::Sort(App *app) : array(Array(100)), algorithm(array), current_state(algorithm.getCurrentState())
+Sort::Sort(App *app) : array(Array(128)), algorithm(array), current_state(algorithm.getCurrentState())
 {
     this->app = app;
 
@@ -60,6 +60,8 @@ void Sort::draw()
 void Sort::update()
 {
 
+    totalTime += this->app->deltime;
+
     if (this->app->appState->startSort)
     {
         sorting = true;
@@ -70,17 +72,17 @@ void Sort::update()
         this->init();
         this->app->appState->clearSort = 1;
     }
-    if (sorting)
+    if (sorting )
     {
         sf::sleep(sf::milliseconds(5));
         switch (currentAlgorithm)
         {
         case 0:
-            algorithm.bubbleSort();
+            algorithm.merge();
 
             break;
         case 1:
-            algorithm.insertionSort();
+            algorithm.merge();
 
             break;
         case 2:

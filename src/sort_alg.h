@@ -21,7 +21,8 @@ private:
     std::vector<int> tempArray;
     size_t i, j;
     int pivotIndex;
-    size_t left, middle, right;
+    size_t left=0, middle, right;
+    size_t currSize=0;
 
     int partition(int low, int high);
 };
