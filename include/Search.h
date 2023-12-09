@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <queue>
 #include <stack>
 #include "SearchSpace.h"
@@ -66,10 +67,11 @@ namespace viz::search
 		// Starts the search algorithm
 		void start_search() override;
 	};
+
 	class AStarSearch final: public Search
 	{
 	private:
-		std::stack<sf::Vector2i> stack_;
+		std::priority_queue<sf::Vector2i, std::vector<sf::Vector2i>, std::function<bool(const sf::Vector2i&, const sf::Vector2i&)>> priority_queue_;
 
 	public:
 		AStarSearch(viz::search::SearchSpace* search_space, const float step_delay);
@@ -80,64 +82,3 @@ namespace viz::search
 		void start_search() override;
 	};
 }
-
-/*
-class Box;
-class Button;
-class App;
-
-class Search
-{
-private:
-	int matrix_height = 28;
-	int matrix_width = 28;
-	int boxOrder = 40;
-	Box *get_box(sf::Vector2i &pos);
-
-public:
-	Search(App *app);
-	~Search();
-	App *app;
-	Algorithm alg;
-
-	sf::Vector2i origin = sf::Vector2i(25, 25);
-	std::vector<std::vector<Box *>> box;
-	std::vector<Button *> buttons;
-
-	float totalTime = .0f;
-	float switchTIme = .1f;
-	bool searching = false;
-	bool search_complete = false;
-	bool back_propagating = false;
-
-	// For search
-	std::queue<sf::Vector2i> queue;
-	std::vector<std::vector<bool>> visited;
-	std::vector<std::vector<sf::Vector2i>> parents;
-	std::vector<sf::Vector2i> maze;
-	sf::Vector2i initial_state = sf::Vector2i(5, 5);
-	sf::Vector2i final_state = sf::Vector2i(20, 20);
-	sf::Vector2i back_state = final_state;
-	sf::Text *textAlgo;
-	Node *currentNode;
-
-	void init_boxes();
-	void init_buttons();
-	void init();
-
-	void update();
-	void update_boxes();
-	void update_buttons();
-
-	void draw_boxes();
-	void draw_buttons();
-	void draw();
-
-	void solve();
-	void init_solve();
-
-	void reset();
-
-	void handle_user_input(sf::Event& event);
-};
-*/

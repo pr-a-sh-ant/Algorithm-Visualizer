@@ -14,18 +14,12 @@ set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 
 # set include files
 set(INCLUDE_FILES
-    # ${INCLUDE_DIR}/Node.h
-    ${INCLUDE_DIR}/Algorithm.h
     ${INCLUDE_DIR}/Mouse.h
-    ${INCLUDE_DIR}/Entity.h
     ${INCLUDE_DIR}/Search.h
     ${INCLUDE_DIR}/App.h
     ${INCLUDE_DIR}/Button.h
-    ${INCLUDE_DIR}/sort_alg.h
-    ${INCLUDE_DIR}/array.h
     ${INCLUDE_DIR}/Sort.h
     ${INCLUDE_DIR}/State.h
-    ${INCLUDE_DIR}/Home.h
     ${INCLUDE_DIR}/Animation.h
     ${INCLUDE_DIR}/Maze.h
     ${INCLUDE_DIR}/MazeBox.h
@@ -36,7 +30,6 @@ set(INCLUDE_FILES
     ${INCLUDE_DIR}/SortWindow.h
     ${INCLUDE_DIR}/SortSpace.h
     ${INCLUDE_DIR}/ThreadPool.h
-    # ${INCLUDE_DIR}/Box.h
 )
 # set source files
 set(SOURCE_FILES_GG
@@ -49,7 +42,6 @@ set(SOURCE_FILES_GG
     ${SOURCE_DIR}/SearchWindow.cpp
     ${SOURCE_DIR}/Button.cpp
     ${SOURCE_DIR}/Search.cpp
-    # ${SOURCE_DIR}/Node.cpp
     ${SOURCE_DIR}/State.cpp
     ${SOURCE_DIR}/SearchSpace.cpp
     ${SOURCE_DIR}/App.cpp
@@ -58,12 +50,6 @@ set(SOURCE_FILES_GG
     ${SOURCE_DIR}/SortSpace.cpp
     ${SOURCE_DIR}/Sort.cpp
     ${SOURCE_DIR}/ThreadPool.cpp
-    # ${SOURCE_DIR}/Box.cpp
-    # ${SOURCE_DIR}/Algorithm.cpp
-    # ${SOURCE_DIR}/Entity.cpp
-    # ${SOURCE_DIR}/sort_alg.cpp
-    # ${SOURCE_DIR}/array.cpp
-    # ${SOURCE_DIR}/Home.cpp
 )
 
 add_executable(AlgViz 
