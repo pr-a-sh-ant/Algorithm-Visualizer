@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "SearchWindow.h"
 #include "HomeWindow.h"
+#include "SortWindow.h"
 
 namespace viz
 {
@@ -13,10 +14,11 @@ namespace viz
 		viz::window::Window* selected_window;
 		viz::window::SearchWindow* search_window;
 		viz::window::HomeWindow* home_window;
+		viz::window::SortWindow* sort_window;
+
 		float delta_time_seconds;
 		sf::Clock clock;
 		sf::Event sf_event;
-		// TODO: Sort Window
 		App();
 		~App();
 

@@ -1,38 +1,55 @@
 #pragma once
 
-#include "App.h"
-#include "Button.h"
-#include <queue>
-#include "sort_alg.h"
-#include "array.h"
-#include "Button.h"
+#include "SortSpace.h"
 
-class App;
-
-class Sort
+namespace viz::sort
 {
-public:
-    Sort(App *app);
-    ~Sort();
-    App *app;
-    AlgorithmSort algorithm;
-    Array array;
-    const std::vector<int> &current_state;
+	class Sort
+	{
+	protected:
+		viz::sort::SortSpace* sort_space_; // Pointer to the sort space (not owned)
+		float step_delay_; // The delay between each step in seconds
+		float step_clock_; // The clock for the current step
 
-    std::vector<Button *> buttons;
+		// Swaps the values at the given indices
+		void swap(const size_t index_first, const size_t index_second);
+	public:
+		Sort(viz::sort::SortSpace* sort_space, const float step_delay);
+		virtual ~Sort() = default;
 
-    sf::Text *textAlgo;
-    
-    sf::RectangleShape renderbox;
-    sf::RectangleShape bar;
+		// Performs a single step of the sort
+		virtual void run_sort_step() = 0;
+		// Updates the sort step by step
+		void update(const float delta_time_sec);
 
-    int currentAlgorithm = 0;
-    float barwidth;
-    bool sorting;
+		// Returns true if the sort is completed
+		[[nodiscard]]
+		bool is_sort_complete() const;
+		[[nodiscard]]
+		bool is_sort_running() const;
+		[[nodiscard]]
+		float get_step_delay() const;
 
-    
+		// Setters
+		void set_step_delay(const float step_delay);
 
-    void init();
-    void draw();
-    void update();
-};
+		// Resets the sort
+		virtual void reset();
+		// Starts the sort
+		virtual void start_sort();
+	};
+
+	class BubbleSort : public Sort
+	{
+	private:
+		size_t outer_loop_index_; // The index of the outer loop
+		size_t inner_loop_index_; // The index of the inner loop
+
+	public:
+		BubbleSort(viz::sort::SortSpace* sort_space, const float step_delay);
+
+		void run_sort_step() override;
+		void reset() override;
+		void start_sort() override;
+	};;
+}

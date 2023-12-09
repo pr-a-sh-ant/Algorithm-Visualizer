@@ -33,6 +33,8 @@ set(INCLUDE_FILES
     ${INCLUDE_DIR}/SearchWindow.h
     ${INCLUDE_DIR}/SearchSpace.h
     ${INCLUDE_DIR}/HomeWindow.h
+    ${INCLUDE_DIR}/SortWindow.h
+    ${INCLUDE_DIR}/SortSpace.h
     # ${INCLUDE_DIR}/Box.h
 )
 # set source files
@@ -51,6 +53,7 @@ set(SOURCE_FILES_GG
     ${SOURCE_DIR}/SearchSpace.cpp
     ${SOURCE_DIR}/App.cpp
     ${SOURCE_DIR}/HomeWindow.cpp
+    ${SOURCE_DIR}/SortWindow.cpp
     # ${SOURCE_DIR}/Box.cpp
     # ${SOURCE_DIR}/Algorithm.cpp
     # ${SOURCE_DIR}/Entity.cpp

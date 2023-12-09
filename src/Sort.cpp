@@ -1,101 +1,101 @@
 #include "Sort.h"
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include "App.h"
+#include "State.h"
 
-Sort::Sort(App *app) : array(Array(100)), algorithm(array), current_state(algorithm.getCurrentState())
+void viz::sort::Sort::swap(const size_t index_first, const size_t index_second)
 {
-    this->app = app;
-
-    renderbox.setSize(sf::Vector2f(1000, 1000));
-    renderbox.setPosition(25, 25);
-
-    textAlgo = new sf::Text("Sort Alogrithms", this->app->font, 60);
-    this->textAlgo->setPosition(1250, 200);
-    // this->app->appState->sortAlg = 0;
-
-    this->buttons.push_back(new Button(1150, 50, "Start Sort", 300, 80, "setSorting"));
-
-    this->buttons.push_back(new Button(1550, 50, "Reset", 300, 80, "resetSort"));
-
-    this->buttons.push_back(new Button(1350, 400, "Insertion", 300, 80, "insertMode"));
-
-    this->buttons.push_back(new Button(1350, 300, "Bubble", 300, 80, "bubbleMode"));
-
-    this->buttons.push_back(new Button(1200, 880, "Back", 200, 80, "goBack"));
+	std::swap(sort_space_->box_heights[index_first], sort_space_->box_heights[index_second]);
 }
 
-void Sort::init()
+viz::sort::Sort::Sort(SortSpace* sort_space, const float step_delay)
+	: sort_space_(sort_space), step_delay_(step_delay), step_clock_(0.0f)
 {
-    sorting = false;
-    this->app->appState->startSort = false;
-    algorithm.resetSorting();
-    this->app->appState->clear = 0;
 }
 
-void Sort::draw()
+void viz::sort::Sort::update(const float delta_time_sec)
 {
-    barwidth = static_cast<float>(renderbox.getSize().x) / current_state.size();
-
-    this->app->window->draw(*this->textAlgo);
-
-    for (int i = 0; i < buttons.size(); i++)
-    {
-
-        buttons[i]->draw(this->app->window);
-    }
-
-    this->app->window->draw(renderbox);
-    for (size_t i = 0; i < current_state.size(); i++)
-    {
-
-        bar.setSize(sf::Vector2f(barwidth, current_state[i] * 5));
-        bar.setPosition(25 + (i * barwidth), renderbox.getSize().y - bar.getSize().y);
-        bar.setFillColor(sf::Color::Black);
-
-        this->app->window->draw(bar);
-    }
+	if (State::get_state_instance().sort.visualizer_mode == sort_visualizer_mode::sorting)
+	{
+		this->step_clock_ += delta_time_sec;
+		if (this->step_clock_ >= this->step_delay_)
+		{
+			this->step_clock_ -= this->step_delay_;
+			this->run_sort_step();
+		}
+	}
 }
 
-void Sort::update()
+bool viz::sort::Sort::is_sort_complete() const
 {
+	return State::get_state_instance().sort.visualizer_mode == sort_visualizer_mode::completed;
+}
 
-    if (this->app->appState->startSort)
-    {
-        sorting = true;
-    }
+bool viz::sort::Sort::is_sort_running() const
+{
+	return State::get_state_instance().sort.visualizer_mode == sort_visualizer_mode::sorting;
+}
 
-    if (!this->app->appState->clearSort)
-    {
-        this->init();
-        this->app->appState->clearSort = 1;
-    }
-    if (sorting)
-    {
-        sf::sleep(sf::milliseconds(5));
-        switch (currentAlgorithm)
-        {
-        case 0:
-            algorithm.bubbleSort();
+float viz::sort::Sort::get_step_delay() const
+{
+	return this->step_delay_;
+}
 
-            break;
-        case 1:
-            algorithm.insertionSort();
+void viz::sort::Sort::set_step_delay(const float step_delay)
+{
+	this->step_delay_ = step_delay;
+}
 
-            break;
-        case 2:
-            algorithm.bogo();
-            break;
-        }
-    }
-    this->currentAlgorithm = this->app->appState->sortAlg;
-    for (int i = 0; i < buttons.size(); i++)
-    {
-        buttons[i]->update(this->app->mouse, this->app->appState);
-    }
+void viz::sort::Sort::reset()
+{
+	this->step_clock_ = 0.0f;
+	State::get_state_instance().sort.visualizer_mode = sort_visualizer_mode::none;
+	this->sort_space_->randomize();
+}
 
-    if (this->app->appState->clear)
-    {
-        this->init();
-    }
+void viz::sort::Sort::start_sort()
+{
+	this->step_clock_ = 0.0f;
+	State::get_state_instance().sort.visualizer_mode = sort_visualizer_mode::sorting;
+}
+
+viz::sort::BubbleSort::BubbleSort(viz::sort::SortSpace* sort_space, const float step_delay)
+	: Sort(sort_space, step_delay),outer_loop_index_(0), inner_loop_index_(0)
+{
+}
+
+void viz::sort::BubbleSort::run_sort_step()
+{
+if (this->outer_loop_index_ < this->sort_space_->box_heights.size())
+	{
+		if (this->inner_loop_index_ < this->sort_space_->box_heights.size() - this->outer_loop_index_ - 1)
+		{
+			if (this->sort_space_->box_heights[this->inner_loop_index_] > this->sort_space_->box_heights[this->inner_loop_index_ + 1])
+			{
+				this->swap(this->inner_loop_index_, this->inner_loop_index_ + 1);
+			}
+			this->inner_loop_index_++;
+		}
+		else
+		{
+			this->outer_loop_index_++;
+			this->inner_loop_index_ = 0;
+		}
+	}
+	else
+	{
+		State::get_state_instance().sort.visualizer_mode = sort_visualizer_mode::completed;
+	}
+}
+
+void viz::sort::BubbleSort::reset()
+{
+	Sort::reset();
+	this->outer_loop_index_ = 0;
+	this->inner_loop_index_ = 0;
+}
+
+void viz::sort::BubbleSort::start_sort()
+{
+	Sort::start_sort();
+	this->outer_loop_index_ = 0;
+	this->inner_loop_index_ = 0;
 }

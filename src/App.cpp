@@ -171,7 +171,7 @@ void search_callback(viz::App& app)
 void sort_callback(viz::App& app)
 {
 	app.selected_window->reset();
-	throw std::exception("Not implemented");
+	app.selected_window = app.sort_window;
 }
 
 void back_callback(viz::App& app)
@@ -191,6 +191,8 @@ viz::App::App()
 	// Initialize the home window
 	this->home_window = new viz::window::HomeWindow({ 1920, 1080 }, "Home", [this]() {search_callback(*this); }, [this]() {sort_callback(*this); });
 	viz::State::get_state_instance();
+	// Initialize the sort window
+	this->sort_window = new viz::window::SortWindow({ 1920, 1080 }, "Sort", [this]() {back_callback(*this); });
 	// Set the default window
 	this->selected_window = this->home_window;
 

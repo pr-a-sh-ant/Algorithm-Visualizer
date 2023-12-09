@@ -35,11 +35,24 @@ namespace viz
 		completed
 	};
 
+	enum class sort_visualizer_mode
+	{
+		none = 0,
+		sorting,
+		completed
+	};
+
 	struct search_state
 	{
 		search_mouse_click_mode mouse_click_mode = search_mouse_click_mode::none;
 		search_visualizer_mode visualizer_mode = search_visualizer_mode::none;
 	};
+
+	struct sort_state
+	{
+		sort_visualizer_mode visualizer_mode = sort_visualizer_mode::none;
+	};
+
 	class State;
 	// Singleton class for storing the state of the application
 	class State
@@ -49,9 +62,9 @@ namespace viz
 		// constructor
 		State() = default;
 	public:
-
 		search_state search; // State for the search visualization
 		viz::Mouse mouse; // State of mouse
+		sort_state sort; // State for the sort visualization
 
 		void update_mouse(const sf::Vector2i& mouse_position);
 
