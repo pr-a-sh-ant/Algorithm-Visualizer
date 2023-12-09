@@ -35,6 +35,7 @@ set(INCLUDE_FILES
     ${INCLUDE_DIR}/HomeWindow.h
     ${INCLUDE_DIR}/SortWindow.h
     ${INCLUDE_DIR}/SortSpace.h
+    ${INCLUDE_DIR}/ThreadPool.h
     # ${INCLUDE_DIR}/Box.h
 )
 # set source files
@@ -56,6 +57,7 @@ set(SOURCE_FILES_GG
     ${SOURCE_DIR}/SortWindow.cpp
     ${SOURCE_DIR}/SortSpace.cpp
     ${SOURCE_DIR}/Sort.cpp
+    ${SOURCE_DIR}/ThreadPool.cpp
     # ${SOURCE_DIR}/Box.cpp
     # ${SOURCE_DIR}/Algorithm.cpp
     # ${SOURCE_DIR}/Entity.cpp

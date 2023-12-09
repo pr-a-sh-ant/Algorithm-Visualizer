@@ -23,6 +23,14 @@ viz::sort::SortSpace::SortSpace(const sf::Vector2f &start_position, const int bo
 	this->background_box.setPosition(this->start_position);
 }
 
+void viz::sort::SortSpace::set_number_of_boxes(const int new_number_of_boxes)
+{
+	this->box_width = static_cast<int>(this->background_box.getSize().x) / new_number_of_boxes;
+	this->number_of_boxes = new_number_of_boxes;
+	this->box_heights.resize(this->number_of_boxes);
+	this->randomize();
+}
+
 void viz::sort::SortSpace::randomize()
 {
 	int single_difference = (this->box_max_height - this->box_min_height) / this->number_of_boxes;

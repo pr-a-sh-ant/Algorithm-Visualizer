@@ -17,9 +17,9 @@ namespace viz::window
 		inline static const sf::Vector2f bars_offset = sf::Vector2f(10.0f, 10.0f);				 // Offset of the bars
 		constexpr static const int number_of_bars = 100;										 // Number of bars
 		constexpr static const int bar_min_height = 10;											 // Minimum height of a bar
-		constexpr static const int bar_max_height = 1000;										 // Maximum height of a bar
-		constexpr static const int bounding_rect_width = 1200;									 // Width of the bounding rectangle
-		constexpr static const float step_delay = 0.001f;										 // Delay between steps
+		constexpr static const int bar_max_height = 1010;										 // Maximum height of a bar
+		constexpr static const int bounding_rect_width = 1020;									 // Width of the bounding rectangle
+		constexpr static const float step_delay = 0.005f;										 // Delay between steps
 		int bar_width;																			 // Width of a bar
 
 		void init_buttons();

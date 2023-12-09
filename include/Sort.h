@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 #include "SortSpace.h"
 
 namespace viz::sort
@@ -67,17 +69,69 @@ namespace viz::sort
 		void start_sort() override;
 	};
 
+	class QuickSort: public Sort
+	{
+	private:
+		std::vector<std::function<void()>> actions_;
+		size_t current_action_index_;
+		std::vector<int> array_copy_;
+		bool is_base_sort_running_;
+
+		int partition(const int low, const int high);
+		void quick_sort(const int low, const int high);
+
+	public:
+		QuickSort(viz::sort::SortSpace* sort_space, const float step_delay);
+
+		void run_sort_step() override;
+		void reset() override;
+		void start_sort() override;
+	};
+
 	class MergeSort : public Sort {
 	private:
-		size_t left_index_;   // Index for the left subarray
-		size_t right_index_;  // Index for the right subarray
-		size_t merge_index_;  // Index for merging the subarrays
+		std::vector<std::function<void()>> actions_;
+		size_t current_action_index_;
+		std::vector<int> array_copy_;
+		bool is_base_sort_running_;
 
-		// Merge function for merging two subarrays
-		void merge(size_t left, size_t middle, size_t right);
+		void merge(const int left, const int middle, const int right);
+		void merge_sort(const int left, const int right);
 
 	public:
 		MergeSort(viz::sort::SortSpace* sort_space, const float step_delay);
+
+		void run_sort_step() override;
+		void reset() override;
+		void start_sort() override;
+	};
+
+	class RadixSort : public Sort {
+	private:
+		std::vector<std::function<void()>> actions_;
+		size_t current_action_index_;
+		std::vector<int> array_copy_;
+		bool is_base_sort_running_;
+
+		int get_max() const;
+		void count_sort(int exp);
+
+	public:
+		RadixSort(viz::sort::SortSpace* sort_space, const float step_delay);
+
+		void run_sort_step() override;
+		void reset() override;
+		void start_sort() override;
+	};
+
+	class BogoSort : public Sort
+	{
+	private:
+		[[nodiscard]]
+		bool is_sorted() const;
+
+	public:
+		BogoSort(viz::sort::SortSpace* sort_space, const float step_delay);
 
 		void run_sort_step() override;
 		void reset() override;

@@ -12,6 +12,17 @@ namespace sort_callbacks
 		sort_window.back_callback();
 	}
 
+	void change_array_size(const int new_size, viz::window::SortWindow& sort_window)
+	{
+		auto& state = viz::State::get_state_instance().get_state_instance();
+		if (state.sort.visualizer_mode == viz::sort_visualizer_mode::sorting || sort_window.sort_space->number_of_boxes
+			== new_size)
+		{
+			return;
+		}
+		sort_window.sort_space->set_number_of_boxes(new_size);
+	}
+
 	void start_sort(viz::window::SortWindow& sort_window)
 	{
 		auto& state = viz::State::get_state_instance().get_state_instance();
@@ -67,6 +78,45 @@ namespace sort_callbacks
 		state.sort.visualizer_mode = viz::sort_visualizer_mode::none;
 	}
 
+	void quick_sort(viz::window::SortWindow& sort_window)
+	{
+		auto& state = viz::State::get_state_instance().get_state_instance();
+		if (state.sort.visualizer_mode == viz::sort_visualizer_mode::sorting)
+		{
+			return;
+		}
+		sort_window.selected_sort_algorithm = sort_window.sort_algorithms["QuickSort"];
+		// Reset the sort space
+		sort_window.selected_sort_algorithm->reset();
+		state.sort.visualizer_mode = viz::sort_visualizer_mode::none;
+	}
+
+	void radix_sort(viz::window::SortWindow& sort_window)
+	{
+		auto& state = viz::State::get_state_instance().get_state_instance();
+		if (state.sort.visualizer_mode == viz::sort_visualizer_mode::sorting)
+		{
+			return;
+		}
+		sort_window.selected_sort_algorithm = sort_window.sort_algorithms["RadixSort"];
+		// Reset the sort space
+		sort_window.selected_sort_algorithm->reset();
+		state.sort.visualizer_mode = viz::sort_visualizer_mode::none;
+	}
+
+	void bogo_sort(viz::window::SortWindow& sort_window)
+	{
+		auto& state = viz::State::get_state_instance().get_state_instance();
+		if (state.sort.visualizer_mode == viz::sort_visualizer_mode::sorting)
+		{
+			return;
+		}
+		sort_window.selected_sort_algorithm = sort_window.sort_algorithms["BogoSort"];
+		// Reset the sort space
+		sort_window.selected_sort_algorithm->reset();
+		state.sort.visualizer_mode = viz::sort_visualizer_mode::none;
+	}
+
 	void reset(viz::window::SortWindow& sort_window)
 	{
 		sort_window.selected_sort_algorithm->reset();
@@ -87,16 +137,47 @@ struct ButtonInfo
 void viz::window::SortWindow::init_buttons()
 {
 	const std::vector<ButtonInfo> button_infos = {
-		{{1450, 900}, {200, 80}, "Back", {204, 0, 0}, {255, 0, 0}, sort_callbacks::back}, // Back Button
-		{{1250, 50}, {300, 80}, "Start", {58, 107, 102}, {116, 216, 143}, sort_callbacks::start_sort}, // Start Button
-		{{1600, 50}, {300, 80}, "Reset", {9, 57, 120}, {19, 98, 168}, sort_callbacks::reset}, // Reset
-		{{1400, 250}, {300, 80}, "Bubble", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort}, // Bubble sort
-		{{1400, 350}, {300, 80}, "Selection", {9, 57, 120}, {19, 98, 168}, sort_callbacks::selection_sort},
+		{{1350, 900}, {200, 80}, "Back", {204, 0, 0}, {255, 0, 0}, sort_callbacks::back}, // Back Button
+		{{1300, 50}, {250, 80}, "Start", {58, 107, 102}, {116, 216, 143}, sort_callbacks::start_sort}, // Start Button
+		{{1600, 50}, {250, 80}, "Reset", {9, 57, 120}, {19, 98, 168}, sort_callbacks::reset}, // Reset
+		{{1300, 250}, {250, 80}, "Bubble", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort}, // Bubble sort
+		{{1300, 350}, {250, 80}, "Selection", {9, 57, 120}, {19, 98, 168}, sort_callbacks::selection_sort},
 		// Selection Sort
-		{{1400, 450}, {300, 80}, "Quick", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort}, // Quick sort
-		{{1400, 550}, {300, 80}, "Merge", {9, 57, 120}, {19, 98, 168}, sort_callbacks::merge_sort}, // Merge Sort
-		{{1400, 650}, {300, 80}, "Radix", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort}, // Merge Sort
-		{{1400, 750}, {300, 80}, "Bogo", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bubble_sort}, // Merge Sort
+		{{1300, 450}, {250, 80}, "Quick", {9, 57, 120}, {19, 98, 168}, sort_callbacks::quick_sort}, // Quick sort
+		{{1300, 550}, {250, 80}, "Merge", {9, 57, 120}, {19, 98, 168}, sort_callbacks::merge_sort}, // Merge Sort
+		{{1300, 650}, {250, 80}, "Radix", {9, 57, 120}, {19, 98, 168}, sort_callbacks::radix_sort}, // Merge Sort
+		{{1300, 750}, {250, 80}, "Bogo", {9, 57, 120}, {19, 98, 168}, sort_callbacks::bogo_sort}, // Merge Sort
+		// Size changing Buttons
+		{
+			{1600, 250}, {250, 80}, "Size:50", {9, 57, 120}, {19, 98, 168}, [](SortWindow& sort_window)
+			{
+				sort_callbacks::change_array_size(50, sort_window);
+			}
+		},
+		{
+			{1600, 350}, {250, 80}, "Size:100", {9, 57, 120}, {19, 98, 168}, [](SortWindow& sort_window)
+			{
+				sort_callbacks::change_array_size(100, sort_window);
+			}
+		},
+		{
+			{1600, 450}, {250, 80}, "Size:200", {9, 57, 120}, {19, 98, 168}, [](SortWindow& sort_window)
+			{
+				sort_callbacks::change_array_size(200, sort_window);
+			}
+		},
+		{
+			{1600, 550}, {250, 80}, "Size:500", {9, 57, 120}, {19, 98, 168}, [](SortWindow& sort_window)
+			{
+				sort_callbacks::change_array_size(500, sort_window);
+			}
+		},
+		{
+			{1600, 650}, {250, 80}, "Size:1000", {9, 57, 120}, {19, 98, 168}, [](SortWindow& sort_window)
+			{
+				sort_callbacks::change_array_size(1000, sort_window);
+			}
+		}
 	};
 
 	for (const auto& button_info : button_infos)
@@ -147,6 +228,10 @@ viz::window::SortWindow::SortWindow(const sf::Vector2u& window_size, const std::
 	this->sort_algorithms["BubbleSort"] = new sort::BubbleSort(sort_space, step_delay); // Bubble sort
 	this->sort_algorithms["SelectionSort"] = new sort::SelectionSort(sort_space, step_delay); // Insertion sort
 	this->sort_algorithms["MergeSort"] = new sort::MergeSort(sort_space, step_delay); // Merge sort
+	this->sort_algorithms["QuickSort"] = new sort::QuickSort(sort_space, step_delay); // Quick sort
+	this->sort_algorithms["RadixSort"] = new sort::RadixSort(sort_space, step_delay); // Radix sort
+	this->sort_algorithms["BogoSort"] = new sort::BogoSort(sort_space, step_delay); // Bogo sort
+
 	this->selected_sort_algorithm = sort_algorithms["BubbleSort"];
 
 	// Initialize button

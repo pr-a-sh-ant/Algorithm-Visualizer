@@ -9,7 +9,7 @@ namespace viz::search
 	{
 	private:
 		sf::Vector2i dimensions_;
-		viz::Maze* maze_;
+		viz::Maze* maze_; // Pointer to maze (not owned)
 		std::vector<int> parents_;
 		std::vector<bool> visited_;
 
