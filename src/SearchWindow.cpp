@@ -191,7 +191,7 @@ viz::window::SearchWindow::SearchWindow(const sf::Vector2u &window_size, const s
 	this->search_algorithms = {
 		{"BreadthFirstSearch", new search::BreadthFirstSearch(this->search_space, 0.01f)},
 		{"DepthFirstSearch", new search::DepthFirstSearch(this->search_space, 0.01f)},
-		{"AStarSearch", new search::AStarSearch(this->search_space, 0.01f)}
+		{"AStarSearch", new search::DepthFirstSearch(this->search_space, 0.01f)}
 	};
 	this->selected_search_algorithm = this->search_algorithms["BreadthFirstSearch"]; // Set BFS as default
 	this->init_buttons();															 // initialize the buttons
