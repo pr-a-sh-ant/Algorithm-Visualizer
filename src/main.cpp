@@ -1,7 +1,4 @@
-#include <iostream>
-#include <SFML/Graphics.hpp>
-#include "State.h"
-#include "SearchWindow.h"
+#include "App.h"
 
 /*
 int main()
@@ -38,6 +35,7 @@ int main()
 	}
 }*/
 
+/*
 viz::State* viz::State::state_instance_ptr_ = nullptr;
 
 
@@ -100,6 +98,12 @@ int main()
 		
 		window.display();
 	}
+}*/
+
+int main()
+{
+	viz::App app;
+	app.run();
 }
 
 

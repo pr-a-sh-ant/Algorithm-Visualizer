@@ -1,9 +1,7 @@
-#include "App.h"
-#include "Search.h"
-#include <iostream>
-#include "Home.h"
 #include "State.h"
+#include "App.h"
 
+/*
 App::App()
 {
 	init_window();
@@ -160,4 +158,112 @@ void App::run()
 App::~App()
 {
 	delete this->mouse;
+}
+*/
+
+#pragma callback functions
+void search_callback(viz::App& app)
+{
+	app.selected_window->reset();
+	app.selected_window = app.search_window;
+}
+
+void sort_callback(viz::App& app)
+{
+	app.selected_window->reset();
+	throw std::exception("Not implemented");
+}
+
+void back_callback(viz::App& app)
+{
+	app.selected_window->reset();
+	app.selected_window = app.home_window;
+}
+#pragma endregion
+
+viz::App::App()
+	: delta_time_seconds(0.0f)
+{
+	// Initialize the sfml window
+	this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Algorithm Visualizer", sf::Style::Fullscreen);
+	// Initialize the search window
+	this->search_window = new viz::window::SearchWindow({ 1920, 1080 }, "Search", [this]() {back_callback(*this); });
+	// Initialize the home window
+	this->home_window = new viz::window::HomeWindow({ 1920, 1080 }, "Home", [this]() {search_callback(*this); }, [this]() {sort_callback(*this); });
+	viz::State::get_state_instance();
+	// Set the default window
+	this->selected_window = this->home_window;
+
+	this->clock.restart();
+}
+
+viz::App::~App()
+{
+	delete this->window;
+	delete this->search_window;
+}
+
+void viz::App::draw()
+{
+	this->window->clear();
+	this->selected_window->draw(std::ref(*this->window));
+	this->window->display();
+}
+
+void viz::App::update()
+{
+	this->delta_time_seconds = this->clock.restart().asSeconds();
+	this->selected_window->update(this->delta_time_seconds);
+}
+
+void viz::App::handle_state()
+{
+	viz::State::get_state_instance().mouse.is_left_button_pressed = false;
+
+	while (this->window->pollEvent(this->sf_event))
+	{
+		switch (this->sf_event.type)
+		{
+		case sf::Event::Closed:
+			this->window->close();
+			break;
+		case sf::Event::KeyPressed:
+			if (this->sf_event.key.code == sf::Keyboard::Escape)
+			{
+				this->window->close();
+			}
+			break;
+		case(sf::Event::MouseButtonPressed) :
+				if (this->sf_event.mouseButton.button == sf::Mouse::Left)
+				{
+					viz::State::get_state_instance().mouse.is_left_button_down = true;
+					viz::State::get_state_instance().mouse.is_left_button_pressed = true;
+				}
+			break;
+		case (sf::Event::MouseButtonReleased):
+			if (this->sf_event.mouseButton.button == sf::Mouse::Left)
+			{
+				viz::State::get_state_instance().mouse.is_left_button_down = false;
+			}
+			break;
+		case sf::Event::MouseMoved:
+			viz::State::get_state_instance().update_mouse({ this->sf_event.mouseMove.x, this->sf_event.mouseMove.y });
+		default:
+			break;
+		}
+	}
+	//viz::State::get_state_instance().update_mouse(sf::Mouse::getPosition(std::ref(*this->window)));	// Update the mouse position
+	this->selected_window->handle_state_change(viz::State::get_state_instance());
+}
+
+#include <iostream>
+
+void viz::App::run()
+{
+	while (this->window->isOpen())
+	{
+		this->handle_state();
+		this->update();
+		this->draw();
+	}
 }

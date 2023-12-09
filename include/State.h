@@ -53,11 +53,7 @@ namespace viz
 		search_state search; // State for the search visualization
 		viz::Mouse mouse; // State of mouse
 
-		void update_mouse(const sf::Vector2f& mouse_position)
-		{
-			this->mouse.prev_pos = this->mouse.pos;
-			this->mouse.pos = mouse_position;
-		}
+		void update_mouse(const sf::Vector2i& mouse_position);
 
 		// Returns the instance of the state
 		inline static State& get_state_instance()

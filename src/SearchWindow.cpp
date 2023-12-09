@@ -10,8 +10,7 @@ namespace search_callbacks
 {
 	void back(viz::window::SearchWindow& search_window)
 	{
-		throw std::runtime_error("Not Implemented");
-		return;
+		search_window.back_callback();
 	}
 
 	void maze(viz::window::SearchWindow& search_window)
@@ -124,8 +123,8 @@ void viz::window::SearchWindow::draw_button(sf::RenderWindow& window)
 	}
 }
 
-viz::window::SearchWindow::SearchWindow(const sf::Vector2u& window_size, const std::string& title)
-	: Window(window_size, title)
+viz::window::SearchWindow::SearchWindow(const sf::Vector2u& window_size, const std::string& title, std::function<void()> back_callback)
+	: Window(window_size, title), back_callback(std::move(back_callback))
 {
 	this->maze = new Maze(maze_box_dimensions, maze_size_boxes, maze_position);
 	this->search_space = new search::SearchSpace(this->maze);
@@ -150,6 +149,12 @@ viz::window::SearchWindow::~SearchWindow()
 	{
 		delete algorithm;
 	}
+}
+
+void viz::window::SearchWindow::reset()
+{
+	this->maze->clear();
+	this->selected_search_algorithm->reset();
 }
 
 void viz::window::SearchWindow::draw(sf::RenderWindow& window)

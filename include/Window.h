@@ -22,6 +22,7 @@ namespace viz::window
 		explicit Window(const sf::Vector2u& window_size ,std::string title); // Constructor
 		virtual ~Window();
 
+		virtual void reset() = 0; // Reset the window
 		virtual void draw(sf::RenderWindow& window) = 0; // Draw the window
 		virtual void handle_state_change(viz::State& state) = 0; // Handle state change (eg. mouse move, click, etc.)
 		virtual void update(const float delta_time_seconds) = 0; // Update the window and animations

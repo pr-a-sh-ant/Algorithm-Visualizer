@@ -1,4 +1,34 @@
 #pragma once
+
+#include <SFML/Graphics.hpp>
+#include "SearchWindow.h"
+#include "HomeWindow.h"
+
+namespace viz
+{
+	class App
+	{
+	public:
+		sf::RenderWindow* window;
+		viz::window::Window* selected_window;
+		viz::window::SearchWindow* search_window;
+		viz::window::HomeWindow* home_window;
+		float delta_time_seconds;
+		sf::Clock clock;
+		sf::Event sf_event;
+		// TODO: Sort Window
+		App();
+		~App();
+
+		void draw();
+		void update();
+		void handle_state(); // user inputs (mouse click, move etc.)
+
+		// Runs the app
+		void run();
+	};
+}
+
 /*
 #include "Mouse.h"
 #include "Search.h"

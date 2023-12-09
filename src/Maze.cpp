@@ -156,7 +156,7 @@ void viz::Maze::handle_state_change(const State& state)
 	if (state.search.mouse_click_mode == search_mouse_click_mode::wall)
 	{
 		// If left mouse button is down
-		if (state.mouse.is_left_button_down)
+		if (state.mouse.is_left_button_down && !state.mouse.is_left_button_pressed)
 		{
 			sf::Vector2i prev_box_position;
 			this->set_wall(current_box_position, false);
@@ -190,8 +190,9 @@ void viz::Maze::handle_state_change(const State& state)
 				}
 			}
 		}
+
 		// If left mouse button is pressed
-		else if (state.mouse.is_left_button_pressed)
+		if (state.mouse.is_left_button_pressed)
 		{
 			this->set_wall(current_box_position, true);
 		}
@@ -263,8 +264,24 @@ void viz::Maze::set_wall(const sf::Vector2i& position, const bool revert)
 	}
 
 	auto& box = this->operator[](position);
-	box.set_type((revert && box.get_type() == MazeBoxType::obstacle) ? MazeBoxType::empty : MazeBoxType::obstacle,
-	             true);
+	if (!revert)
+	{
+		if (box.get_type() == MazeBoxType::empty)
+		{
+			box.set_type(MazeBoxType::obstacle, true);
+		}
+	}
+	else
+	{
+		if (box.get_type() == MazeBoxType::obstacle)
+		{
+			box.set_type(MazeBoxType::empty, true);
+		}
+		else if (box.get_type() == MazeBoxType::empty)
+		{
+			box.set_type(MazeBoxType::obstacle, true);
+		}
+	}
 }
 
 void viz::Maze::reset()

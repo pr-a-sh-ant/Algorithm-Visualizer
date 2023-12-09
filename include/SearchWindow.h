@@ -25,11 +25,13 @@ namespace viz::window
 		viz::search::Search* selected_search_algorithm;
 		std::map<std::string, viz::search::Search*> search_algorithms;
 		sf::Text algorithm_text;
-		
 
-		SearchWindow(const sf::Vector2u& window_size, const std::string& title);
+		std::function<void()> back_callback; // Callback to go back to the main menu
+
+		SearchWindow(const sf::Vector2u& window_size, const std::string& title, std::function<void()> back_callback);
 		~SearchWindow() override;
 
+		void reset() override;
 		void draw(sf::RenderWindow& window) override;
 		void update(const float delta_time_seconds) override;
 		void handle_state_change(viz::State& state) override;
