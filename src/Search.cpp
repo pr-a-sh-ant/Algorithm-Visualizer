@@ -554,3 +554,37 @@ void viz::search::DepthFirstSearch::start_search()
 	this->search_space_->set_as_visited(this->search_space_->get_start_box());
 	this->stack_.push(this->search_space_->get_start_box());
 }
+
+
+
+
+viz::search::AStarSearch::AStarSearch(viz::search::SearchSpace* search_space, const float step_delay)
+	: Search(search_space, step_delay)
+{
+	this->stack_ = std::stack<sf::Vector2i>();
+}
+
+void viz::search::AStarSearch::run_search_step()
+{
+	// If the search is running but the stack is empty, raise exception
+	if (this->stack_.empty())
+	{
+		throw std::runtime_error("Not found");
+	}
+
+}
+
+void viz::search::AStarSearch::start_search()
+{
+	if (viz::State::get_state_instance().search.visualizer_mode != search_visualizer_mode::none)
+	{
+		return;
+	}
+	Search::start_search();
+
+	this->stack_ = std::stack<sf::Vector2i>(); // Reset the stack
+
+	// Sets the start box as visited and adds it to the stack
+	this->search_space_->set_as_visited(this->search_space_->get_start_box());
+	this->stack_.push(this->search_space_->get_start_box());
+}

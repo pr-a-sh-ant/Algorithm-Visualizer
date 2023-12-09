@@ -66,6 +66,19 @@ namespace viz::search
 		// Starts the search algorithm
 		void start_search() override;
 	};
+	class AStarSearch final: public Search
+	{
+	private:
+		std::stack<sf::Vector2i> stack_;
+
+	public:
+		AStarSearch(viz::search::SearchSpace* search_space, const float step_delay);
+
+		// Runs a single step of the search algorithm
+		void run_search_step() override;
+		// Starts the search algorithm
+		void start_search() override;
+	};
 }
 
 /*
