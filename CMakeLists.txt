@@ -58,8 +58,14 @@ add_executable(AlgViz
 )
 
 include_directories(${INCLUDE_DIR})
+
 target_link_libraries(AlgViz PRIVATE sfml-graphics)
 target_compile_features(AlgViz PRIVATE cxx_std_20)
+
+# if linux, add include_directories(/usr/include/freetype2)
+if (UNIX)
+    include_directories(/usr/include/freetype2)
+endif()
 
 if (WIN32 AND BUILD_SHARED_LIBS)
     add_custom_command(TARGET AlgViz POST_BUILD
