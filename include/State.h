@@ -54,6 +54,7 @@ namespace viz
 	};
 
 	class State;
+
 	// Singleton class for storing the state of the application
 	class State
 	{
@@ -61,25 +62,39 @@ namespace viz
 		static State* state_instance_ptr_;
 		// constructor
 		State() = default;
+
 	public:
 		search_state search; // State for the search visualization
-		viz::Mouse mouse; // State of mouse
+		Mouse mouse; // State of mouse
 		sort_state sort; // State for the sort visualization
 
 		void update_mouse(const sf::Vector2i& mouse_position);
 
-		// Returns the instance of the state
-		inline static State& get_state_instance()
+		// Returns true if the class is initialized
+		static bool is_initialized()
 		{
-			if (State::state_instance_ptr_ == nullptr)
+			return state_instance_ptr_ != nullptr;
+		}
+
+		// Destroys the state instance
+		static void destroy_state_instance()
+		{
+			if (state_instance_ptr_ != nullptr)
 			{
-				State::state_instance_ptr_ = new State();
+				delete state_instance_ptr_;
+				state_instance_ptr_ = nullptr;
+			}
+		}
+
+		// Returns the instance of the state
+		static State& get_state_instance()
+		{
+			if (state_instance_ptr_ == nullptr)
+			{
+				state_instance_ptr_ = new State();
 			}
 
-			return *State::state_instance_ptr_;
+			return *state_instance_ptr_;
 		}
 	};
-
 }
-
-	

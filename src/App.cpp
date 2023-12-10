@@ -52,6 +52,8 @@ viz::App::App()
 
 	// Initialize the state
 	State::get_state_instance();
+
+	/*
 	// Initialize the thread pool
 	auto& thread_pool = thread::ThreadPool::initialize();
 
@@ -90,7 +92,26 @@ viz::App::App()
 	while (this->home_window == nullptr)
 	{
 		// Waiting for the home window to be initialized
-	}
+	}*/
+
+	this->home_window = new window::HomeWindow(
+		{ 1920, 1080 }, "Home", [this]()
+		{
+			search_callback(*this);
+		},
+		[this]()
+		{
+			sort_callback(*this);
+		},
+		[this]()
+		{
+			exit_callback(*this);
+		});
+	this->search_window = new window::SearchWindow({ 1920, 1080 }, "Search", [this]()
+		{
+			back_callback(*this);
+		});
+	this->sort_window = new window::SortWindow({ 1920, 1080 }, "Sort", [this]() { back_callback(*this); });
 
 	this->selected_window = this->home_window;
 
@@ -101,6 +122,22 @@ viz::App::~App()
 {
 	delete this->window;
 	delete this->search_window;
+	delete this->home_window;
+	delete this->sort_window;
+
+	if (viz::State::is_initialized())
+	{
+		viz::State::destroy_state_instance();
+	}
+	if (viz::thread::ThreadPool::is_initialized())
+	{
+		auto& thread_pool = viz::thread::ThreadPool::get_instance();
+		while (thread_pool.busy())
+		{
+			// Waiting for the thread pool to be free
+		}
+		thread_pool.stop();
+	}
 }
 
 void viz::App::draw()

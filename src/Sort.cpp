@@ -226,11 +226,14 @@ void viz::sort::QuickSort::start_sort()
 	this->actions_.clear();
 	this->is_base_sort_running_ = true;
 
+	/*
 	thread::ThreadPool::get_instance().queue_job([this]()
 	{
 		this->quick_sort(0, this->array_copy_.size() - 1);
 		this->is_base_sort_running_ = false;
-	});
+	});*/
+	this->quick_sort(0, this->array_copy_.size() - 1);
+	this->is_base_sort_running_ = false;
 }
 
 void viz::sort::MergeSort::merge(const int left, const int middle, const int right)
@@ -346,12 +349,14 @@ void viz::sort::MergeSort::start_sort()
 	this->is_base_sort_running_ = true;
 	this->actions_.clear();
 
-
+	/*
 	thread::ThreadPool::get_instance().queue_job([this]()
 	{
 		this->merge_sort(0, this->array_copy_.size() - 1);
 		this->is_base_sort_running_ = false;
-	});
+	});*/
+	this->merge_sort(0, this->array_copy_.size() - 1);
+	this->is_base_sort_running_ = false;
 }
 
 int viz::sort::RadixSort::get_max() const

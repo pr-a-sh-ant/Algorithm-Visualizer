@@ -52,6 +52,11 @@ viz::thread::ThreadPool& viz::thread::ThreadPool::get_instance()
 	return std::ref(*instance_);
 }
 
+bool viz::thread::ThreadPool::is_initialized()
+{
+	return ThreadPool::instance_ != nullptr;
+}
+
 void viz::thread::ThreadPool::queue_job(std::function<void()> job)
 {
 	{

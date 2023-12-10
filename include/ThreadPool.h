@@ -24,6 +24,7 @@ namespace viz::thread
 	public:
 		static ThreadPool& initialize();
 		static ThreadPool& get_instance();
+		static bool is_initialized();
 
 		void queue_job(std::function<void()> job);
 		void stop();
