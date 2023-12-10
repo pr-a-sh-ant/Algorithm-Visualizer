@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+
 #include "SearchWindow.h"
 #include "HomeWindow.h"
 #include "SortWindow.h"

@@ -1,5 +1,7 @@
 #include "Search.h"
+
 #include <SFML/Graphics.hpp>
+
 #include "State.h"
 #include "App.h"
 

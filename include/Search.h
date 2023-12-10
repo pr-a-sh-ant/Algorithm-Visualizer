@@ -3,6 +3,7 @@
 #include <functional>
 #include <queue>
 #include <stack>
+
 #include "SearchSpace.h"
 
 namespace viz::search

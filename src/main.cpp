@@ -5,5 +5,3 @@ int main()
 	viz::App app;
 	app.run();
 }
-
-

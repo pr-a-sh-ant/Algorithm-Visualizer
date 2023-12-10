@@ -1,7 +1,7 @@
 #include "SearchWindow.h"
 
 #include <iostream>
-#include <stdexcept>
+
 #include "State.h"
 
 #pragma region button_callback_functions

@@ -1,9 +1,10 @@
 #include "Maze.h"
+
 #include <SFML/Graphics.hpp>
+#include <iostream>
+
 #include "MazeBox.h"
 #include "State.h"
-
-#include <iostream>
 
 viz::Maze::Maze(const sf::Vector2f &box_dimensions, const sf::Vector2i &boxes_in_maze,
 				const sf::Vector2f &maze_start_position)

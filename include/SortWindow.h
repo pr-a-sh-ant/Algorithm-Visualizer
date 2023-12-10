@@ -1,11 +1,12 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
 #include <string>
 #include <functional>
-#include <SFML/Graphics.hpp>
+#include <map>
+
 #include "Window.h"
 #include "SortSpace.h"
-#include <map>
 #include "Sort.h"
 
 namespace viz::window

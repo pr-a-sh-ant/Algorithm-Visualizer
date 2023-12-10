@@ -1,7 +1,9 @@
-#include "State.h"
 #include "App.h"
-#include "ThreadPool.h"
+
 #include <iostream>
+
+#include "State.h"
+#include "ThreadPool.h"
 
 #pragma region callback functions
 void search_callback(viz::App& app)

@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Maze.h"
 #include <vector>
+
+#include "Maze.h"
 
 namespace viz::search
 {

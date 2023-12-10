@@ -1,7 +1,8 @@
 #pragma once
 
-#include <vector>
 #include <SFML/Graphics.hpp>
+
+#include <vector>
 
 namespace viz::sort
 {

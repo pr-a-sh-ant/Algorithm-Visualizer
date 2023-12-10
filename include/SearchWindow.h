@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+
 #include "Window.h"
 #include "Maze.h"
 #include "SearchSpace.h"

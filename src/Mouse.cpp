@@ -1,7 +1,6 @@
-#include <SFML/Graphics.hpp>
 #include "Mouse.h"
-#include <iostream>
 
+#include <SFML/Graphics.hpp>
 
 Mouse::Mouse(){
 	this->clicked=false;

@@ -1,10 +1,10 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <vector>
+
 #include "State.h"
 #include "Button.h"
-#include <vector>
-#include <map>
 
 namespace viz::window
 {

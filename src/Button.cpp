@@ -1,9 +1,10 @@
-#include <SFML/Graphics.hpp>
 #include "Button.h"
+
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <string>
+
 #include "Mouse.h"
-#include <iostream>
-#include "State.h"
-#include <iostream>
 
 viz::Button::Button(const sf::Vector2f& position, const sf::Vector2f& dimensions, std::string text, const std::string& font, const sf::Color fill_color, const sf::Color fill_color_hover, const std::function<void()>& callback)
 	: button_name(std::move(text)), fill_color(fill_color), fill_color_hover(fill_color_hover), pressed(false), hovered(false), callback(callback)

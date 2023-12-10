@@ -1,9 +1,10 @@
 #pragma once
+
+#include <SFML/Graphics.hpp>
 #include <functional>
+#include <string>
 
 #include "Mouse.h"
-#include <SFML/Graphics.hpp>
-#include <string>
 
 namespace viz
 {

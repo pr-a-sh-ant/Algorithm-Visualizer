@@ -1,5 +1,4 @@
 #include "Animation.h"
-#include <iostream>
 
 sf::Color calculate_color(const sf::Color& initial_color, const sf::Color& final_color, const float& progress)
 {

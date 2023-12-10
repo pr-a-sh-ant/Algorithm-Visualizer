@@ -1,5 +1,7 @@
-#include <SFML/Graphics.hpp>
 #include "MazeBox.h"
+
+#include <SFML/Graphics.hpp>
+
 #include "Animation.h"
 
 sf::Color viz::MazeBox::get_box_color(MazeBoxType type)
