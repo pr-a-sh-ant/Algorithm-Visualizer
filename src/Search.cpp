@@ -86,7 +86,7 @@ void viz::search::Search::update(const float& delta_time_seconds)
 		{
 			this->run_search_step();
 		}
-		catch (const std::runtime_error&)
+		catch (const viz::search::destination_not_found_exception&)
 		{
 			this->searching_ = false;
 			this->back_tracking_ = false;
@@ -112,7 +112,7 @@ void viz::search::BreadthFirstSearch::run_search_step()
 	// If the search is running but the queue is empty, raise exception
 	if (this->queue_.empty())
 	{
-		throw std::runtime_error("Not found");
+		throw viz::search::destination_not_found_exception();
 	}
 
 	const auto current_box_index = this->queue_.front(); // Get the current box index
@@ -167,7 +167,7 @@ void viz::search::DepthFirstSearch::run_search_step()
 	// If the search is running but the stack is empty, raise exception
 	if (this->stack_.empty())
 	{
-		throw std::runtime_error("Not found");
+		throw viz::search::destination_not_found_exception();
 	}
 
 	const auto current_box_index = this->stack_.top(); // Get the current box index
@@ -211,7 +211,7 @@ void viz::search::DepthFirstSearch::start_search()
 	this->stack_.push(this->search_space_->get_start_box());
 }
 
-viz::search::AStarSearch::AStarSearch(SearchSpace* search_space, const float step_delay)
+viz::search::BestFirstSearch::BestFirstSearch(SearchSpace* search_space, const float step_delay)
 	: Search(search_space, step_delay)
 {
 	this->priority_queue_ = std::priority_queue<sf::Vector2i, std::vector<sf::Vector2i>, std::function<bool(
@@ -224,12 +224,12 @@ viz::search::AStarSearch::AStarSearch(SearchSpace* search_space, const float ste
 		});
 }
 
-void viz::search::AStarSearch::run_search_step()
+void viz::search::BestFirstSearch::run_search_step()
 {
 	// If the search is running but the priority queue is empty, raise exception
 	if (this->priority_queue_.empty())
 	{
-		throw std::runtime_error("Not found");
+		throw viz::search::destination_not_found_exception();
 	}
 
 	const auto current_box_index = this->priority_queue_.top(); // Get the current box index
@@ -258,7 +258,7 @@ void viz::search::AStarSearch::run_search_step()
 	this->search_space_->set_as_explored(current_box_index); // Set the current box as explored
 }
 
-void viz::search::AStarSearch::start_search()
+void viz::search::BestFirstSearch::start_search()
 {
 	if (State::get_state_instance().search.visualizer_mode != search_visualizer_mode::none)
 	{

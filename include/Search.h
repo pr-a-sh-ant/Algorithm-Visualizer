@@ -7,6 +7,16 @@
 
 namespace viz::search
 {
+	class destination_not_found_exception final: public std::exception
+	{
+	public:
+		[[nodiscard]]
+		const char* what() const noexcept override
+		{
+			return "Destination not found";
+		}
+	};
+
 	class Search
 	{
 	protected:
@@ -68,13 +78,13 @@ namespace viz::search
 		void start_search() override;
 	};
 
-	class AStarSearch final: public Search
+	class BestFirstSearch final: public Search
 	{
 	private:
 		std::priority_queue<sf::Vector2i, std::vector<sf::Vector2i>, std::function<bool(const sf::Vector2i&, const sf::Vector2i&)>> priority_queue_;
 
 	public:
-		AStarSearch(viz::search::SearchSpace* search_space, const float step_delay);
+		BestFirstSearch(viz::search::SearchSpace* search_space, const float step_delay);
 
 		// Runs a single step of the search algorithm
 		void run_search_step() override;
