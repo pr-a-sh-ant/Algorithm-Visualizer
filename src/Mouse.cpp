@@ -11,8 +11,5 @@ Mouse::Mouse(){
 void Mouse::update(sf::RenderWindow &window)
 {
 	this->pos = sf::Mouse::getPosition(window);
-	// std::cout<<pos.x<<" "<<pos.y<<std::endl;
-
-	
 }
 

@@ -1,7 +1,6 @@
 #include "SearchWindow.h"
 
 #include <iostream>
-// include standard exception
 #include <stdexcept>
 #include "State.h"
 
