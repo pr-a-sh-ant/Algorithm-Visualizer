@@ -28,6 +28,15 @@ The project is setup with [cmake](https://cmake.org/). To run the project locall
 ```
 
 ## Screenshots
+![Home Page](https://github.com/pr-a-sh-ant/Algorithm-Visualizer/raw/report/screenshots/Home%20Page.png)
+![Maze Gneration](https://github.com/pr-a-sh-ant/Algorithm-Visualizer/raw/report/screenshots/Maze%20Generation.png)
+![Search Complete](https://github.com/pr-a-sh-ant/Algorithm-Visualizer/raw/report/screenshots/Search%20Complete.png)
+![Sort Page](https://github.com/pr-a-sh-ant/Algorithm-Visualizer/raw/report/screenshots/Sort%20Page.png)
+![Sorting](https://github.com/pr-a-sh-ant/Algorithm-Visualizer/raw/report/screenshots/Sorting.png)
 
-<!-- Search Page -->
-![Home Page]("https://github.com/pr-a-sh-ant/Algorithm-Visualizer/raw/report/screenshots/Home%20Page.png")
+## Contributors
+
+* [Kirtan Kunwar](https://github.com/kiyotone)
+* [Navin Nepal](https://github.com/marconn01)
+* [Prashant Aryal](https://github.com/pr-a-sh-ant)
+* [Prateek Poudel](https://github.com/Prateek61)
