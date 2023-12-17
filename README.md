@@ -29,4 +29,5 @@ The project is setup with [cmake](https://cmake.org/). To run the project locall
 
 ## Screenshots
 
-
+<!-- Search Page -->
+![Home Page]("https://github.com/pr-a-sh-ant/Algorithm-Visualizer/raw/report/screenshots/Home%20Page.png")
