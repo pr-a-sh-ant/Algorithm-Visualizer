@@ -24,7 +24,7 @@ The project is setup with [cmake](https://cmake.org/). To run the project locall
 - Run the executable
 > Note: The executable path may vary depending on the OS and the build system used.
 ```
-  ./build/Algorithm-Visualizer
+  ./build/AlgViz
 ```
 
 ## Screenshots
