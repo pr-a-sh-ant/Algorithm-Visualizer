@@ -2,6 +2,7 @@
 
 viz::thread::ThreadPool* viz::thread::ThreadPool::instance_ = nullptr;
 
+// Worker thread function to process jobs
 void viz::thread::ThreadPool::thread_loop()
 {
 	while (true)
@@ -24,6 +25,7 @@ void viz::thread::ThreadPool::thread_loop()
 	}
 }
 
+// Initialize the thread pool singleton
 viz::thread::ThreadPool& viz::thread::ThreadPool::initialize()
 {
 	if (instance_ != nullptr)
@@ -34,7 +36,7 @@ viz::thread::ThreadPool& viz::thread::ThreadPool::initialize()
 	instance_ = new ThreadPool();
 
 	const auto num_threads = std::thread::hardware_concurrency();
-	for (uint32_t i = 0; i < 3; i++)
+	for (uint32_t i = 0; i < 3; i++) // Initialize 3 worker threads
 	{
 		instance_->threads_.emplace_back(std::thread(&ThreadPool::thread_loop, instance_));
 	}
@@ -42,6 +44,7 @@ viz::thread::ThreadPool& viz::thread::ThreadPool::initialize()
 	return std::ref(*instance_);
 }
 
+// Get the instance of the thread pool singleton
 viz::thread::ThreadPool& viz::thread::ThreadPool::get_instance()
 {
 	if (instance_ == nullptr)
@@ -52,11 +55,13 @@ viz::thread::ThreadPool& viz::thread::ThreadPool::get_instance()
 	return std::ref(*instance_);
 }
 
+// Check if the thread pool is initialized
 bool viz::thread::ThreadPool::is_initialized()
 {
-	return ThreadPool::instance_ != nullptr;
+	return instance_ != nullptr;
 }
 
+// Queue a job for execution
 void viz::thread::ThreadPool::queue_job(std::function<void()> job)
 {
 	{
@@ -66,6 +71,7 @@ void viz::thread::ThreadPool::queue_job(std::function<void()> job)
 	this->mutex_condition_.notify_one();
 }
 
+// Check if the thread pool is busy with jobs
 bool viz::thread::ThreadPool::busy()
 {
 	bool pool_busy;
@@ -76,6 +82,7 @@ bool viz::thread::ThreadPool::busy()
 	return pool_busy;
 }
 
+// Stop the thread pool and join threads
 void viz::thread::ThreadPool::stop()
 {
 	{
